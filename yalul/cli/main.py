@@ -1,5 +1,5 @@
 import click
-from yalul.source import Source
+from yalul.lexer import Lexer
 
 @click.command()
 @click.argument('filename', required=False)
@@ -12,5 +12,7 @@ def execute(filename):
         )
     else:
         source_file = open(filename, 'r')
-        source = Source(source_file)
-        click.echo(source.read())
+        tokens = Lexer(source_file).run()
+        
+        for token in tokens:
+            click.echo(token)
