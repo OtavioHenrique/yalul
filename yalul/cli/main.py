@@ -15,4 +15,4 @@ def execute(filename):
         source_file = open(filename, 'r')
         tokens = Lexer(source_file).run()
         for token in tokens:
-            click.echo(token.value)
+            click.echo(token)
