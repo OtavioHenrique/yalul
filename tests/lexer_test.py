@@ -27,8 +27,14 @@ class TestLexerInteger:
 
 
 class TestLexerOperators:
+    """
+    Test lexer for operators tokens
+    """
     @pytest.mark.parametrize('open_file', ['operators_example.yalul'], indirect=['open_file'])
     def test_lexer_run(self, open_file):
+        """
+        Receives a source containing operators and lex it to operator tokens
+        """
         lexer = Lexer(open_file)
         tokens = lexer.run()
 
