@@ -1,6 +1,7 @@
 import os
 from yalul.lex.token import Token
 from yalul.lex.token_type import TokenType
+from yalul.lex.scanners.operator import OperatorScanner
 
 
 class Lexer:
@@ -9,6 +10,7 @@ class Lexer:
 
     This class has as it main objective receive a source code, scan it and produce a list of language tokens.
     """
+
     def __init__(self, source):
         """
         Construct a new Lexer object.
@@ -42,6 +44,13 @@ class Lexer:
                 number_string = ''.join(numbers)
 
                 tokens_list.append(Token(TokenType.INTEGER, int(number_string)))
+
+            if OperatorScanner.is_operator(current_char):
+                token = OperatorScanner(current_char).create_token()
+
+                tokens_list.append(token)
+
+                current_char = self.source.read(1)
 
         return tokens_list
 
