@@ -1,6 +1,6 @@
 import os
-from yalul.lex.token import Token
-from yalul.lex.token_type import TokenType
+from yalul.lex.scanners.operator import OperatorScanner
+from yalul.lex.scanners.integer import IntegerScanner
 
 
 class Lexer:
@@ -9,6 +9,7 @@ class Lexer:
 
     This class has as it main objective receive a source code, scan it and produce a list of language tokens.
     """
+
     def __init__(self, source):
         """
         Construct a new Lexer object.
@@ -31,22 +32,21 @@ class Lexer:
             if current_char == ' ' or current_char == '\n':
                 current_char = self.source.read(1)
 
-            if self.__is_digit(current_char):
-                numbers = []
+            if IntegerScanner.is_digit(current_char):
+                scanner = IntegerScanner(current_char, self.source)
 
-                while self.__is_digit(current_char):
-                    numbers.append(current_char)
+                tokens_list.append(scanner.create_token())
 
-                    current_char = self.source.read(1)
+                current_char = scanner.current_char
 
-                number_string = ''.join(numbers)
+            if OperatorScanner.is_operator(current_char):
+                token = OperatorScanner(current_char).create_token()
 
-                tokens_list.append(Token(TokenType.INTEGER, int(number_string)))
+                tokens_list.append(token)
+
+                current_char = self.source.read(1)
 
         return tokens_list
-
-    def __is_digit(self, char):
-        return '0' <= char <= '9'
 
     def __end_of_file(self):
         return self.source.tell() >= self.file_size
