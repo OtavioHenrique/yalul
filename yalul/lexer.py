@@ -1,7 +1,9 @@
 import os
+
 from yalul.lex.scanners.operator import OperatorScanner
 from yalul.lex.scanners.integer import IntegerScanner
-
+from yalul.lex.token import Token
+from yalul.lex.token_type import TokenType
 
 class Lexer:
     """
@@ -45,6 +47,8 @@ class Lexer:
                 tokens_list.append(token)
 
                 current_char = self.source.read(1)
+
+        tokens_list.append(Token(TokenType.EOF, "End of File"))
 
         return tokens_list
 

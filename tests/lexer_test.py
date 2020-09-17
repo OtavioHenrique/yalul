@@ -22,9 +22,10 @@ class TestLexerInteger:
         lexer = Lexer(open_file)
         tokens = lexer.run()
 
-        for token in tokens:
+        for token in tokens[:-1]:
             assert token.type == TokenType.INTEGER
 
+        assert tokens[-1].type == TokenType.EOF
 
 class TestLexerOperators:
     """
@@ -38,7 +39,7 @@ class TestLexerOperators:
         lexer = Lexer(open_file)
         tokens = lexer.run()
 
-        expected_tokens = [TokenType.SUM, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVISION]
+        expected_tokens = [TokenType.SUM, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVISION, TokenType.EOF]
 
         for index, token in enumerate(tokens):
             assert token.type == expected_tokens[index]

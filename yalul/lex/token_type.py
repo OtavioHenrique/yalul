@@ -5,6 +5,7 @@ class TokenType(Enum):
     """
     An enum of the available lex tokens of yalul language
     """
+    EOF = 0
     INTEGER = 1
     SUM = 2
     MINUS = 3
