@@ -5,6 +5,7 @@ from yalul.lex.scanners.integer import IntegerScanner
 from yalul.lex.token import Token
 from yalul.lex.token_type import TokenType
 
+
 class Lexer:
     """
     Yalul's own Lexer.
