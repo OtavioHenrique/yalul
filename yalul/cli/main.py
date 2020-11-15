@@ -1,5 +1,6 @@
 import click
 from yalul.lexer import Lexer
+from yalul.parser import Parser
 
 @click.command()
 @click.argument('filename', required=False)
@@ -13,6 +14,6 @@ def execute(filename):
     else:
         source_file = open(filename, 'r')
         tokens = Lexer(source_file).run()
-        
+
         for token in tokens:
             click.echo(token)
