@@ -40,7 +40,7 @@ class Parser:
     def __addition(self):
         expression = self.__multiply()
 
-        while self.tokens[self._current_token].type == TokenType.SUM:
+        while self.tokens[self._current_token].type == TokenType.SUM or self.tokens[self._current_token].type == TokenType.MINUS:
             operator = self.tokens[self._current_token]
 
             self._current_token += 1
@@ -54,7 +54,7 @@ class Parser:
     def __multiply(self):
         expression = self.__literal()
 
-        while self.tokens[self._current_token].type == TokenType.MULTIPLY:
+        while self.tokens[self._current_token].type == TokenType.MULTIPLY or self.tokens[self._current_token].type == TokenType.DIVISION:
             operator = self.tokens[self._current_token]
 
             self._current_token += 1

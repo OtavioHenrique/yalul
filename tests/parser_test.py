@@ -120,4 +120,50 @@ class TestParserBinary:
         assert type(ast.right) is Value
         assert ast.right.value is 42
 
+    def test_parser_run_generates_correct_ast_single_binary_expression_minus(self):
+        """
+        Validates if parser is generating a correct AST to a single binary operation minus
+        """
+        tokens = [
+            Token(TokenType.INTEGER, 5),
+            Token(TokenType.MINUS, "-"),
+            Token(TokenType.INTEGER, 3),
+            Token(TokenType.EOF, "End of File")
+        ]
+
+        ast = Parser(tokens).parse()
+        ast = ast[0]
+
+        assert type(ast) is Binary
+        assert ast.operator.type == TokenType.MINUS
+
+        assert type(ast.left) == Value
+        assert ast.left.value == 5
+
+        assert ast.right.value == 3
+        assert type(ast.right) == Value
+
+    def test_parser_run_generates_correct_ast_single_binary_expression_division(self):
+        """
+        Validates if parser is generating a correct AST to a single binary operation division
+        """
+        tokens = [
+            Token(TokenType.INTEGER, 10),
+            Token(TokenType.DIVISION, "/"),
+            Token(TokenType.INTEGER, 2),
+            Token(TokenType.EOF, "End of File")
+        ]
+
+        ast = Parser(tokens).parse()
+        ast = ast[0]
+
+        assert type(ast) is Binary
+        assert ast.operator.type == TokenType.DIVISION
+
+        assert type(ast.left) == Value
+        assert ast.left.value == 10
+
+        assert ast.right.value == 2
+        assert type(ast.right) == Value
+
 
