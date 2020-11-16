@@ -38,7 +38,7 @@ class Parser:
         return self.__addition()
 
     def __addition(self):
-        expression = self.__multiply()
+        expression = self.__minus()
 
         while self.tokens[self._current_token].type == TokenType.SUM or self.tokens[self._current_token].type == TokenType.MINUS:
             operator = self.tokens[self._current_token]
@@ -51,15 +51,43 @@ class Parser:
 
         return expression
 
-    def __multiply(self):
-        expression = self.__literal()
+    def __minus(self):
+        expression = self.__multiply()
 
-        while self.tokens[self._current_token].type == TokenType.MULTIPLY or self.tokens[self._current_token].type == TokenType.DIVISION:
+        while self.tokens[self._current_token].type == TokenType.MINUS:
+            operator = self.tokens[self._current_token]
+
+            self._current_token += 1
+
+            right_expression = self.__minus()
+
+            expression = Binary(expression, operator, right_expression)
+
+        return expression
+
+    def __multiply(self):
+        expression = self.__division()
+
+        while self.tokens[self._current_token].type == TokenType.MULTIPLY:
             operator = self.tokens[self._current_token]
 
             self._current_token += 1
 
             right_expression = self.__multiply()
+
+            expression = Binary(expression, operator, right_expression)
+
+        return expression
+
+    def __division(self):
+        expression = self.__literal()
+
+        while self.tokens[self._current_token].type == TokenType.DIVISION:
+            operator = self.tokens[self._current_token]
+
+            self._current_token += 1
+
+            right_expression = self.__division()
 
             expression = Binary(expression, operator, right_expression)
 
