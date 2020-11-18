@@ -2,6 +2,7 @@ import os
 
 from yalul.lex.scanners.operator import OperatorScanner
 from yalul.lex.scanners.integer import IntegerScanner
+from yalul.lex.scanners.comparison_operator import ComparisonOperatorScanner
 from yalul.lex.token import Token
 from yalul.lex.token_type import TokenType
 
@@ -48,6 +49,21 @@ class Lexer:
                 tokens_list.append(token)
 
                 current_char = self.source.read(1)
+
+            if ComparisonOperatorScanner.is_comparison(current_char):
+                two_digit_token_list = [
+                    TokenType.LESS_EQUAL,
+                    TokenType.GREATER_EQUAL,
+                    TokenType.BANG_EQUAL,
+                    TokenType.EQUAL_EQUAL
+                ]
+
+                scanner = ComparisonOperatorScanner(current_char, self.source)
+                token = scanner.create_token()
+
+                tokens_list.append(token)
+
+                current_char = scanner.current_char
 
         tokens_list.append(Token(TokenType.EOF, "End of File"))
 
