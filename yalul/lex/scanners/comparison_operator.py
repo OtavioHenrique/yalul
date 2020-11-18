@@ -22,7 +22,8 @@ class ComparisonOperatorScanner:
         """
         Construct a new OperatorScanner object.
 
-        :params token: Char of the token
+        :params current_char: Current char being read
+        :params source: Source being read by lexer
         """
         self.current_char = current_char
         self.source = source
@@ -39,7 +40,7 @@ class ComparisonOperatorScanner:
 
     def create_token(self):
         """
-        Returns a new Token of the given char
+        Returns a new Comparison Token of the given char
         """
         current_file_pointer_location = self.source.tell()
 
