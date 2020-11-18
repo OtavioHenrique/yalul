@@ -43,3 +43,30 @@ class TestLexerOperators:
 
         for index, token in enumerate(tokens):
             assert token.type == expected_tokens[index]
+
+class TestLexerComparisonOperators:
+    """
+    Test lexer for comparison operators tokens
+    """
+    @pytest.mark.parametrize('open_file', ['comparison_operators_example.yalul'], indirect=['open_file'])
+    def test_lexer_run_comparison(self, open_file):
+        """
+        Receives a source containing comparison operators and lex it to operator tokens
+        """
+        lexer = Lexer(open_file)
+        tokens = lexer.run()
+
+        expected_tokens = [
+            TokenType.GREATER,
+            TokenType.LESS,
+            TokenType.EQUAL,
+            TokenType.BANG_EQUAL,
+            TokenType.BANG,
+            TokenType.LESS_EQUAL,
+            TokenType.GREATER_EQUAL,
+            TokenType.EQUAL_EQUAL,
+            TokenType.EOF
+        ]
+
+        for index, token in enumerate(tokens):
+            assert token.type == expected_tokens[index]

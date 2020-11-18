@@ -11,3 +11,11 @@ class TokenType(Enum):
     MINUS = 3
     DIVISION = 4
     MULTIPLY = 5
+    GREATER = 6
+    LESS = 7
+    EQUAL_EQUAL = 8
+    LESS_EQUAL = 9
+    GREATER_EQUAL = 10
+    BANG = 11
+    EQUAL = 12
+    BANG_EQUAL = 13
