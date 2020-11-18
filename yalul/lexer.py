@@ -62,7 +62,7 @@ class Lexer:
                 token = scanner.create_token()
 
                 tokens_list.append(token)
-                print("PROXIMO CHAR ->>> " + scanner.current_char + "  APPOS ADICIONAR ->>>" + str(token) + "   E O CURRENT CHAR ->>  " + current_char)
+
                 current_char = scanner.current_char
 
         tokens_list.append(Token(TokenType.EOF, "End of File"))
