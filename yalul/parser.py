@@ -40,7 +40,18 @@ class Parser:
     def __comparison(self):
         expression = self.__addition()
 
-        while self.tokens[self._current_token].type == TokenType.GREATER or self.tokens[self._current_token].type == TokenType.LESS:
+        comparison_tokens = [
+            TokenType.GREATER,
+            TokenType.LESS,
+            TokenType.LESS_EQUAL,
+            TokenType.GREATER_EQUAL,
+            TokenType.BANG,
+            TokenType.EQUAL,
+            TokenType.BANG_EQUAL,
+            TokenType.EQUAL_EQUAL
+        ]
+
+        while self.tokens[self._current_token].type in comparison_tokens:
             operator = self.tokens[self._current_token]
 
             self._current_token += 1
@@ -54,7 +65,8 @@ class Parser:
     def __addition(self):
         expression = self.__minus()
 
-        while self.tokens[self._current_token].type == TokenType.SUM or self.tokens[self._current_token].type == TokenType.MINUS:
+        while self.tokens[self._current_token].type == TokenType.SUM or self.tokens[
+            self._current_token].type == TokenType.MINUS:
             operator = self.tokens[self._current_token]
 
             self._current_token += 1
