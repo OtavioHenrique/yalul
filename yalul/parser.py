@@ -35,7 +35,21 @@ class Parser:
         return self.__expression_statement()
 
     def __expression_statement(self):
-        return self.__addition()
+        return self.__comparison()
+
+    def __comparison(self):
+        expression = self.__addition()
+
+        while self.tokens[self._current_token].type == TokenType.GREATER or self.tokens[self._current_token].type == TokenType.LESS:
+            operator = self.tokens[self._current_token]
+
+            self._current_token += 1
+
+            right_expression = self.__comparison()
+
+            expression = Binary(expression, operator, right_expression)
+
+        return expression
 
     def __addition(self):
         expression = self.__minus()
