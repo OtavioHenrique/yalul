@@ -11,7 +11,7 @@ class TestParserBinary:
 
     def test_parser_run_generates_correct_ast_complex_binary_expression_with_multi_precedence(self):
         """
-        Validates if parser is generating a correct AST to a binary expression with multi precedence, like 39 * 2 + 42
+        Validates if parser is generating a correct AST to a binary expressions with multi precedence, like 39 * 2 + 42
         """
         tokens = [
             Token(TokenType.INTEGER, 39),
