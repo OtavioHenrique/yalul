@@ -1,4 +1,4 @@
-from yalul.parse.statements.expression import Expression
+from yalul.parsers.ast.nodes.statements.expression import Expression
 
 
 class Value(Expression):

@@ -1,6 +1,17 @@
 from yalul.lex.token_type import TokenType
-from yalul.parse.statements.expressions.value import Value
-from yalul.parse.statements.expressions.binary import Binary
+from yalul.parsers.expression_parse import ExpressionParser
+
+
+class Token:
+    def __init__(self, current):
+        self.current_token = current
+
+    def current(self):
+        return self.current_token
+
+    def increment(self):
+        self.current_token += 1
+        return self.current_token
 
 
 class Parser:
@@ -12,11 +23,11 @@ class Parser:
         """
         Construct a new Parser object.
 
-        :param source: A opened file
-        :return: returns nothing
+        :param tokens: A list of language tokens
+        :return: returns an abstract syntax tree (AST)
         """
         self.tokens = tokens
-        self._current_token = 0
+        self._current_token = Token(0)
 
     def parse(self):
         """
@@ -35,106 +46,9 @@ class Parser:
         return self.__expression_statement()
 
     def __expression_statement(self):
-        return self.__comparison()
-
-    def __comparison(self):
-        expression = self.__addition()
-
-        comparison_tokens = [
-            TokenType.GREATER,
-            TokenType.LESS,
-            TokenType.LESS_EQUAL,
-            TokenType.GREATER_EQUAL,
-            TokenType.BANG,
-            TokenType.EQUAL,
-            TokenType.BANG_EQUAL,
-            TokenType.EQUAL_EQUAL
-        ]
-
-        while self.tokens[self._current_token].type in comparison_tokens:
-            operator = self.tokens[self._current_token]
-
-            self._current_token += 1
-
-            right_expression = self.__comparison()
-
-            expression = Binary(expression, operator, right_expression)
-
-        return expression
-
-    def __addition(self):
-        expression = self.__minus()
-
-        while self.tokens[self._current_token].type == TokenType.SUM or self.tokens[
-            self._current_token].type == TokenType.MINUS:
-            operator = self.tokens[self._current_token]
-
-            self._current_token += 1
-
-            right_expression = self.__addition()
-
-            expression = Binary(expression, operator, right_expression)
-
-        return expression
-
-    def __minus(self):
-        expression = self.__multiply()
-
-        while self.tokens[self._current_token].type == TokenType.MINUS:
-            operator = self.tokens[self._current_token]
-
-            self._current_token += 1
-
-            right_expression = self.__minus()
-
-            expression = Binary(expression, operator, right_expression)
-
-        return expression
-
-    def __multiply(self):
-        expression = self.__division()
-
-        while self.tokens[self._current_token].type == TokenType.MULTIPLY:
-            operator = self.tokens[self._current_token]
-
-            self._current_token += 1
-
-            right_expression = self.__multiply()
-
-            expression = Binary(expression, operator, right_expression)
-
-        return expression
-
-    def __division(self):
-        expression = self.__literal()
-
-        while self.tokens[self._current_token].type == TokenType.DIVISION:
-            operator = self.tokens[self._current_token]
-
-            self._current_token += 1
-
-            right_expression = self.__division()
-
-            expression = Binary(expression, operator, right_expression)
-
-        return expression
-
-    def __literal(self):
-        current_token = self.tokens[self._current_token]
-
-        if current_token.type == TokenType.INTEGER:
-            self._current_token += 1
-
-            return Value(current_token.value)
+        return ExpressionParser(self.tokens, self._current_token).parse()
 
     def __at_end(self):
-        current_token = self.tokens[self._current_token]
+        current_token = self.tokens[self._current_token.current()]
 
         return current_token.type == TokenType.EOF
-
-    def __next_token(self):
-        next_token_index = self._current_token + 1
-
-        next_token = self.tokens[next_token_index]
-
-        return next_token
