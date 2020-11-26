@@ -1,6 +1,6 @@
 from yalul.lex.token_type import TokenType
-from yalul.parse.statements.expressions.binary import Binary
-from yalul.parse.statements.expressions.value import Value
+from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
+from yalul.parsers.ast.nodes.statements.expressions.value import Value
 
 
 class ExpressionParser:

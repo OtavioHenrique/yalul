@@ -1,5 +1,5 @@
 from yalul.lex.token_type import TokenType
-from yalul.parse.expression_parse import ExpressionParser
+from yalul.parsers.expression_parse import ExpressionParser
 
 
 class Token:
