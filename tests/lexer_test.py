@@ -22,15 +22,18 @@ class TestLexerInteger:
         lexer = Lexer(open_file)
         tokens = lexer.run()
 
-        for token in tokens[:-1]:
+        for token in tokens[:-2]:
             assert token.type == TokenType.INTEGER
 
+        assert tokens[-2].type == TokenType.END_STATEMENT
         assert tokens[-1].type == TokenType.EOF
+
 
 class TestLexerOperators:
     """
     Test lexer for operators tokens
     """
+
     @pytest.mark.parametrize('open_file', ['operators_example.yalul'], indirect=['open_file'])
     def test_lexer_run(self, open_file):
         """
@@ -39,15 +42,24 @@ class TestLexerOperators:
         lexer = Lexer(open_file)
         tokens = lexer.run()
 
-        expected_tokens = [TokenType.SUM, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVISION, TokenType.EOF]
+        expected_tokens = [
+            TokenType.SUM,
+            TokenType.MINUS,
+            TokenType.MULTIPLY,
+            TokenType.DIVISION,
+            TokenType.END_STATEMENT,
+            TokenType.EOF
+        ]
 
         for index, token in enumerate(tokens):
             assert token.type == expected_tokens[index]
+
 
 class TestLexerComparisonOperators:
     """
     Test lexer for comparison operators tokens
     """
+
     @pytest.mark.parametrize('open_file', ['comparison_operators_example.yalul'], indirect=['open_file'])
     def test_lexer_run_comparison(self, open_file):
         """
@@ -65,6 +77,39 @@ class TestLexerComparisonOperators:
             TokenType.LESS_EQUAL,
             TokenType.GREATER_EQUAL,
             TokenType.EQUAL_EQUAL,
+            TokenType.END_STATEMENT,
+            TokenType.EOF
+        ]
+
+        for index, token in enumerate(tokens):
+            assert token.type == expected_tokens[index]
+
+
+class TestLexerSeparateStatements:
+    """
+    Test lexer separating statements
+    """
+
+    @pytest.mark.parametrize('open_file', ['separate_statements_example.yalul'], indirect=['open_file'])
+    def test_lexer_run_comparison(self, open_file):
+        """
+        Receives a source containing expression and a separate statement
+        """
+        lexer = Lexer(open_file)
+
+        tokens = lexer.run()
+
+        expected_tokens = [
+            TokenType.INTEGER,
+            TokenType.SUM,
+            TokenType.INTEGER,
+            TokenType.DIVISION,
+            TokenType.INTEGER,
+            TokenType.END_STATEMENT,
+            TokenType.INTEGER,
+            TokenType.SUM,
+            TokenType.INTEGER,
+            TokenType.END_STATEMENT,
             TokenType.EOF
         ]
 

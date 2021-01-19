@@ -19,3 +19,4 @@ class TokenType(Enum):
     BANG = 11
     EQUAL = 12
     BANG_EQUAL = 13
+    END_STATEMENT = 14
