@@ -16,6 +16,7 @@ class TestParseBinaryMultiply:
             Token(TokenType.INTEGER, 42),
             Token(TokenType.MULTIPLY, "*"),
             Token(TokenType.INTEGER, 1),
+            Token(TokenType.END_STATEMENT, "End of Statement"),
             Token(TokenType.EOF, "End of File")
         ]
 
