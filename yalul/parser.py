@@ -46,7 +46,10 @@ class Parser:
         return self.__expression_statement()
 
     def __expression_statement(self):
-        return ExpressionParser(self.tokens, self._current_token).parse()
+        expression = ExpressionParser(self.tokens, self._current_token).parse()
+        if self.tokens[self._current_token.current()].type == TokenType.END_STATEMENT:
+            self._current_token.increment()
+        return expression
 
     def __at_end(self):
         current_token = self.tokens[self._current_token.current()]
