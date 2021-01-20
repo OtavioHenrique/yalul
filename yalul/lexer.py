@@ -33,7 +33,13 @@ class Lexer:
         tokens_list = []
 
         while not self.__end_of_file():
-            if current_char == ' ' or current_char == '\n':
+            if current_char == ' ':
+                current_char = self.source.read(1)
+
+            if current_char == '\n':
+                if tokens_list[-1].type != TokenType.END_STATEMENT:
+                    tokens_list.append(Token(TokenType.END_STATEMENT, "End of Staatement"))
+
                 current_char = self.source.read(1)
 
             if IntegerScanner.is_digit(current_char):
@@ -65,6 +71,7 @@ class Lexer:
 
                 current_char = scanner.current_char
 
+        tokens_list.append(Token(TokenType.END_STATEMENT, "End of Staatement"))
         tokens_list.append(Token(TokenType.EOF, "End of File"))
 
         return tokens_list

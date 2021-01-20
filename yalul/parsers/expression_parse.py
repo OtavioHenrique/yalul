@@ -109,3 +109,5 @@ class ExpressionParser:
             self._current_token.increment()
 
             return Value(current_token.value)
+        else:
+            return current_token

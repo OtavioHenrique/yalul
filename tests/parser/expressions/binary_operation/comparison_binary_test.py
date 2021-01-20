@@ -16,6 +16,7 @@ class TestParseBinaryComparison:
             Token(TokenType.INTEGER, 42),
             Token(TokenType.GREATER, ">"),
             Token(TokenType.INTEGER, 1),
+            Token(TokenType.END_STATEMENT, "End of Statement"),
             Token(TokenType.EOF, "End of File")
         ]
 

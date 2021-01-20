@@ -16,6 +16,7 @@ class TestParseBinaryDivision:
             Token(TokenType.INTEGER, 10),
             Token(TokenType.DIVISION, "/"),
             Token(TokenType.INTEGER, 2),
+            Token(TokenType.END_STATEMENT, "End of Statement"),
             Token(TokenType.EOF, "End of File")
         ]
 

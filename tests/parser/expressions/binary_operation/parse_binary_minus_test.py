@@ -16,6 +16,7 @@ class TestParseBinaryMinus:
             Token(TokenType.INTEGER, 5),
             Token(TokenType.MINUS, "-"),
             Token(TokenType.INTEGER, 3),
+            Token(TokenType.END_STATEMENT, "End of Statement"),
             Token(TokenType.EOF, "End of File")
         ]
 

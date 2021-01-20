@@ -18,6 +18,7 @@ class TestParserBinary:
             Token(TokenType.INTEGER, 2),
             Token(TokenType.SUM, "+"),
             Token(TokenType.INTEGER, 42),
+            Token(TokenType.END_STATEMENT, "End of Statement"),
             Token(TokenType.EOF, "End of File")
         ]
 
