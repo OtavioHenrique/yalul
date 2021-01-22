@@ -2,7 +2,7 @@ from yalul.lex.token_type import TokenType
 from yalul.lex.token import Token
 
 
-class IntegerScanner:
+class NumbersScanner:
     """
     IntegerScanner is called by Lexer when a digit character is read. It reads the integer and returns a Integer Token
     """
@@ -22,15 +22,23 @@ class IntegerScanner:
         Read source and creates a new integer token
         """
         numbers = []
+        is_float = False
 
-        while IntegerScanner.is_digit(self.current_char):
+        while NumbersScanner.is_digit(self.current_char) or self.current_char == '.':
             numbers.append(self.current_char)
+
+            if self.current_char == '.':
+                is_float = True
 
             self.current_char = self.source.read(1)
 
         number_string = ''.join(numbers)
 
-        return Token(TokenType.INTEGER, int(number_string))
+        if is_float is True:
+            return Token(TokenType.FLOAT, float(number_string))
+        else:
+            return Token(TokenType.INTEGER, int(number_string))
+
 
     @classmethod
     def is_digit(cls, char):
