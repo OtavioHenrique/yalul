@@ -3,6 +3,7 @@ import os
 from yalul.lex.scanners.operator import OperatorScanner
 from yalul.lex.scanners.integer import IntegerScanner
 from yalul.lex.scanners.comparison_operator import ComparisonOperatorScanner
+from yalul.lex.scanners.string import StringScanner
 from yalul.lex.token import Token
 from yalul.lex.token_type import TokenType
 
@@ -39,6 +40,13 @@ class Lexer:
             if current_char == '\n':
                 if tokens_list[-1].type != TokenType.END_STATEMENT:
                     tokens_list.append(Token(TokenType.END_STATEMENT, "End of Staatement"))
+
+                current_char = self.source.read(1)
+
+            if current_char == '"':
+                string = StringScanner(current_char, self.source).create_token()
+
+                tokens_list.append(string)
 
                 current_char = self.source.read(1)
 
