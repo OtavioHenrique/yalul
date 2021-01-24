@@ -6,6 +6,7 @@ class NumbersScanner:
     """
     IntegerScanner is called by Lexer when a digit character is read. It reads the integer and returns a Integer Token
     """
+
     def __init__(self, current_char, source):
         """
         Construct a new IntegerScanner object.
@@ -38,7 +39,6 @@ class NumbersScanner:
             return Token(TokenType.FLOAT, float(number_string))
         else:
             return Token(TokenType.INTEGER, int(number_string))
-
 
     @classmethod
     def is_digit(cls, char):

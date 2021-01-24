@@ -1,5 +1,6 @@
 import os
 
+from yalul.lex.scanners.identifier import IdentifierScanner
 from yalul.lex.scanners.operator import OperatorScanner
 from yalul.lex.scanners.integer import NumbersScanner
 from yalul.lex.scanners.comparison_operator import ComparisonOperatorScanner
@@ -78,6 +79,15 @@ class Lexer:
                 tokens_list.append(token)
 
                 current_char = scanner.current_char
+
+            if IdentifierScanner.is_alpha(current_char):
+                scanner = ComparisonOperatorScanner(current_char, self.source)
+                token = scanner.create_token()
+
+                tokens_list.append(token)
+
+                current_char = scanner.current_char
+
 
         tokens_list.append(Token(TokenType.END_STATEMENT, "End of Staatement"))
         tokens_list.append(Token(TokenType.EOF, "End of File"))
