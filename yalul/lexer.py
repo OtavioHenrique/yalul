@@ -1,7 +1,7 @@
 import os
 
 from yalul.lex.scanners.operator import OperatorScanner
-from yalul.lex.scanners.integer import IntegerScanner
+from yalul.lex.scanners.integer import NumbersScanner
 from yalul.lex.scanners.comparison_operator import ComparisonOperatorScanner
 from yalul.lex.scanners.string import StringScanner
 from yalul.lex.token import Token
@@ -50,8 +50,8 @@ class Lexer:
 
                 current_char = self.source.read(1)
 
-            if IntegerScanner.is_digit(current_char):
-                scanner = IntegerScanner(current_char, self.source)
+            if NumbersScanner.is_digit(current_char):
+                scanner = NumbersScanner(current_char, self.source)
 
                 tokens_list.append(scanner.create_token())
 

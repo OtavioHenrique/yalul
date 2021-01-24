@@ -21,3 +21,4 @@ class TokenType(Enum):
     BANG_EQUAL = 13
     END_STATEMENT = 14
     STRING = 15
+    FLOAT = 16
