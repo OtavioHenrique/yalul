@@ -6,7 +6,6 @@ IDENTIFIERS = {
 }
 
 
-## TODO: Change to keyword
 class KeywordScanner:
     """
     IdentifierScanner is called by Lexer when a char character is read. It reads the identifier and returns its token
