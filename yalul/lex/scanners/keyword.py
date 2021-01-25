@@ -6,7 +6,8 @@ IDENTIFIERS = {
 }
 
 
-class IdentifierScanner:
+## TODO: Change to keyword
+class KeywordScanner:
     """
     IdentifierScanner is called by Lexer when a char character is read. It reads the identifier and returns its token
     """
@@ -29,7 +30,7 @@ class IdentifierScanner:
 
         chars = []
 
-        while IdentifierScanner.is_alpha(self.current_char):
+        while KeywordScanner.is_alpha(self.current_char):
             chars.append(self.current_char)
 
             self.current_char = self.source.read(1)
