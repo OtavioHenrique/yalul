@@ -2,7 +2,9 @@ from yalul.lex.token_type import TokenType
 from yalul.lex.token import Token
 
 IDENTIFIERS = {
-    'null': TokenType.NULL
+    'null': TokenType.NULL,
+    'true': TokenType.TRUE,
+    'false': TokenType.FALSE
 }
 
 
