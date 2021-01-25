@@ -22,3 +22,4 @@ class TokenType(Enum):
     END_STATEMENT = 14
     STRING = 15
     FLOAT = 16
+    NULL = 17

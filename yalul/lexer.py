@@ -1,5 +1,6 @@
 import os
 
+from yalul.lex.scanners.keyword import KeywordScanner
 from yalul.lex.scanners.operator import OperatorScanner
 from yalul.lex.scanners.integer import NumbersScanner
 from yalul.lex.scanners.comparison_operator import ComparisonOperatorScanner
@@ -72,6 +73,14 @@ class Lexer:
                     TokenType.EQUAL_EQUAL
                 ]
 
+                scanner = ComparisonOperatorScanner(current_char, self.source)
+                token = scanner.create_token()
+
+                tokens_list.append(token)
+
+                current_char = scanner.current_char
+
+            if KeywordScanner.is_alpha(current_char):
                 scanner = ComparisonOperatorScanner(current_char, self.source)
                 token = scanner.create_token()
 
