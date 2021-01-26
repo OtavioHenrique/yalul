@@ -23,3 +23,5 @@ class TokenType(Enum):
     STRING = 15
     FLOAT = 16
     NULL = 17
+    TRUE = 18
+    FALSE = 19
