@@ -1,6 +1,19 @@
 from yalul.lex.token_type import TokenType
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
-from yalul.parsers.ast.nodes.statements.expressions.value import Value
+from yalul.parsers.ast.nodes.statements.expressions.values.boolean import Boolean
+from yalul.parsers.ast.nodes.statements.expressions.values.null import Null
+from yalul.parsers.ast.nodes.statements.expressions.values.float import Float
+from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
+from yalul.parsers.ast.nodes.statements.expressions.values.string import String
+
+TOKEN_TO_VALUES = {
+    TokenType.INTEGER: Integer,
+    TokenType.STRING: String,
+    TokenType.FLOAT: Float,
+    TokenType.NULL: Null,
+    TokenType.TRUE: Boolean,
+    TokenType.FALSE: Boolean
+}
 
 
 class ExpressionParser:
@@ -105,9 +118,11 @@ class ExpressionParser:
     def __literal(self):
         current_token = self.tokens[self._current_token.current()]
 
-        if current_token.type == TokenType.INTEGER:
+        token_class = TOKEN_TO_VALUES.get(current_token.type)
+
+        if token_class:
             self._current_token.increment()
 
-            return Value(current_token.value)
+            return token_class(current_token.value)
         else:
             return current_token
