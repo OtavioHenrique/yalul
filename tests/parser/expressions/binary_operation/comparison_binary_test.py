@@ -1,8 +1,8 @@
 from yalul.parser import Parser
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
-from yalul.parsers.ast.nodes.statements.expressions.value import Value
 from yalul.lex.token import Token
 from yalul.lex.token_type import TokenType
+from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
 
 
 class TestParseBinaryComparison:
@@ -27,11 +27,11 @@ class TestParseBinaryComparison:
         assert type(node) is Binary
         assert node.operator.type == TokenType.GREATER
 
-        assert type(node.left) == Value
+        assert type(node.left) == Integer
         assert node.left.value == 42
 
         assert node.right.value == 1
-        assert type(node.right) == Value
+        assert type(node.right) == Integer
 
     def test_parser_run_generates_correct_ast_single_binary_expression_comparison_less(self):
         """
@@ -51,11 +51,11 @@ class TestParseBinaryComparison:
         assert type(node) is Binary
         assert node.operator.type == TokenType.LESS
 
-        assert type(node.left) == Value
+        assert type(node.left) == Integer
         assert node.left.value == 42
 
         assert node.right.value == 1
-        assert type(node.right) == Value
+        assert type(node.right) == Integer
 
     def test_parser_run_generates_correct_ast_single_binary_expression_comparison_different(self):
         """
@@ -75,11 +75,11 @@ class TestParseBinaryComparison:
         assert type(node) is Binary
         assert node.operator.type == TokenType.BANG_EQUAL
 
-        assert type(node.left) == Value
+        assert type(node.left) == Integer
         assert node.left.value == 42
 
         assert node.right.value == 1
-        assert type(node.right) == Value
+        assert type(node.right) == Integer
 
     def test_parser_run_generates_correct_ast_single_binary_expression_comparison_equal_equal(self):
         """
@@ -99,11 +99,11 @@ class TestParseBinaryComparison:
         assert type(node) is Binary
         assert node.operator.type == TokenType.EQUAL_EQUAL
 
-        assert type(node.left) == Value
+        assert type(node.left) == Integer
         assert node.left.value == 42
 
         assert node.right.value == 1
-        assert type(node.right) == Value
+        assert type(node.right) == Integer
 
     def test_parser_run_generates_correct_ast_single_binary_expression_comparison_greater_equal(self):
         """
@@ -123,11 +123,11 @@ class TestParseBinaryComparison:
         assert type(node) is Binary
         assert node.operator.type == TokenType.GREATER_EQUAL
 
-        assert type(node.left) == Value
+        assert type(node.left) == Integer
         assert node.left.value == 42
 
         assert node.right.value == 1
-        assert type(node.right) == Value
+        assert type(node.right) == Integer
 
     def test_parser_run_generates_correct_ast_single_binary_expression_comparison_less_equal(self):
         """
@@ -147,11 +147,11 @@ class TestParseBinaryComparison:
         assert type(node) is Binary
         assert node.operator.type == TokenType.LESS_EQUAL
 
-        assert type(node.left) == Value
+        assert type(node.left) == Integer
         assert node.left.value == 42
 
         assert node.right.value == 1
-        assert type(node.right) == Value
+        assert type(node.right) == Integer
 
     def test_parser_run_generates_correct_ast_single_binary_expression_comparison_equal(self):
         """
@@ -171,11 +171,11 @@ class TestParseBinaryComparison:
         assert type(node) is Binary
         assert node.operator.type == TokenType.EQUAL
 
-        assert type(node.left) == Value
+        assert type(node.left) == Integer
         assert node.left.value == 42
 
         assert node.right.value == 1
-        assert type(node.right) == Value
+        assert type(node.right) == Integer
 
     def test_parser_run_generates_correct_ast_single_binary_expression_comparison_bang(self):
         """
@@ -195,8 +195,8 @@ class TestParseBinaryComparison:
         assert type(node) is Binary
         assert node.operator.type == TokenType.BANG
 
-        assert type(node.left) == Value
+        assert type(node.left) == Integer
         assert node.left.value == 42
 
         assert node.right.value == 1
-        assert type(node.right) == Value
+        assert type(node.right) == Integer

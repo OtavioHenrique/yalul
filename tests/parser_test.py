@@ -1,8 +1,8 @@
 from yalul.parser import Parser
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
-from yalul.parsers.ast.nodes.statements.expressions.value import Value
 from yalul.lex.token import Token
 from yalul.lex.token_type import TokenType
+from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
 
 
 class TestParserBinary:
@@ -32,11 +32,11 @@ class TestParserBinary:
         assert type(ast.left) is Binary
         assert ast.left.operator.type is TokenType.MULTIPLY
 
-        assert type(ast.left.left) is Value
+        assert type(ast.left.left) is Integer
         assert ast.left.left.value == 39
 
-        assert type(ast.left.right) is Value
+        assert type(ast.left.right) is Integer
         assert ast.left.right.value == 2
 
-        assert type(ast.right) is Value
+        assert type(ast.right) is Integer
         assert ast.right.value is 42

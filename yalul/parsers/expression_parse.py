@@ -1,6 +1,6 @@
 from yalul.lex.token_type import TokenType
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
-from yalul.parsers.ast.nodes.statements.expressions.value import Value
+from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
 
 
 class ExpressionParser:
@@ -108,6 +108,6 @@ class ExpressionParser:
         if current_token.type == TokenType.INTEGER:
             self._current_token.increment()
 
-            return Value(current_token.value)
+            return Integer(current_token.value)
         else:
             return current_token
