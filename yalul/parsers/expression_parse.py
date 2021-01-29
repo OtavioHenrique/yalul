@@ -1,10 +1,12 @@
 from yalul.lex.token_type import TokenType
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
+from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
 from yalul.parsers.ast.nodes.statements.expressions.values.boolean import Boolean
 from yalul.parsers.ast.nodes.statements.expressions.values.null import Null
 from yalul.parsers.ast.nodes.statements.expressions.values.float import Float
 from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
 from yalul.parsers.ast.nodes.statements.expressions.values.string import String
+from yalul.parsers.parser_base import ParserBase
 
 TOKEN_TO_VALUES = {
     TokenType.INTEGER: Integer,
@@ -16,7 +18,7 @@ TOKEN_TO_VALUES = {
 }
 
 
-class ExpressionParser:
+class ExpressionParser(ParserBase):
     """
     Yalul's expression parser, it parses all kinds of expressions
     """
@@ -28,8 +30,7 @@ class ExpressionParser:
         :param tokens: A list of language tokens
         :return: returns parsed expression
         """
-        self.tokens = tokens
-        self._current_token = current_token
+        super().__init__(tokens, current_token)
 
     def parse(self):
         return self.__comparison()
@@ -124,5 +125,13 @@ class ExpressionParser:
             self._current_token.increment()
 
             return token_class(current_token.value)
+        if current_token.type == TokenType.LEFT_PAREN:
+            self._current_token.increment()
+
+            expression = self.__comparison()
+
+            self.consume(TokenType.RIGHT_PAREN)
+
+            return Grouping(expression)
         else:
             return current_token
