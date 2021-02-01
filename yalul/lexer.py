@@ -1,5 +1,6 @@
 import os
 
+from yalul.lex.scanners.grouping import GroupingScanner
 from yalul.lex.scanners.keyword import KeywordScanner
 from yalul.lex.scanners.operator import OperatorScanner
 from yalul.lex.scanners.integer import NumbersScanner
@@ -74,6 +75,14 @@ class Lexer:
                 ]
 
                 scanner = ComparisonOperatorScanner(current_char, self.source)
+                token = scanner.create_token()
+
+                tokens_list.append(token)
+
+                current_char = scanner.current_char
+
+            if GroupingScanner.is_paren(current_char):
+                scanner = GroupingScanner(current_char, self.source)
                 token = scanner.create_token()
 
                 tokens_list.append(token)
