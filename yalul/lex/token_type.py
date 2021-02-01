@@ -25,3 +25,5 @@ class TokenType(Enum):
     NULL = 17
     TRUE = 18
     FALSE = 19
+    LEFT_PAREN = 20
+    RIGHT_PAREN = 21

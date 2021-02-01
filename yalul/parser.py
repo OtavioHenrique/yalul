@@ -1,7 +1,7 @@
 from yalul.lex.token_type import TokenType
 from yalul.parsers.expression_parse import ExpressionParser
 
-
+# TODO: Test here
 class Token:
     def __init__(self, current):
         self.current_token = current
@@ -47,8 +47,7 @@ class Parser:
 
     def __expression_statement(self):
         expression = ExpressionParser(self.tokens, self._current_token).parse()
-        if self.tokens[self._current_token.current()].type == TokenType.END_STATEMENT:
-            self._current_token.increment()
+
         return expression
 
     def __at_end(self):
