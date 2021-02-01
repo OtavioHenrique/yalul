@@ -134,4 +134,4 @@ class ExpressionParser(ParserBase):
 
             return Grouping(expression)
         else:
-            return current_token
+            self.consume(TokenType.END_STATEMENT)
