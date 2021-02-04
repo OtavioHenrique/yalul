@@ -85,6 +85,31 @@ class TestLexerComparisonOperators:
             assert token.type == expected_tokens[index]
 
 
+class TestLexerErrorToken:
+    """
+    Test lexer for error tokens
+    """
+
+    @pytest.mark.parametrize('open_file', ['unexpected_tokens_example.yalul'], indirect=['open_file'])
+    def test_lexer_run_error_tokens(self, open_file):
+        """
+        Receives a source containing invalid tokens and lex it to error tokens
+        """
+        lexer = Lexer(open_file)
+        tokens = lexer.run()
+
+        expected_tokens = [
+            TokenType.ERROR,
+            TokenType.ERROR,
+            TokenType.ERROR,
+            TokenType.END_STATEMENT,
+            TokenType.EOF
+        ]
+
+        for index, token in enumerate(tokens):
+            assert token.type == expected_tokens[index]
+
+
 class TestLexerSeparateStatements:
     """
     Test lexer separating statements
