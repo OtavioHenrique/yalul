@@ -36,11 +36,14 @@ class Lexer:
         tokens_list = []
 
         is_at_end = False
+        current_line = 0
 
         while not is_at_end:
             if current_char == ' ':
                 current_char = self.source.read(1)
             elif current_char == '\n':
+                current_line += 1
+
                 if tokens_list[-1].type != TokenType.END_STATEMENT:
                     tokens_list.append(Token(TokenType.END_STATEMENT, "End of Statement"))
 
@@ -64,13 +67,6 @@ class Lexer:
 
                 current_char = self.source.read(1)
             elif ComparisonOperatorScanner.is_comparison(current_char):
-                two_digit_token_list = [
-                    TokenType.LESS_EQUAL,
-                    TokenType.GREATER_EQUAL,
-                    TokenType.BANG_EQUAL,
-                    TokenType.EQUAL_EQUAL
-                ]
-
                 scanner = ComparisonOperatorScanner(current_char, self.source)
                 token = scanner.create_token()
 
@@ -85,7 +81,7 @@ class Lexer:
 
                 current_char = scanner.current_char
             elif KeywordScanner.is_alpha(current_char):
-                scanner = ComparisonOperatorScanner(current_char, self.source)
+                scanner = KeywordScanner(current_char, self.source, current_line)
                 token = scanner.create_token()
 
                 tokens_list.append(token)
@@ -96,6 +92,9 @@ class Lexer:
                     is_at_end = True
                 else:
                     self.source.read(1)
+            else:
+                tokens_list.append(Token(TokenType.ERROR, "Unexpected token at line {}, token: {}".format(current_line, current_char)))
+                break
 
         if tokens_list[-1].type != TokenType.END_STATEMENT:
             tokens_list.append(Token(TokenType.END_STATEMENT, "End of Statement"))

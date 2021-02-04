@@ -1,6 +1,7 @@
 import click
 from yalul.lexer import Lexer
-from yalul.parser import Parser
+from yalul.lex.token_type import TokenType
+
 
 @click.command()
 @click.argument('filename', required=False)
@@ -15,5 +16,11 @@ def execute(filename):
         source_file = open(filename, 'r')
         tokens = Lexer(source_file).run()
 
-        for token in tokens:
-            click.echo(token)
+        errors = list(filter(lambda x: x.type == TokenType.ERROR, tokens))
+
+        if errors is None:
+            for token in tokens:
+                click.echo(token)
+        else:
+            for error in errors:
+                click.echo(error.value)
