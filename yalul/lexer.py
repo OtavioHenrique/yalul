@@ -94,7 +94,7 @@ class Lexer:
                     self.source.read(1)
             else:
                 tokens_list.append(Token(TokenType.ERROR, "Unexpected token at line {}, token: {}".format(current_line, current_char)))
-                break
+                current_char = self.source.read(1)
 
         if tokens_list[-1].type != TokenType.END_STATEMENT:
             tokens_list.append(Token(TokenType.END_STATEMENT, "End of Statement"))
