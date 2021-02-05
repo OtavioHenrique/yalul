@@ -23,14 +23,16 @@ class ExpressionParser(ParserBase):
     Yalul's expression parser, it parses all kinds of expressions
     """
 
-    def __init__(self, tokens, current_token):
+    def __init__(self, tokens, current_token, errors):
         """
         Construct a new ExpressionParser object.
 
         :param tokens: A list of language tokens
+        :current_token: Current token being read
+        :errors: ParseErrors instance
         :return: returns parsed expression
         """
-        super().__init__(tokens, current_token)
+        super().__init__(tokens, current_token, errors)
 
     def parse(self):
         return self.__comparison()
@@ -130,8 +132,8 @@ class ExpressionParser(ParserBase):
 
             expression = self.__comparison()
 
-            self.consume(TokenType.RIGHT_PAREN)
+            self.consume(TokenType.RIGHT_PAREN, "Expected a RIGHT PAREN ) after expression")
 
             return Grouping(expression)
         else:
-            self.consume(TokenType.END_STATEMENT)
+            self.consume(TokenType.END_STATEMENT, "Expected a END OF STATEMENT after expression")
