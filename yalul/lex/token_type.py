@@ -27,3 +27,4 @@ class TokenType(Enum):
     FALSE = 19
     LEFT_PAREN = 20
     RIGHT_PAREN = 21
+    ERROR = 22

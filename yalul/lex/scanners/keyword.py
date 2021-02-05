@@ -1,7 +1,7 @@
 from yalul.lex.token_type import TokenType
 from yalul.lex.token import Token
 
-IDENTIFIERS = {
+KEYWORDS = {
     'null': TokenType.NULL,
     'true': TokenType.TRUE,
     'false': TokenType.FALSE
@@ -13,16 +13,18 @@ class KeywordScanner:
     IdentifierScanner is called by Lexer when a char character is read. It reads the identifier and returns its token
     """
 
-    def __init__(self, current_char, source):
+    def __init__(self, current_char, source, current_line):
         """
         Construct a new IdentifierScanner object.
 
         :params current_char: Current char being read by Lexer
         :param source: Source code being read
+        :param current_line: current line being read
         :return: returns nothing
         """
         self.current_char = current_char
         self.source = source
+        self.current_line = current_line
 
     def create_token(self):
         """
@@ -36,9 +38,12 @@ class KeywordScanner:
 
             self.current_char = self.source.read(1)
 
-        identifier = ''.join(chars)
+        keyword = ''.join(chars)
 
-        return Token(IDENTIFIERS.get(identifier), "Identifier")
+        if keyword in KEYWORDS:
+            return Token(KEYWORDS.get(keyword), "Identifier")
+        else:
+            return Token(TokenType.ERROR, "Error unexpected keyword at line {} token: {}".format(self.current_line, keyword))
 
     @classmethod
     def is_alpha(cls, char):
