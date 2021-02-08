@@ -7,6 +7,8 @@ class ParserBase:
         Construct a new ExpressionParser object.
 
         :param tokens: A list of language tokens
+        :current_token: Current token being read
+        :errors: ParseErrors instance
         :return: returns parsed expression
         """
         self.tokens = tokens

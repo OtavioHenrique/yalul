@@ -2,7 +2,11 @@ from yalul.lex.token_type import TokenType
 from yalul.parsers.expression_parse import ExpressionParser
 from yalul.parsers.parse_errors import ParseErrors
 
+
 # TODO: Test here
+from yalul.parsers.parse_response import ParseResponse
+
+
 class Token:
     def __init__(self, current):
         self.current_token = current
@@ -42,7 +46,7 @@ class Parser:
 
             statements.append(statement)
 
-        return statements
+        return ParseResponse(statements, self.errors)
 
     def __create_statement(self):
         return self.__expression_statement()
