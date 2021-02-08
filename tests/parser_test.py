@@ -64,6 +64,6 @@ class TestParserGenerateErrors:
 
         parser_response = Parser(tokens).parse()
 
-        errors = parser_response.errors
+        errors = parser_response.show_errors()
 
-        assert errors.errors[0] == "Expected a RIGHT PAREN ) after expression"
+        assert errors[0] == "Expected a RIGHT PAREN ) after expression"
