@@ -25,9 +25,9 @@ class TestParserGroupingExpressions:
             Token(TokenType.EOF, "End of File")
         ]
 
-        ast = Parser(tokens).parse()
+        parser_response = Parser(tokens).parse()
 
-        first_statement_ast = ast[0]
+        first_statement_ast = parser_response.asts[0]
 
         assert type(first_statement_ast) is Binary
         assert first_statement_ast.operator.type is TokenType.MULTIPLY

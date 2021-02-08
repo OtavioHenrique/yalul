@@ -20,9 +20,9 @@ class TestParseBinaryMultiply:
             Token(TokenType.EOF, "End of File")
         ]
 
-        ast = Parser(tokens).parse()
+        parser_response = Parser(tokens).parse()
 
-        ast = ast[0]
+        ast = parser_response.asts[0]
 
         assert type(ast) is Binary
         assert ast.operator.type == TokenType.MULTIPLY
@@ -46,9 +46,9 @@ class TestParseBinaryMultiply:
             Token(TokenType.EOF, "End of File")
         ]
 
-        ast = Parser(tokens).parse()
+        parser_response = Parser(tokens).parse()
 
-        ast = ast[0]
+        ast = parser_response.asts[0]
 
         assert type(ast) is Binary
         assert ast.operator.type is TokenType.MULTIPLY

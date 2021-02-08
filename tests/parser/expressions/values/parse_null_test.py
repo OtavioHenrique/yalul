@@ -17,9 +17,9 @@ class TestParseNull:
             Token(TokenType.EOF, "End of File")
         ]
 
-        ast = Parser(tokens).parse()
+        parser_response = Parser(tokens).parse()
 
-        node = ast[0]
+        node = parser_response.asts[0]
 
         assert type(node) is Null
         assert node.value == "null"
