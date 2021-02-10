@@ -1,6 +1,7 @@
 import click
 from yalul.lexer import Lexer
 from yalul.lex.token_type import TokenType
+from yalul.parser import Parser
 
 
 @click.command()
@@ -24,3 +25,7 @@ def execute(filename):
         else:
             for error in errors:
                 click.echo(error.value)
+
+        parser_response = Parser(tokens).parse()
+
+        print(parser_response.errors.errors)

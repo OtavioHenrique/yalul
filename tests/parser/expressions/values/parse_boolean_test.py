@@ -17,9 +17,9 @@ class TestParseBoolean:
             Token(TokenType.EOF, "End of File")
         ]
 
-        ast = Parser(tokens).parse()
+        parser_response = Parser(tokens).parse()
 
-        node = ast[0]
+        node = parser_response.asts[0]
 
         assert type(node) is Boolean
         assert node.value == "true"
@@ -34,9 +34,9 @@ class TestParseBoolean:
             Token(TokenType.EOF, "End of File")
         ]
 
-        ast = Parser(tokens).parse()
+        parser_response = Parser(tokens).parse()
 
-        node = ast[0]
+        node = parser_response.asts[0]
 
         assert type(node) is Boolean
         assert node.value == "false"

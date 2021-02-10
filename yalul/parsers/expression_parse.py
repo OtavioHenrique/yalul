@@ -17,23 +17,30 @@ TOKEN_TO_VALUES = {
     TokenType.FALSE: Boolean
 }
 
+UNOPENED_OPERATORS = [TokenType.RIGHT_PAREN]
+
 
 class ExpressionParser(ParserBase):
     """
     Yalul's expression parser, it parses all kinds of expressions
     """
 
-    def __init__(self, tokens, current_token):
+    def __init__(self, tokens, current_token, errors):
         """
         Construct a new ExpressionParser object.
 
         :param tokens: A list of language tokens
+        :current_token: Current token being read
+        :errors: ParseErrors instance
         :return: returns parsed expression
         """
-        super().__init__(tokens, current_token)
+        super().__init__(tokens, current_token, errors)
 
     def parse(self):
-        return self.__comparison()
+        expression = self.__comparison()
+        self.consume(TokenType.END_STATEMENT, "Expected a END OF STATEMENT after expression")
+
+        return expression
 
     def __comparison(self):
         expression = self.__addition()
@@ -130,8 +137,13 @@ class ExpressionParser(ParserBase):
 
             expression = self.__comparison()
 
-            self.consume(TokenType.RIGHT_PAREN)
+            self.consume(TokenType.RIGHT_PAREN, "Expected a RIGHT PAREN ) after expression")
 
             return Grouping(expression)
+        if current_token.type in UNOPENED_OPERATORS:
+            self.errors.add_error("Expect a open operator for " + str(current_token))
+            self._current_token.increment()
         else:
-            self.consume(TokenType.END_STATEMENT)
+            previous_token = self.tokens[self._current_token.current() - 1]
+            self.errors.add_error("Expect Expression after " + str(previous_token))
+            self._current_token.increment()
