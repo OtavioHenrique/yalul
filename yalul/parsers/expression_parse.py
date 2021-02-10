@@ -35,7 +35,10 @@ class ExpressionParser(ParserBase):
         super().__init__(tokens, current_token, errors)
 
     def parse(self):
-        return self.__comparison()
+        expression = self.__comparison()
+        self.consume(TokenType.END_STATEMENT, "Expected a END OF STATEMENT after expression")
+
+        return expression
 
     def __comparison(self):
         expression = self.__addition()
@@ -136,4 +139,6 @@ class ExpressionParser(ParserBase):
 
             return Grouping(expression)
         else:
-            self.consume(TokenType.END_STATEMENT, "Expected a END OF STATEMENT after expression")
+            self._current_token.increment()
+            previous_token = self.tokens[self._current_token.current() - 2]
+            self.errors.add_error("Expect Expression after " + str(previous_token))

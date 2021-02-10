@@ -33,7 +33,7 @@ class Parser:
         """
         self.tokens = tokens
         self._current_token = Token(0)
-        self.errors = ParseErrors()
+        self.errors = ParseErrors([])
 
     def parse(self):
         """

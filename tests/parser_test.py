@@ -67,3 +67,26 @@ class TestParserGenerateErrors:
         errors = parser_response.show_errors()
 
         assert errors[0] == "Expected a RIGHT PAREN ) after expression"
+
+
+class TestParserGenerateUnfinishedExpressionErrors:
+    """Test parser generating correct parser errors"""
+
+    def test_parse_run_generates_correct_error_unfinished_expression(self):
+        """
+        Validates if parser if generating correct error to unfinished expressions
+        """
+        tokens = [
+            Token(TokenType.INTEGER, 39),
+            Token(TokenType.MULTIPLY, "*"),
+            Token(TokenType.INTEGER, 41),
+            Token(TokenType.SUM, "+"),
+            Token(TokenType.END_STATEMENT, "End of Statement"),
+            Token(TokenType.EOF, "End of File")
+        ]
+
+        parser_response = Parser(tokens).parse()
+
+        errors = parser_response.show_errors()
+
+        assert errors[0] == "Expect Expression after TokenType.SUM, Value: +"
