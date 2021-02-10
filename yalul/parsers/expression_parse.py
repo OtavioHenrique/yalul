@@ -17,6 +17,8 @@ TOKEN_TO_VALUES = {
     TokenType.FALSE: Boolean
 }
 
+UNOPENED_OPERATORS = [TokenType.RIGHT_PAREN]
+
 
 class ExpressionParser(ParserBase):
     """
@@ -138,7 +140,10 @@ class ExpressionParser(ParserBase):
             self.consume(TokenType.RIGHT_PAREN, "Expected a RIGHT PAREN ) after expression")
 
             return Grouping(expression)
-        else:
+        if current_token.type in UNOPENED_OPERATORS:
+            self.errors.add_error("Expect a open operator for " + str(current_token))
             self._current_token.increment()
-            previous_token = self.tokens[self._current_token.current() - 2]
+        else:
+            previous_token = self.tokens[self._current_token.current() - 1]
             self.errors.add_error("Expect Expression after " + str(previous_token))
+            self._current_token.increment()
