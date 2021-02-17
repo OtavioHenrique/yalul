@@ -101,7 +101,6 @@ class TestLexerErrorToken:
         expected_tokens = [
             TokenType.ERROR,
             TokenType.ERROR,
-            TokenType.ERROR,
             TokenType.END_STATEMENT,
             TokenType.EOF
         ]
@@ -134,6 +133,33 @@ class TestLexerSeparateStatements:
             TokenType.INTEGER,
             TokenType.SUM,
             TokenType.INTEGER,
+            TokenType.END_STATEMENT,
+            TokenType.EOF
+        ]
+
+        for index, token in enumerate(tokens):
+            assert token.type == expected_tokens[index]
+
+
+class TestLexerVariableCreationStatements:
+    """
+    Test lexer lexing variable creation
+    """
+
+    @pytest.mark.parametrize('open_file', ['keywords/variable_example.yalul'], indirect=['open_file'])
+    def test_lexer_run_comparison(self, open_file):
+        """
+        Receives a source containing variable creation
+        """
+        lexer = Lexer(open_file)
+
+        tokens = lexer.run()
+
+        expected_tokens = [
+            TokenType.VARIABLE,
+            TokenType.IDENTIFIER,
+            TokenType.EQUAL,
+            TokenType.STRING,
             TokenType.END_STATEMENT,
             TokenType.EOF
         ]

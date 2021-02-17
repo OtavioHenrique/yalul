@@ -4,7 +4,8 @@ from yalul.lex.token import Token
 KEYWORDS = {
     'null': TokenType.NULL,
     'true': TokenType.TRUE,
-    'false': TokenType.FALSE
+    'false': TokenType.FALSE,
+    'def': TokenType.VARIABLE
 }
 
 
@@ -43,7 +44,7 @@ class KeywordScanner:
         if keyword in KEYWORDS:
             return Token(KEYWORDS.get(keyword), "Identifier")
         else:
-            return Token(TokenType.ERROR, "Error unexpected keyword at line {} token: {}".format(self.current_line, keyword))
+            return Token(TokenType.IDENTIFIER, keyword)
 
     @classmethod
     def is_alpha(cls, char):
