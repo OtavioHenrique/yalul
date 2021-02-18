@@ -21,6 +21,8 @@ class ParserBase:
 
         if current_token.type != TokenType.EOF or current_token.type != TokenType.END_STATEMENT:
             if current_token.type == token_type:
+                token = self.tokens[self._current_token.current()]
                 self._current_token.increment()
+                return token
             else:
                 self.errors.add_error(error_message)

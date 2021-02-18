@@ -1,10 +1,11 @@
 from yalul.lex.token_type import TokenType
-from yalul.parsers.expression_parse import ExpressionParser
+from yalul.parsers.expression_parser import ExpressionParser
 from yalul.parsers.parse_errors import ParseErrors
 
 
 # TODO: Test here
 from yalul.parsers.parse_response import ParseResponse
+from yalul.parsers.variable_parser import VariableParser
 
 
 class Token:
@@ -49,7 +50,10 @@ class Parser:
         return ParseResponse(statements, self.errors)
 
     def __create_statement(self):
-        return self.__expression_statement()
+        if self.tokens[self._current_token.current()].type == TokenType.VARIABLE:
+            return VariableParser(self.tokens, self._current_token, self.errors).parse()
+        else:
+            return self.__expression_statement()
 
     def __expression_statement(self):
         return ExpressionParser(self.tokens, self._current_token, self.errors).parse()
