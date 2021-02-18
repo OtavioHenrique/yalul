@@ -1,5 +1,5 @@
 from yalul.lex.token_type import TokenType
-from yalul.parsers.ast.nodes.statements.variable import Variable
+from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
 from yalul.parsers.expression_parser import ExpressionParser
 from yalul.parsers.parser_base import ParserBase
 
@@ -32,4 +32,4 @@ class VariableParser(ParserBase):
 
         self.consume(TokenType.END_STATEMENT, "Expected a end of statement after variable declaration")
 
-        return Variable(var_name.value, initializer)
+        return VariableDeclaration(var_name.value, initializer)

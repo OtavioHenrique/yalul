@@ -1,4 +1,4 @@
-class Variable:
+class VariableDeclaration:
     """
     Yalul's variable statement
     """
