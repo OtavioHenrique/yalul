@@ -6,6 +6,7 @@ from yalul.parsers.ast.nodes.statements.expressions.values.null import Null
 from yalul.parsers.ast.nodes.statements.expressions.values.float import Float
 from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
 from yalul.parsers.ast.nodes.statements.expressions.values.string import String
+from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
 from yalul.parsers.parser_base import ParserBase
 
 TOKEN_TO_VALUES = {
@@ -132,6 +133,10 @@ class ExpressionParser(ParserBase):
             self._current_token.increment()
 
             return token_class(current_token.value)
+        if current_token.type == TokenType.IDENTIFIER:
+            self._current_token.increment()
+
+            return Variable(current_token.value)
         if current_token.type == TokenType.LEFT_PAREN:
             self._current_token.increment()
 
