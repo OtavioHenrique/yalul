@@ -115,7 +115,7 @@ class TestLexerSeparateStatements:
     """
 
     @pytest.mark.parametrize('open_file', ['separate_statements_example.yalul'], indirect=['open_file'])
-    def test_lexer_run_comparison(self, open_file):
+    def test_lexer_run_separate_statements(self, open_file):
         """
         Receives a source containing expression and a separate statement
         """
@@ -147,7 +147,7 @@ class TestLexerVariableCreationStatements:
     """
 
     @pytest.mark.parametrize('open_file', ['keywords/variable_example.yalul'], indirect=['open_file'])
-    def test_lexer_run_comparison(self, open_file):
+    def test_lexer_run_variable_creation(self, open_file):
         """
         Receives a source containing variable creation
         """
@@ -160,6 +160,30 @@ class TestLexerVariableCreationStatements:
             TokenType.IDENTIFIER,
             TokenType.EQUAL,
             TokenType.STRING,
+            TokenType.END_STATEMENT,
+            TokenType.EOF
+        ]
+
+        for index, token in enumerate(tokens):
+            assert token.type == expected_tokens[index]
+
+class TestLexerBlocksStatements:
+    """
+    Test lexer lexing blocks
+    """
+
+    @pytest.mark.parametrize('open_file', ['block_example.yalul'], indirect=['open_file'])
+    def test_lexer_run_block(self, open_file):
+        """
+        Receives a source containing a block
+        """
+        lexer = Lexer(open_file)
+
+        tokens = lexer.run()
+
+        expected_tokens = [
+            TokenType.LEFT_BRACE,
+            TokenType.RIGHT_BRACE,
             TokenType.END_STATEMENT,
             TokenType.EOF
         ]

@@ -30,3 +30,5 @@ class TokenType(Enum):
     ERROR = 22
     VARIABLE = 23
     IDENTIFIER = 24
+    LEFT_BRACE = 25
+    RIGHT_BRACE = 26

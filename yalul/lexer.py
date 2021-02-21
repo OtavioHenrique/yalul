@@ -1,5 +1,6 @@
 import os
 
+from yalul.lex.scanners.block_scanner import BlockScanner
 from yalul.lex.scanners.grouping import GroupingScanner
 from yalul.lex.scanners.keyword import KeywordScanner
 from yalul.lex.scanners.operator import OperatorScanner
@@ -80,6 +81,13 @@ class Lexer:
                 tokens_list.append(token)
 
                 current_char = scanner.current_char
+            elif BlockScanner.is_block(current_char):
+                scanner = BlockScanner(current_char, self.source)
+                token = scanner.create_token()
+
+                tokens_list.append(token)
+
+                current_char = self.source.read(1)
             elif KeywordScanner.is_alpha(current_char):
                 scanner = KeywordScanner(current_char, self.source, current_line)
                 token = scanner.create_token()
