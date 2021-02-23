@@ -1,4 +1,6 @@
 from yalul.lex.token_type import TokenType
+from yalul.parsers.ast.nodes.statements.block import Block
+from yalul.parsers.block_parser import BlockParser
 from yalul.parsers.expression_parser import ExpressionParser
 from yalul.parsers.parse_errors import ParseErrors
 
@@ -43,15 +45,17 @@ class Parser:
         statements = []
 
         while not self.__at_end():
-            statement = self.__create_statement()
+            statement = self.create_statement()
 
             statements.append(statement)
 
         return ParseResponse(statements, self.errors)
 
-    def __create_statement(self):
+    def create_statement(self):
         if self.tokens[self._current_token.current()].type == TokenType.VARIABLE:
             return VariableParser(self.tokens, self._current_token, self.errors).parse()
+        if self.tokens[self._current_token.current()].type == TokenType.LEFT_BRACE:
+            return BlockParser(self.tokens, self._current_token, self.errors, self).parse()
         else:
             return self.__expression_statement()
 
