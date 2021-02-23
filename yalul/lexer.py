@@ -31,6 +31,8 @@ class Lexer:
     def run(self):
         """
         Return a list of tokens for the source
+
+        :return: returns a list of tokens
         """
         current_char = self.source.read(1)
 
