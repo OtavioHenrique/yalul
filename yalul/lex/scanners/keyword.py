@@ -42,7 +42,7 @@ class KeywordScanner:
         keyword = ''.join(chars)
 
         if keyword in KEYWORDS:
-            return Token(KEYWORDS.get(keyword), "Identifier")
+            return Token(KEYWORDS.get(keyword), keyword)
         else:
             return Token(TokenType.IDENTIFIER, keyword)
 

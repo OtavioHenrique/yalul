@@ -17,7 +17,7 @@ class TestCreateToken:
         token = KeywordScanner(char, open_file, 0).create_token()
 
         assert token.type == TokenType.NULL
-        assert token.value == "Identifier"
+        assert token.value == "null"
 
     @pytest.mark.parametrize('open_file', ['true_example.yalul'], indirect=['open_file'])
     def test_create_true_token(self, open_file):
@@ -25,7 +25,7 @@ class TestCreateToken:
         token = KeywordScanner(char, open_file, 0).create_token()
 
         assert token.type == TokenType.TRUE
-        assert token.value == "Identifier"
+        assert token.value == "true"
 
     @pytest.mark.parametrize('open_file', ['false_example.yalul'], indirect=['open_file'])
     def test_create_false_token(self, open_file):
@@ -33,7 +33,7 @@ class TestCreateToken:
         token = KeywordScanner(char, open_file, 0).create_token()
 
         assert token.type == TokenType.FALSE
-        assert token.value == "Identifier"
+        assert token.value == "false"
 
     @pytest.mark.parametrize('open_file', ['variable_example.yalul'], indirect=['open_file'])
     def test_create_variable_token(self, open_file):
@@ -41,4 +41,4 @@ class TestCreateToken:
         token = KeywordScanner(char, open_file, 0).create_token()
 
         assert token.type == TokenType.VARIABLE
-        assert token.value == "Identifier"
+        assert token.value == "def"
