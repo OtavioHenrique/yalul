@@ -52,12 +52,14 @@ class GraphvizPrinter:
             if previous_node is not None:
                 graph.edge(previous_node, '{}:f0'.format(expression_name))
         elif type(expression) == Binary:
-            graph.node('BinaryOperation', '<f0> Left | <f1> Binary Operation |<f2> Right')
-            graph.node('Operator', '<f0> {}'.format(expression.operator))
-            graph.edge('BinaryOperation:f1', 'Operator:f0')
-            self.__render_expression(graph, expression.left, 'BinaryOperation:f0', 1)
-            self.__render_expression(graph, expression.right, 'BinaryOperation:f2', 2)
+            binary_operation_name = '{}{}'.format('BinaryOperation', count)
+
+            graph.node(binary_operation_name, '<f0> Left | <f1> Binary Operation |<f2> Right')
+            graph.node('Operator{}'.format(count), '<f0> {}'.format(expression.operator))
+            graph.edge('{}:f1'.format(binary_operation_name), 'Operator{}:f0'.format(count))
+            self.__render_expression(graph, expression.left, '{}:f0'.format(binary_operation_name), count + 1)
+            self.__render_expression(graph, expression.right, '{}:f2'.format(binary_operation_name), count + 2)
 
             if previous_node is not None:
-                graph.edge(previous_node, '{}:f0'.format(type(expression).__name__))
+                graph.edge(previous_node, '{}:f1'.format(binary_operation_name))
 
