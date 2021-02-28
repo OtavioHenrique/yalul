@@ -1,3 +1,4 @@
+from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
 from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
 from yalul.parsers.ast.nodes.statements.expression import Expression
@@ -36,15 +37,27 @@ class GraphvizPrinter:
 
         dot.render('test-output/round-table.gv', view=True)
 
-    def __render_expression(self, graph, expression, previous_node=None):
+    def __render_expression(self, graph, expression, previous_node=None, count=0):
         if type(expression) in VALUES_TYPES:
+            expression_name = '{}{}'.format(type(expression).__name__, count)
+
             if type(expression) == Null:
-                graph.node(type(expression).__name__, '<f0> {}'.format(type(expression).__name__))
+                graph.node(expression_name, '<f0> {}'.format(type(expression).__name__))
             elif type(expression) == Boolean:
-                graph.node(type(expression).__name__, '<f0> {} | <f1> {}'.format(type(expression).__name__, expression.value))
+                graph.node(expression_name, '<f0> {} | <f1> {}'.format(type(expression).__name__, expression.value))
             else:
-                graph.node(type(expression).__name__,
+                graph.node(expression_name,
                            '<f0> {} | <f1> {}'.format(type(expression).__name__, expression.value))
 
             if previous_node is not None:
+                graph.edge(previous_node, '{}:f0'.format(expression_name))
+        elif type(expression) == Binary:
+            graph.node('BinaryOperation', '<f0> Left | <f1> Binary Operation |<f2> Right')
+            graph.node('Operator', '<f0> {}'.format(expression.operator))
+            graph.edge('BinaryOperation:f1', 'Operator:f0')
+            self.__render_expression(graph, expression.left, 'BinaryOperation:f0', 1)
+            self.__render_expression(graph, expression.right, 'BinaryOperation:f2', 2)
+
+            if previous_node is not None:
                 graph.edge(previous_node, '{}:f0'.format(type(expression).__name__))
+
