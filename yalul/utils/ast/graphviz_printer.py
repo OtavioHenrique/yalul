@@ -1,3 +1,5 @@
+import uuid
+
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
 from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
@@ -37,7 +39,7 @@ class GraphvizPrinter:
 
         dot.render('test-output/round-table.gv', view=True)
 
-    def __render_expression(self, graph, expression, previous_node=None, count=0):
+    def __render_expression(self, graph, expression, previous_node=None, count='0'):
         if type(expression) in VALUES_TYPES:
             expression_name = '{}{}'.format(type(expression).__name__, count)
 
@@ -57,8 +59,8 @@ class GraphvizPrinter:
             graph.node(binary_operation_name, '<f0> Left | <f1> Binary Operation |<f2> Right')
             graph.node('Operator{}'.format(count), '<f0> {}'.format(expression.operator))
             graph.edge('{}:f1'.format(binary_operation_name), 'Operator{}:f0'.format(count))
-            self.__render_expression(graph, expression.left, '{}:f0'.format(binary_operation_name), count + 1)
-            self.__render_expression(graph, expression.right, '{}:f2'.format(binary_operation_name), count + 2)
+            self.__render_expression(graph, expression.left, '{}:f0'.format(binary_operation_name), str(uuid.uuid4()))
+            self.__render_expression(graph, expression.right, '{}:f2'.format(binary_operation_name), str(uuid.uuid4()))
 
             if previous_node is not None:
                 graph.edge(previous_node, '{}:f1'.format(binary_operation_name))
