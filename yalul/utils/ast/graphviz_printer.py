@@ -37,13 +37,13 @@ class GraphvizPrinter:
 
     def __render_statement(self, graph, statement, previous_node=None, identifier=None):
         if type(statement) == VariableDeclaration:
-            self.render_var_declaration_statement(graph, statement, previous_node, identifier)
+            self.__render_var_declaration_statement(graph, statement, previous_node, identifier)
         if type(statement) == Block:
-            self.render_block_statement(graph, identifier, previous_node, statement)
+            self.__render_block_statement(graph, identifier, previous_node, statement)
         if isinstance(statement, Expression):
             self.__render_expression(graph, statement, previous_node, statement)
 
-    def render_var_declaration_statement(self, graph, statement, previous_node=None, identifier=None):
+    def __render_var_declaration_statement(self, graph, statement, previous_node=None, identifier=None):
         var_declaration_name = '{}{}'.format('VarDeclaration', identifier)
 
         graph.node(var_declaration_name, '<f0> Name|<f1> Variable Declaration|<f2> Value')
@@ -58,7 +58,7 @@ class GraphvizPrinter:
         if previous_node is not None:
             graph.edge(previous_node, '{}:f1'.format(var_declaration_name))
 
-    def render_block_statement(self, graph, identifier, previous_node, statement):
+    def __render_block_statement(self, graph, identifier, previous_node, statement):
         block_name = '{}{}'.format('Block', identifier)
 
         graph.node(block_name, '<f0> Block | <f1> Statements')
