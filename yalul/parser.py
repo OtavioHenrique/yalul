@@ -1,5 +1,4 @@
 from yalul.lex.token_type import TokenType
-from yalul.parsers.ast.nodes.statements.block import Block
 from yalul.parsers.block_parser import BlockParser
 from yalul.parsers.expression_parser import ExpressionParser
 from yalul.parsers.parse_errors import ParseErrors

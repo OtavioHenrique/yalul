@@ -167,6 +167,7 @@ class TestLexerVariableCreationStatements:
         for index, token in enumerate(tokens):
             assert token.type == expected_tokens[index]
 
+
 class TestLexerBlocksStatements:
     """
     Test lexer lexing blocks

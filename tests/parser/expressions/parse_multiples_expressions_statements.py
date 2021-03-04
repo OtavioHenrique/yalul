@@ -47,4 +47,3 @@ class TestParserMultipleStatements:
 
         assert type(second_statement_ast.right) is Integer
         assert second_statement_ast.right.value == 42
-

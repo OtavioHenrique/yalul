@@ -25,7 +25,7 @@ class TestVariableDeclarationStatements:
         first_statement_ast = parser_response.asts[0]
 
         assert type(first_statement_ast) is VariableDeclaration
-        assert first_statement_ast.name is "everything"
+        assert first_statement_ast.name == "everything"
 
         assert type(first_statement_ast.initializer) is Integer
         assert first_statement_ast.initializer.value == 42
