@@ -31,7 +31,7 @@ class Parser:
         Construct a new Parser object.
 
         :param tokens: A list of language tokens
-        :return: returns an abstract syntax tree (AST)
+        :return: returns nothing
         """
         self.tokens = tokens
         self._current_token = Token(0)
@@ -40,6 +40,8 @@ class Parser:
     def parse(self):
         """
         Returns a new AST
+
+        :return: returns an abstract syntax tree (AST)
         """
         statements = []
 

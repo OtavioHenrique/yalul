@@ -30,10 +30,9 @@ class ExpressionParser(ParserBase):
         """
         Construct a new ExpressionParser object.
 
-        :param tokens: A list of language tokens
+        :tokens: A list of language tokens
         :current_token: Current token being read
         :errors: ParseErrors instance
-        :return: returns parsed expression
         """
         super().__init__(tokens, current_token, errors)
 
