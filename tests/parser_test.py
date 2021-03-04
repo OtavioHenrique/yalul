@@ -41,7 +41,7 @@ class TestParserBinary:
         assert ast.left.right.value == 2
 
         assert type(ast.right) is Integer
-        assert ast.right.value is 42
+        assert ast.right.value == 42
 
 
 class TestParserGenerateErrors:

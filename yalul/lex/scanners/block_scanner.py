@@ -6,6 +6,7 @@ PAREN = {
     '}': TokenType.RIGHT_BRACE
 }
 
+
 class BlockScanner:
     """
     BlockScanner is called by Lexer when a brace character is read. It reads the brace and returns a brace Token

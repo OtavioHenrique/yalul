@@ -1,4 +1,3 @@
-import pytest
 from yalul.lex.scanners.operator import OperatorScanner
 from yalul.lex.token_type import TokenType
 

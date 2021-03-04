@@ -1,3 +1,5 @@
+# flake8: noqa: C901
+
 import os
 
 from yalul.lex.scanners.block_scanner import BlockScanner
@@ -101,7 +103,8 @@ class Lexer:
                 else:
                     self.source.read(1)
             else:
-                tokens_list.append(Token(TokenType.ERROR, "Unexpected token at line {}, token: {}".format(current_line, current_char)))
+                tokens_list.append(Token(TokenType.ERROR,
+                                         "Unexpected token at line {}, token: {}".format(current_line, current_char)))
                 current_char = self.source.read(1)
 
         if tokens_list[-1].type != TokenType.END_STATEMENT:
