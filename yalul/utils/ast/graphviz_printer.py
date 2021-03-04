@@ -24,7 +24,16 @@ VALUES_TYPES = [
 
 
 class GraphvizPrinter:
+    """
+    GraphvizPrinter will render and export all given ast as graphviz graphs
+    """
     def __init__(self, ast):
+        """
+        Construct a new GraphvizPrinter object.
+
+        :ast: A Yalul's abstract syntax tree
+        :return: returns nothing
+        """
         self.ast = ast
 
     def generate_pdf(self):
