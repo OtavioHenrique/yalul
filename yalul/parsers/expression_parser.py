@@ -6,6 +6,7 @@ from yalul.parsers.ast.nodes.statements.expressions.values.null import Null
 from yalul.parsers.ast.nodes.statements.expressions.values.float import Float
 from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
 from yalul.parsers.ast.nodes.statements.expressions.values.string import String
+from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
 from yalul.parsers.parser_base import ParserBase
 
@@ -37,8 +38,22 @@ class ExpressionParser(ParserBase):
         super().__init__(tokens, current_token, errors)
 
     def parse(self):
-        expression = self.__comparison()
+        expression = self.__var_assignment()
         self.consume(TokenType.END_STATEMENT, "Expected a END OF STATEMENT after expression")
+
+        return expression
+
+    def __var_assignment(self):
+        expression = self.__comparison()
+
+        while self.tokens[self._current_token.current()].type == TokenType.EQUAL:
+            identifier = self.tokens[self._current_token.current() - 1].value
+
+            self._current_token.increment()
+
+            value = self.__var_assignment()
+
+            expression = VarAssignment(identifier, value)
 
         return expression
 
@@ -51,7 +66,6 @@ class ExpressionParser(ParserBase):
             TokenType.LESS_EQUAL,
             TokenType.GREATER_EQUAL,
             TokenType.BANG,
-            TokenType.EQUAL,
             TokenType.BANG_EQUAL,
             TokenType.EQUAL_EQUAL
         ]

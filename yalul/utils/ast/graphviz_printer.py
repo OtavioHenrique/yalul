@@ -3,6 +3,7 @@ import uuid
 from yalul.parsers.ast.nodes.statements.block import Block
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
+from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
 from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
 from yalul.parsers.ast.nodes.statements.expression import Expression
@@ -27,6 +28,7 @@ class GraphvizPrinter:
     """
     GraphvizPrinter will render and export all given ast as graphviz graphs
     """
+
     def __init__(self, ast):
         """
         Construct a new GraphvizPrinter object.
@@ -79,9 +81,9 @@ class GraphvizPrinter:
             graph.edge(previous_node, '{}:f1'.format(block_name))
 
     def __render_expression(self, graph, expression, previous_node=None, identifier=None):
-        if type(expression) in VALUES_TYPES:
-            expression_name = '{}{}'.format(type(expression).__name__, identifier)
+        expression_name = '{}{}'.format(type(expression).__name__, identifier)
 
+        if type(expression) in VALUES_TYPES:
             if type(expression) == Null:
                 graph.node(expression_name, '<f0> {}'.format(type(expression).__name__))
             elif type(expression) == Boolean:
@@ -93,22 +95,26 @@ class GraphvizPrinter:
             if previous_node is not None:
                 graph.edge(previous_node, '{}:f0'.format(expression_name))
         elif type(expression) == Binary:
-            binary_operation_name = '{}{}'.format('BinaryOperation', identifier)
-
-            graph.node(binary_operation_name, '<f0> Left | <f1> Binary Operation |<f2> Right')
+            graph.node(expression_name, '<f0> Left | <f1> Binary Operation |<f2> Right')
             graph.node('Operator{}'.format(identifier), '<f0> {}'.format(expression.operator))
-            graph.edge('{}:f1'.format(binary_operation_name), 'Operator{}:f0'.format(identifier))
-            self.__render_expression(graph, expression.left, '{}:f0'.format(binary_operation_name), str(uuid.uuid4()))
-            self.__render_expression(graph, expression.right, '{}:f2'.format(binary_operation_name), str(uuid.uuid4()))
+            graph.edge('{}:f1'.format(expression_name), 'Operator{}:f0'.format(identifier))
+            self.__render_expression(graph, expression.left, '{}:f0'.format(expression_name), str(uuid.uuid4()))
+            self.__render_expression(graph, expression.right, '{}:f2'.format(expression_name), str(uuid.uuid4()))
 
             if previous_node is not None:
-                graph.edge(previous_node, '{}:f1'.format(binary_operation_name))
+                graph.edge(previous_node, '{}:f1'.format(expression_name))
         elif type(expression) == Grouping:
-            grouping_name = '{}{}'.format(type(expression).__name__, identifier)
+            graph.node(expression_name, '<f0> Grouping | <f1> Expression')
 
-            graph.node(grouping_name, '<f0> Grouping | <f1> Expression')
-
-            self.__render_expression(graph, expression.value, '{}:f1'.format(grouping_name), str(uuid.uuid4()))
+            self.__render_expression(graph, expression.value, '{}:f1'.format(expression_name), str(uuid.uuid4()))
 
             if previous_node is not None:
-                graph.edge(previous_node, '{}:f0'.format(grouping_name))
+                graph.edge(previous_node, '{}:f0'.format(expression_name))
+        elif type(expression) == VarAssignment:
+            graph.node(expression_name, '<f0> Identifier | <f1> Variable Assignment |<f2> Value')
+            graph.node('VarName{}'.format(identifier), '<f0> {}'.format(expression.identifier))
+            graph.edge('{}:f0'.format(expression_name), 'VarName{}:f0'.format(identifier))
+            self.__render_expression(graph, expression.value, '{}:f2'.format(expression_name), str(uuid.uuid4()))
+
+            if previous_node is not None:
+                graph.edge(previous_node, '{}:f1'.format(expression_name))
