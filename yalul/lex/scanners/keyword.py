@@ -5,7 +5,8 @@ KEYWORDS = {
     'null': TokenType.NULL,
     'true': TokenType.TRUE,
     'false': TokenType.FALSE,
-    'def': TokenType.VARIABLE
+    'def': TokenType.VARIABLE,
+    'if': TokenType.IF
 }
 
 

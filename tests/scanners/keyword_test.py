@@ -42,3 +42,11 @@ class TestCreateToken:
 
         assert token.type == TokenType.VARIABLE
         assert token.value == "def"
+
+    @pytest.mark.parametrize('open_file', ['if_example.yalul'], indirect=['open_file'])
+    def test_create_if_token(self, open_file):
+        char = open_file.read(1)
+        token = KeywordScanner(char, open_file, 0).create_token()
+
+        assert token.type == TokenType.IF
+        assert token.value == "if"
