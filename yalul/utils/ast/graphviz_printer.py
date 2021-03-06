@@ -1,3 +1,5 @@
+# flake8: noqa: C901
+
 import uuid
 
 from yalul.parsers.ast.nodes.statements.block import Block
