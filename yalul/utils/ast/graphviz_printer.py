@@ -1,3 +1,5 @@
+# flake8: noqa: C901
+
 import uuid
 
 from yalul.parsers.ast.nodes.statements.block import Block
@@ -5,6 +7,7 @@ from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
 from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
+from yalul.parsers.ast.nodes.statements.if_statement import If
 from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
 from yalul.parsers.ast.nodes.statements.expression import Expression
 from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
@@ -51,8 +54,22 @@ class GraphvizPrinter:
             self.__render_var_declaration_statement(graph, statement, previous_node, identifier)
         if type(statement) == Block:
             self.__render_block_statement(graph, identifier, previous_node, statement)
+        if type(statement) == If:
+            self.__render_if_statement(graph, statement, previous_node, identifier)
         if isinstance(statement, Expression):
             self.__render_expression(graph, statement, previous_node, statement)
+
+    def __render_if_statement(self, graph, statement, previous_node, identifier):
+        if_name = '{}{}'.format('IfStatement', identifier)
+
+        graph.node(if_name, '<f0> Condition|<f1> If Statement|<f2> Then Block')
+
+        self.__render_expression(graph, statement.condition, '{}:f0'.format(if_name))
+
+        self.__render_block_statement(graph, str(uuid.uuid4()), '{}:f2'.format(if_name), statement.then_block)
+
+        if previous_node is not None:
+            graph.edge(previous_node, '{}:f1'.format(if_name))
 
     def __render_var_declaration_statement(self, graph, statement, previous_node=None, identifier=None):
         var_declaration_name = '{}{}'.format('VarDeclaration', identifier)

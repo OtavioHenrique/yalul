@@ -32,3 +32,4 @@ class TokenType(Enum):
     IDENTIFIER = 24
     LEFT_BRACE = 25
     RIGHT_BRACE = 26
+    IF = 27

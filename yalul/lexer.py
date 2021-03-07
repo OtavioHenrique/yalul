@@ -49,7 +49,7 @@ class Lexer:
             elif current_char == '\n':
                 current_line += 1
 
-                if tokens_list[-1].type != TokenType.END_STATEMENT:
+                if tokens_list[-1].type != TokenType.END_STATEMENT and tokens_list[-1].type != TokenType.LEFT_BRACE:
                     tokens_list.append(Token(TokenType.END_STATEMENT, "End of Statement"))
 
                 current_char = self.source.read(1)
