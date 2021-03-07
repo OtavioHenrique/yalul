@@ -1,10 +1,8 @@
 from yalul.lex.token_type import TokenType
 from yalul.parsers.block_parser import BlockParser
 from yalul.parsers.expression_parser import ExpressionParser
+from yalul.parsers.if_parser import IfParser
 from yalul.parsers.parse_errors import ParseErrors
-
-
-# TODO: Test here
 from yalul.parsers.parse_response import ParseResponse
 from yalul.parsers.variable_parser import VariableParser
 
@@ -57,6 +55,8 @@ class Parser:
             return VariableParser(self.tokens, self._current_token, self.errors).parse()
         if self.tokens[self._current_token.current()].type == TokenType.LEFT_BRACE:
             return BlockParser(self.tokens, self._current_token, self.errors, self).parse()
+        if self.tokens[self._current_token.current()].type == TokenType.IF:
+            return IfParser(self.tokens, self._current_token, self.errors, self).parse()
         else:
             return self.__expression_statement()
 
