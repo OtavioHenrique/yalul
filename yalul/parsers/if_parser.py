@@ -39,4 +39,11 @@ class IfParser(ParserBase):
         if type(then_block) != Block:
             self.errors.add_error("Expect a block after if condition")
 
-        return If(condition_expression, then_block)
+        else_block = None
+
+        if self.tokens[self._current_token.current()].type == TokenType.ELSE:
+            self._current_token.increment()
+
+            else_block = BlockParser(self.tokens, self._current_token, self.errors, self.parser).parse()
+
+        return If(condition_expression, then_block, else_block)
