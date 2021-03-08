@@ -62,11 +62,12 @@ class GraphvizPrinter:
     def __render_if_statement(self, graph, statement, previous_node, identifier):
         if_name = '{}{}'.format('IfStatement', identifier)
 
-        graph.node(if_name, '<f0> Condition|<f1> If Statement|<f2> Then Block')
+        graph.node(if_name, '<f0> Condition|<f1> If Statement|<f2> Then Block|<f3> Else Block')
 
         self.__render_expression(graph, statement.condition, '{}:f0'.format(if_name))
 
         self.__render_block_statement(graph, str(uuid.uuid4()), '{}:f2'.format(if_name), statement.then_block)
+        self.__render_block_statement(graph, str(uuid.uuid4()), '{}:f3'.format(if_name), statement.else_block)
 
         if previous_node is not None:
             graph.edge(previous_node, '{}:f1'.format(if_name))
