@@ -33,4 +33,5 @@ class TokenType(Enum):
     LEFT_BRACE = 25
     RIGHT_BRACE = 26
     IF = 27
-    ELSE = 26
+    ELSE = 28
+    WHILE = 29

@@ -231,6 +231,7 @@ class TestLexerIfStatements:
         for index, token in enumerate(tokens):
             assert token.type == expected_tokens[index]
 
+
 class TestLexerIfElseStatements:
     """
     Test lexer lexing ifs
@@ -263,6 +264,43 @@ class TestLexerIfElseStatements:
             TokenType.IDENTIFIER,
             TokenType.EQUAL,
             TokenType.INTEGER,
+            TokenType.SUM,
+            TokenType.INTEGER,
+            TokenType.END_STATEMENT,
+            TokenType.RIGHT_BRACE,
+            TokenType.END_STATEMENT,
+            TokenType.EOF
+        ]
+
+        for index, token in enumerate(tokens):
+            assert token.type == expected_tokens[index]
+
+
+class TestLexerWhileStatements:
+    """
+    Test lexer lexing while
+    """
+
+    @pytest.mark.parametrize('open_file', ['keywords/while_example.yalul'], indirect=['open_file'])
+    def test_lexer_run_block(self, open_file):
+        """
+        Receives a source containing a while statement
+        """
+        lexer = Lexer(open_file)
+
+        tokens = lexer.run()
+
+        expected_tokens = [
+            TokenType.WHILE,
+            TokenType.LEFT_PAREN,
+            TokenType.IDENTIFIER,
+            TokenType.LESS,
+            TokenType.INTEGER,
+            TokenType.RIGHT_PAREN,
+            TokenType.LEFT_BRACE,
+            TokenType.IDENTIFIER,
+            TokenType.EQUAL,
+            TokenType.IDENTIFIER,
             TokenType.SUM,
             TokenType.INTEGER,
             TokenType.END_STATEMENT,
