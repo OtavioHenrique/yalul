@@ -1,2 +1,1 @@
-# yalul
-Yet another language to understand languages
+![Yalul logo](img/logo_final.png)
