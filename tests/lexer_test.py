@@ -311,3 +311,39 @@ class TestLexerWhileStatements:
 
         for index, token in enumerate(tokens):
             assert token.type == expected_tokens[index]
+
+
+class TestLexerFuncStatements:
+    """
+    Test lexer lexing functions
+    """
+
+    @pytest.mark.parametrize('open_file', ['keywords/function_example.yalul'], indirect=['open_file'])
+    def test_lexer_run_block(self, open_file):
+        """
+        Receives a source containing a func statement
+        """
+        lexer = Lexer(open_file)
+
+        tokens = lexer.run()
+
+        expected_tokens = [
+            TokenType.FUNCTION,
+            TokenType.IDENTIFIER,
+            TokenType.LEFT_PAREN,
+            TokenType.IDENTIFIER,
+            TokenType.IDENTIFIER,
+            TokenType.RIGHT_PAREN,
+            TokenType.LEFT_BRACE,
+            TokenType.RETURN,
+            TokenType.IDENTIFIER,
+            TokenType.SUM,
+            TokenType.IDENTIFIER,
+            TokenType.END_STATEMENT,
+            TokenType.RIGHT_BRACE,
+            TokenType.END_STATEMENT,
+            TokenType.EOF
+        ]
+
+        for index, token in enumerate(tokens):
+            assert token.type == expected_tokens[index]

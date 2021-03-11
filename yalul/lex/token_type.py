@@ -36,3 +36,4 @@ class TokenType(Enum):
     ELSE = 28
     WHILE = 29
     FUNCTION = 30
+    RETURN = 31

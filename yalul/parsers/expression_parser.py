@@ -1,6 +1,7 @@
 from yalul.lex.token_type import TokenType
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
+from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
 from yalul.parsers.ast.nodes.statements.expressions.values.boolean import Boolean
 from yalul.parsers.ast.nodes.statements.expressions.values.null import Null
 from yalul.parsers.ast.nodes.statements.expressions.values.float import Float
@@ -158,6 +159,12 @@ class ExpressionParser(ParserBase):
             self.consume(TokenType.RIGHT_PAREN, "Expected a RIGHT PAREN ) after expression")
 
             return Grouping(expression)
+        if current_token.type == TokenType.RETURN:
+            self._current_token.increment()
+
+            expression = self.__comparison()
+
+            return Return(expression)
         if current_token.type in UNOPENED_OPERATORS:
             self.errors.add_error("Expect a open operator for " + str(current_token))
             self._current_token.increment()
