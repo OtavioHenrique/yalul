@@ -2,9 +2,7 @@ from yalul.parser import Parser
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.lex.token import Token
 from yalul.lex.token_type import TokenType
-from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
 from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
-from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
 
 
 class TestParserReturnExpressions:
