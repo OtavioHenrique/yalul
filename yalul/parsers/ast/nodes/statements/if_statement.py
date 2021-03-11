@@ -8,8 +8,8 @@ class If:
         Construct a new if statement object.
 
         :condition: if condition (grouping expression)
-        :then_block: then block staatement
-        :else_block: else block staatement
+        :then_block: then block statement
+        :else_block: else block statement
         """
         self.condition = condition
         self.then_block = then_block
