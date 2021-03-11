@@ -7,7 +7,8 @@ KEYWORDS = {
     'false': TokenType.FALSE,
     'def': TokenType.VARIABLE,
     'if': TokenType.IF,
-    'else': TokenType.ELSE
+    'else': TokenType.ELSE,
+    'while': TokenType.WHILE
 }
 
 
