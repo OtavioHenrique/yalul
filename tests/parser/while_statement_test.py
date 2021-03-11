@@ -4,7 +4,6 @@ from yalul.parser import Parser
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
-from yalul.parsers.ast.nodes.statements.if_statement import If
 from yalul.parsers.ast.nodes.statements.while_statement import While
 
 

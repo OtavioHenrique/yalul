@@ -60,9 +60,17 @@ class TestCreateToken:
         assert token.value == "else"
 
     @pytest.mark.parametrize('open_file', ['while_example.yalul'], indirect=['open_file'])
-    def test_create_else_token(self, open_file):
+    def test_create_while_token(self, open_file):
         char = open_file.read(1)
         token = KeywordScanner(char, open_file, 0).create_token()
 
         assert token.type == TokenType.WHILE
         assert token.value == "while"
+
+    @pytest.mark.parametrize('open_file', ['function_example.yalul'], indirect=['open_file'])
+    def test_create_function_token(self, open_file):
+        char = open_file.read(1)
+        token = KeywordScanner(char, open_file, 0).create_token()
+
+        assert token.type == TokenType.FUNCTION
+        assert token.value == "func"

@@ -5,8 +5,10 @@ import uuid
 from yalul.parsers.ast.nodes.statements.block import Block
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
+from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
 from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
+from yalul.parsers.ast.nodes.statements.func import Func
 from yalul.parsers.ast.nodes.statements.if_statement import If
 from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
 from yalul.parsers.ast.nodes.statements.expression import Expression
@@ -25,7 +27,6 @@ VALUES_TYPES = [
     Boolean,
     Variable
 ]
-
 
 class GraphvizPrinter:
     """
@@ -53,11 +54,30 @@ class GraphvizPrinter:
         if type(statement) == VariableDeclaration:
             self.__render_var_declaration_statement(graph, statement, previous_node, identifier)
         if type(statement) == Block:
-            self.__render_block_statement(graph, identifier, previous_node, statement)
+            self.__render_block_statement(graph, statement, previous_node, identifier)
         if type(statement) == If:
             self.__render_if_statement(graph, statement, previous_node, identifier)
         if isinstance(statement, Expression):
-            self.__render_expression(graph, statement, previous_node, statement)
+            self.__render_expression(graph, statement, previous_node, identifier)
+        if type(statement) == Func:
+            self.__render_func(graph, statement, previous_node, identifier)
+
+    def __render_func(self, graph, statement, previous_node, identifier):
+        func_graph_name = '{}{}'.format('FuncStatement', identifier)
+
+        graph.node(func_graph_name, '<f0> Identifier|<f1> Func Statement|<f2> Parameters|<f3> Block')
+        graph.node(statement.identifier, '<f0> Func Identifier|<f1> {}'.format(func_graph_name))
+        graph.edge('{}:f0'.format(func_graph_name), '{}:f0'.format(statement.identifier))
+
+        for parameter in statement.parameters:
+            parameter_name = 'Parameter{}{}'.format(parameter.value, identifier)
+            graph.node(parameter_name, '<f0> {}'.format(parameter.value))
+            graph.edge('{}:f2'.format(func_graph_name), '{}:f0'.format(parameter_name))
+
+        self.__render_block_statement(graph, statement.block, '{}:f3'.format(func_graph_name), str(uuid.uuid4()))
+
+        if previous_node is not None:
+            graph.edge(previous_node, '{}:f1'.format(func_graph_name))
 
     def __render_if_statement(self, graph, statement, previous_node, identifier):
         if_name = '{}{}'.format('IfStatement', identifier)
@@ -66,8 +86,8 @@ class GraphvizPrinter:
 
         self.__render_expression(graph, statement.condition, '{}:f0'.format(if_name))
 
-        self.__render_block_statement(graph, str(uuid.uuid4()), '{}:f2'.format(if_name), statement.then_block)
-        self.__render_block_statement(graph, str(uuid.uuid4()), '{}:f3'.format(if_name), statement.else_block)
+        self.__render_block_statement(graph, statement.then_block, '{}:f2'.format(if_name), str(uuid.uuid4()))
+        self.__render_block_statement(graph, statement.else_block, '{}:f3'.format(if_name), str(uuid.uuid4()))
 
         if previous_node is not None:
             graph.edge(previous_node, '{}:f1'.format(if_name))
@@ -87,7 +107,7 @@ class GraphvizPrinter:
         if previous_node is not None:
             graph.edge(previous_node, '{}:f1'.format(var_declaration_name))
 
-    def __render_block_statement(self, graph, identifier, previous_node, statement):
+    def __render_block_statement(self, graph, statement, previous_node, identifier):
         block_name = '{}{}'.format('Block', identifier)
 
         graph.node(block_name, '<f0> Block | <f1> Statements')
@@ -123,6 +143,13 @@ class GraphvizPrinter:
                 graph.edge(previous_node, '{}:f1'.format(expression_name))
         elif type(expression) == Grouping:
             graph.node(expression_name, '<f0> Grouping | <f1> Expression')
+
+            self.__render_expression(graph, expression.value, '{}:f1'.format(expression_name), str(uuid.uuid4()))
+
+            if previous_node is not None:
+                graph.edge(previous_node, '{}:f0'.format(expression_name))
+        elif type(expression) == Return:
+            graph.node(expression_name, '<f0> Return | <f1> Expression')
 
             self.__render_expression(graph, expression.value, '{}:f1'.format(expression_name), str(uuid.uuid4()))
 

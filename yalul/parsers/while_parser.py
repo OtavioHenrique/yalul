@@ -1,4 +1,3 @@
-from yalul.lex.token_type import TokenType
 from yalul.parsers.ast.nodes.statements.block import Block
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
 from yalul.parsers.ast.nodes.statements.while_statement import While

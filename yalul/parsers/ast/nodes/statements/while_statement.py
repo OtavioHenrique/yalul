@@ -8,7 +8,7 @@ class While:
         Construct a new while statement object.
 
         :condition: while condition (grouping expression)
-        :block: block staatement
+        :block: block statement
         """
         self.condition = condition
         self.block = block
