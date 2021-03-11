@@ -9,6 +9,7 @@ KEYWORDS = {
     'if': TokenType.IF,
     'else': TokenType.ELSE,
     'while': TokenType.WHILE,
+    'func': TokenType.FUNCTION,
     'return': TokenType.RETURN
 }
 

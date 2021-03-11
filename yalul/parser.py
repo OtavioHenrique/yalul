@@ -1,6 +1,7 @@
 from yalul.lex.token_type import TokenType
 from yalul.parsers.block_parser import BlockParser
 from yalul.parsers.expression_parser import ExpressionParser
+from yalul.parsers.func_parser import FuncParser
 from yalul.parsers.if_parser import IfParser
 from yalul.parsers.parse_errors import ParseErrors
 from yalul.parsers.parse_response import ParseResponse
@@ -60,6 +61,8 @@ class Parser:
             return IfParser(self.tokens, self._current_token, self.errors, self).parse()
         if self.tokens[self._current_token.current()].type == TokenType.WHILE:
             return WhileParser(self.tokens, self._current_token, self.errors, self).parse()
+        if self.tokens[self._current_token.current()].type == TokenType.FUNCTION:
+            return FuncParser(self.tokens, self._current_token, self.errors, self).parse()
         else:
             return self.__expression_statement()
 
