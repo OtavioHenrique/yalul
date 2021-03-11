@@ -5,6 +5,7 @@ import uuid
 from yalul.parsers.ast.nodes.statements.block import Block
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
+from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
 from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
 from yalul.parsers.ast.nodes.statements.if_statement import If
@@ -123,6 +124,13 @@ class GraphvizPrinter:
                 graph.edge(previous_node, '{}:f1'.format(expression_name))
         elif type(expression) == Grouping:
             graph.node(expression_name, '<f0> Grouping | <f1> Expression')
+
+            self.__render_expression(graph, expression.value, '{}:f1'.format(expression_name), str(uuid.uuid4()))
+
+            if previous_node is not None:
+                graph.edge(previous_node, '{}:f0'.format(expression_name))
+        elif type(expression) == Return:
+            graph.node(expression_name, '<f0> Return | <f1> Expression')
 
             self.__render_expression(graph, expression.value, '{}:f1'.format(expression_name), str(uuid.uuid4()))
 
