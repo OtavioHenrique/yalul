@@ -8,7 +8,8 @@ KEYWORDS = {
     'def': TokenType.VARIABLE,
     'if': TokenType.IF,
     'else': TokenType.ELSE,
-    'while': TokenType.WHILE
+    'while': TokenType.WHILE,
+    'func': TokenType.FUNCTION
 }
 
 
