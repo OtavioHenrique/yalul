@@ -17,6 +17,7 @@ from yalul.parsers.ast.nodes.statements.expressions.values.null import Null
 from yalul.parsers.ast.nodes.statements.expressions.values.string import String
 from yalul.parsers.ast.nodes.statements.expressions.values.float import Float
 from yalul.parsers.ast.nodes.statements.expressions.values.boolean import Boolean
+from yalul.parsers.ast.nodes.statements.while_statement import While
 from graphviz import Digraph
 
 VALUES_TYPES = [
@@ -27,6 +28,7 @@ VALUES_TYPES = [
     Boolean,
     Variable
 ]
+
 
 class GraphvizPrinter:
     """
@@ -61,6 +63,19 @@ class GraphvizPrinter:
             self.__render_expression(graph, statement, previous_node, identifier)
         if type(statement) == Func:
             self.__render_func(graph, statement, previous_node, identifier)
+        if type(statement) == While:
+            self.__render_while(graph, statement, previous_node, identifier)
+
+    def __render_while(self, graph, statement, previous_node, identifier):
+        while_name = 'while{}'.format(identifier)
+
+        graph.node(while_name, '<f0> Condition|<f1> While Statement|<f2> Block')
+
+        self.__render_expression(graph, statement.condition, '{}:f0'.format(while_name))
+        self.__render_block_statement(graph, statement.block, '{}:f2'.format(while_name), str(uuid.uuid4()))
+
+        if previous_node is not None:
+            graph.edge(previous_node, '{}:f1'.format(while_name))
 
     def __render_func(self, graph, statement, previous_node, identifier):
         func_graph_name = '{}{}'.format('FuncStatement', identifier)
