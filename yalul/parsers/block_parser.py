@@ -25,7 +25,7 @@ class BlockParser(ParserBase):
 
         self._current_token.increment()
 
-        while self.tokens[self._current_token.current()].type != TokenType.RIGHT_BRACE:
+        while self.current_token().type != TokenType.RIGHT_BRACE:
             statements.append(self.parser.create_statement())
 
         self.consume(TokenType.RIGHT_BRACE, 'Expect a RIGHT BRACE } to close a block')

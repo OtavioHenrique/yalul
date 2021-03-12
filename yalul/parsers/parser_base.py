@@ -26,3 +26,6 @@ class ParserBase:
                 return token
             else:
                 self.errors.add_error(error_message)
+
+    def current_token(self):
+        return self.tokens[self._current_token.current()]

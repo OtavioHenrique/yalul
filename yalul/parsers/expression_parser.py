@@ -47,7 +47,7 @@ class ExpressionParser(ParserBase):
     def __var_assignment(self):
         expression = self.__comparison()
 
-        while self.tokens[self._current_token.current()].type == TokenType.EQUAL:
+        while self.current_token().type == TokenType.EQUAL:
             identifier = self.tokens[self._current_token.current() - 1].value
 
             self._current_token.increment()
@@ -71,8 +71,8 @@ class ExpressionParser(ParserBase):
             TokenType.EQUAL_EQUAL
         ]
 
-        while self.tokens[self._current_token.current()].type in comparison_tokens:
-            operator = self.tokens[self._current_token.current()]
+        while self.current_token().type in comparison_tokens:
+            operator = self.current_token()
 
             self._current_token.increment()
 
@@ -85,8 +85,8 @@ class ExpressionParser(ParserBase):
     def __addition(self):
         expression = self.__minus()
 
-        while self.tokens[self._current_token.current()].type == TokenType.SUM:
-            operator = self.tokens[self._current_token.current()]
+        while self.current_token().type == TokenType.SUM:
+            operator = self.current_token()
 
             self._current_token.increment()
 
@@ -99,8 +99,8 @@ class ExpressionParser(ParserBase):
     def __minus(self):
         expression = self.__multiply()
 
-        while self.tokens[self._current_token.current()].type == TokenType.MINUS:
-            operator = self.tokens[self._current_token.current()]
+        while self.current_token().type == TokenType.MINUS:
+            operator = self.current_token()
 
             self._current_token.increment()
 
@@ -113,8 +113,8 @@ class ExpressionParser(ParserBase):
     def __multiply(self):
         expression = self.__division()
 
-        while self.tokens[self._current_token.current()].type == TokenType.MULTIPLY:
-            operator = self.tokens[self._current_token.current()]
+        while self.current_token().type == TokenType.MULTIPLY:
+            operator = self.current_token()
 
             self._current_token.increment()
 
@@ -127,8 +127,8 @@ class ExpressionParser(ParserBase):
     def __division(self):
         expression = self.__literal()
 
-        while self.tokens[self._current_token.current()].type == TokenType.DIVISION:
-            operator = self.tokens[self._current_token.current()]
+        while self.current_token().type == TokenType.DIVISION:
+            operator = self.current_token()
 
             self._current_token.increment()
 
@@ -139,7 +139,7 @@ class ExpressionParser(ParserBase):
         return expression
 
     def __literal(self):
-        current_token = self.tokens[self._current_token.current()]
+        current_token = self.current_token()
 
         token_class = TOKEN_TO_VALUES.get(current_token.type)
 
