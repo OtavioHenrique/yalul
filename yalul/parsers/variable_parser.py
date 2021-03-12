@@ -30,6 +30,4 @@ class VariableParser(ParserBase):
             self._current_token.increment()
             initializer = ExpressionParser(self.tokens, self._current_token, self.errors).parse()
 
-        self.consume(TokenType.END_STATEMENT, "Expected a end of statement after variable declaration")
-
         return VariableDeclaration(var_name.value, initializer)

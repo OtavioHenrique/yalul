@@ -54,13 +54,13 @@ class Parser(ParserBase):
     def create_statement(self):
         if self.current_token().type == TokenType.VARIABLE:
             return VariableParser(self.tokens, self._current_token, self.errors).parse()
-        if self.current_token().type == TokenType.LEFT_BRACE:
+        elif self.current_token().type == TokenType.LEFT_BRACE:
             return BlockParser(self.tokens, self._current_token, self.errors, self).parse()
-        if self.current_token().type == TokenType.IF:
+        elif self.current_token().type == TokenType.IF:
             return IfParser(self.tokens, self._current_token, self.errors, self).parse()
-        if self.current_token().type == TokenType.WHILE:
+        elif self.current_token().type == TokenType.WHILE:
             return WhileParser(self.tokens, self._current_token, self.errors, self).parse()
-        if self.current_token().type == TokenType.FUNCTION:
+        elif self.current_token().type == TokenType.FUNCTION:
             return FuncParser(self.tokens, self._current_token, self.errors, self).parse()
         else:
             return self.__expression_statement()
