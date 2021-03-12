@@ -5,6 +5,7 @@ from yalul.parsers.func_parser import FuncParser
 from yalul.parsers.if_parser import IfParser
 from yalul.parsers.parse_errors import ParseErrors
 from yalul.parsers.parse_response import ParseResponse
+from yalul.parsers.parser_base import ParserBase
 from yalul.parsers.variable_parser import VariableParser
 from yalul.parsers.while_parser import WhileParser
 
@@ -21,7 +22,7 @@ class Token:
         return self.current_token
 
 
-class Parser:
+class Parser(ParserBase):
     """
     Yalul's own parser, it receives a list of language tokens provided by lexer and output an abstract syntax tree
     """
@@ -33,9 +34,7 @@ class Parser:
         :param tokens: A list of language tokens
         :return: returns nothing
         """
-        self.tokens = tokens
-        self._current_token = Token(0)
-        self.errors = ParseErrors([])
+        super().__init__(tokens, Token(0), ParseErrors([]))
 
     def parse(self):
         """
@@ -53,15 +52,15 @@ class Parser:
         return ParseResponse(statements, self.errors)
 
     def create_statement(self):
-        if self.tokens[self._current_token.current()].type == TokenType.VARIABLE:
+        if self.current_token().type == TokenType.VARIABLE:
             return VariableParser(self.tokens, self._current_token, self.errors).parse()
-        if self.tokens[self._current_token.current()].type == TokenType.LEFT_BRACE:
+        if self.current_token().type == TokenType.LEFT_BRACE:
             return BlockParser(self.tokens, self._current_token, self.errors, self).parse()
-        if self.tokens[self._current_token.current()].type == TokenType.IF:
+        if self.current_token().type == TokenType.IF:
             return IfParser(self.tokens, self._current_token, self.errors, self).parse()
-        if self.tokens[self._current_token.current()].type == TokenType.WHILE:
+        if self.current_token().type == TokenType.WHILE:
             return WhileParser(self.tokens, self._current_token, self.errors, self).parse()
-        if self.tokens[self._current_token.current()].type == TokenType.FUNCTION:
+        if self.current_token().type == TokenType.FUNCTION:
             return FuncParser(self.tokens, self._current_token, self.errors, self).parse()
         else:
             return self.__expression_statement()
@@ -70,6 +69,6 @@ class Parser:
         return ExpressionParser(self.tokens, self._current_token, self.errors).parse()
 
     def __at_end(self):
-        current_token = self.tokens[self._current_token.current()]
+        current_token = self.current_token()
 
         return current_token.type == TokenType.EOF

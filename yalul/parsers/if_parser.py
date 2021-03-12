@@ -39,7 +39,7 @@ class IfParser(ParserBase):
 
         else_block = None
 
-        if self.tokens[self._current_token.current()].type == TokenType.ELSE:
+        if self.current_token().type == TokenType.ELSE:
             self._current_token.increment()
 
             else_block = BlockParser(self.tokens, self._current_token, self.errors, self.parser).parse()

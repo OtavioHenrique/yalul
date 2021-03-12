@@ -25,19 +25,19 @@ class FuncParser(ParserBase):
     def parse(self):
         self._current_token.increment()
 
-        func_identifier = self.tokens[self._current_token.current()].value
+        func_identifier = self.current_token().value
 
         self._current_token.increment()
 
-        if self.tokens[self._current_token.current()].type != TokenType.LEFT_PAREN:
+        if self.current_token().type != TokenType.LEFT_PAREN:
             self.errors.add_error("Expect a left parenthesis after func identifier")
 
         self._current_token.increment()
 
         func_parameters = []
 
-        while self.tokens[self._current_token.current()].type != TokenType.RIGHT_PAREN:
-            func_parameters.append(self.tokens[self._current_token.current()])
+        while self.current_token().type != TokenType.RIGHT_PAREN:
+            func_parameters.append(self.current_token())
             self._current_token.increment()
 
         self._current_token.increment()
