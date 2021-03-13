@@ -19,7 +19,7 @@ class ParserBase:
     def consume(self, token_type, error_message):
         current_token = self.tokens[self._current_token.current()]
 
-        if current_token.type != TokenType.EOF or current_token.type != TokenType.END_STATEMENT:
+        if current_token.type != TokenType.EOF:
             if current_token.type == token_type:
                 token = self.tokens[self._current_token.current()]
                 self._current_token.increment()

@@ -40,7 +40,10 @@ class ExpressionParser(ParserBase):
 
     def parse(self):
         expression = self.__var_assignment()
-        self.consume(TokenType.END_STATEMENT, "Expected a END OF STATEMENT after expression")
+
+        if self.tokens[self._current_token.current() - 1].type != TokenType.RIGHT_BRACE \
+                and self.current_token().type != TokenType.LEFT_BRACE:
+            self.consume(TokenType.END_STATEMENT, "Expected a END OF STATEMENT after expression")
 
         return expression
 
@@ -169,6 +172,8 @@ class ExpressionParser(ParserBase):
             self.errors.add_error("Expect a open operator for " + str(current_token))
             self._current_token.increment()
         else:
-            previous_token = self.tokens[self._current_token.current() - 1]
-            self.errors.add_error("Expect Expression after " + str(previous_token))
+            if self.current_token().type != TokenType.END_STATEMENT:
+                previous_token = self.tokens[self._current_token.current() - 1]
+                self.errors.add_error("Expect Expression after " + str(previous_token))
+
             self._current_token.increment()
