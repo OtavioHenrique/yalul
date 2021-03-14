@@ -8,26 +8,35 @@ class BlockParser(ParserBase):
     Yalul's block statement parser, it parses all blocks
     """
 
-    def __init__(self, tokens, current_token, errors, parser):
+    def __init__(self, tokens, token_counter, errors, parser):
         """
         Construct a new BlockParser object.
 
         :param tokens: A list of language tokens
-        :current_token: Current token being read
+        :token_counter: A instance of TokenCounter with current token being read
         :errors: ParseErrors instance
-        :return: returns parsed expression
+        :return: BlockParser object
         """
-        super().__init__(tokens, current_token, errors)
-        self.parser = parser
+        super().__init__(tokens, token_counter, errors, parser)
 
     def parse(self):
-        statements = []
+        """
+        Parser block statement
 
-        self._current_token.increment()
+        :return: Block object
+        """
+        self.token_counter.increment()
+
+        block_statements = self.__parse_block_statements()
+
+        self.consume(TokenType.RIGHT_BRACE, 'Expect a RIGHT BRACE } to close a block')
+
+        return Block(block_statements)
+
+    def __parse_block_statements(self):
+        statements = []
 
         while self.current_token().type != TokenType.RIGHT_BRACE:
             statements.append(self.parser.create_statement())
 
-        self.consume(TokenType.RIGHT_BRACE, 'Expect a RIGHT BRACE } to close a block')
-
-        return Block(statements)
+        return statements
