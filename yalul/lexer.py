@@ -13,6 +13,7 @@ from yalul.lex.token import Token
 from yalul.lex.token_type import TokenType
 
 LEXER_SCANNERS = [
+    StringScanner,
     NumbersScanner,
     OperatorScanner,
     ComparisonOperatorScanner,
@@ -60,12 +61,6 @@ class Lexer:
 
                 if tokens_list[-1].type != TokenType.END_STATEMENT and tokens_list[-1].type != TokenType.LEFT_BRACE:
                     tokens_list.append(Token(TokenType.END_STATEMENT, "End of Statement"))
-
-                current_char = self.source.read(1)
-            elif current_char == '"':
-                string = StringScanner(current_char, self.source).create_token()
-
-                tokens_list.append(string)
 
                 current_char = self.source.read(1)
             elif self.__select_scanner(current_char) is not None:

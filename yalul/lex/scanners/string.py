@@ -35,4 +35,13 @@ class StringScanner:
 
         string = ''.join(chars)
 
+        self.current_char = self.source.read(1)
+
         return Token(TokenType.STRING, string)
+
+    @classmethod
+    def should_lex(cls, char):
+        """
+        Receives a char and returning if its a quote
+        """
+        return char == '"'
