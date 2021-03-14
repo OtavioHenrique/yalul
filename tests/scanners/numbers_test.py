@@ -9,7 +9,7 @@ def open_file(request):
     return open(str(Path.cwd()) + "/tests/lex_examples/" + request.param)
 
 
-class TestIsDigit:
+class TestShouldLex:
     def test_when_is_digit(self):
         assert NumbersScanner.should_lex('6')
 

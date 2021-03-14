@@ -9,7 +9,7 @@ def open_file(request):
     return open(str(Path.cwd()) + "/tests/lex_examples/" + request.param)
 
 
-class TestIsParen:
+class TestShouldLex:
     def test_when_is_left_paren(self):
         assert GroupingScanner.should_lex('(')
 

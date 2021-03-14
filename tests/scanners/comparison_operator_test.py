@@ -9,7 +9,7 @@ def open_file(request):
     return open(str(Path.cwd()) + "/tests/lex_examples/" + request.param)
 
 
-class TestIsComparison:
+class TestShouldLex:
     def test_when_is_comparison(self):
         assert ComparisonOperatorScanner.should_lex('>')
 

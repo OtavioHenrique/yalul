@@ -10,7 +10,7 @@ def open_file(request):
     return open(str(Path.cwd()) + "/tests/lex_examples/" + request.param)
 
 
-class TestIsBlock:
+class TestShouldLex:
     def test_when_is_block(self):
         assert BlockScanner.should_lex('{')
         assert BlockScanner.should_lex('}')

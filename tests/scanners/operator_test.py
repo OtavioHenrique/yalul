@@ -11,7 +11,7 @@ def open_file(request):
     return open(str(Path.cwd()) + "/tests/lex_examples/" + request.param)
 
 
-class TestIsOperator:
+class TestShouldLex:
     def test_when_is_operator(self):
         operators = ['+', '-', '/', '*']
 
