@@ -18,6 +18,7 @@ class TestParseFloat:
         ]
 
         parser_response = Parser(tokens).parse()
+        assert len(parser_response.errors()) == 0
 
         node = parser_response.asts[0]
 

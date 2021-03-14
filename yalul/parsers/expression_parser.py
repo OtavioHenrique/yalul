@@ -20,7 +20,7 @@ TOKEN_TO_VALUES = {
     TokenType.FALSE: Boolean
 }
 
-UNOPENED_OPERATORS = [TokenType.RIGHT_PAREN]
+UNOPENED_OPERATORS = [TokenType.RIGHT_PAREN, TokenType.RIGHT_BRACE]
 
 
 class ExpressionParser(ParserBase):

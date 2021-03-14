@@ -24,6 +24,8 @@ class TestVariableDeclarationStatements:
         parser_response = Parser(tokens).parse()
         first_statement_ast = parser_response.asts[0]
 
+        assert len(parser_response.errors()) == 0
+
         assert type(first_statement_ast) is VariableDeclaration
         assert first_statement_ast.name == "everything"
 
