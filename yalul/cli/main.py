@@ -33,4 +33,4 @@ def execute(filename, render_ast):
         if render_ast:
             ASTPrinter(parser_response.asts).print()
 
-        print(parser_response.errors.errors)
+        print(parser_response.errors())
