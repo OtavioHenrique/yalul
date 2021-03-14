@@ -18,7 +18,7 @@ class BlockScanner:
 
         :params current_char: Current char being read by Lexer
         :param source: Source code being read
-        :return: returns nothing
+        :return: BlockScanner object
         """
         self.current_char = current_char
         self.source = source
@@ -26,14 +26,16 @@ class BlockScanner:
     def create_token(self):
         """
         Read source and creates a new brace token
-        """
 
+        :return: Token object
+        """
         token = Token(PAREN.get(self.current_char), "brace")
+        self.current_char = self.source.read(1)
 
         return token
 
     @classmethod
-    def is_block(cls, char):
+    def should_lex(cls, char):
         """
         Receives a char and returning if its a left or right brace
         """

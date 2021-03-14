@@ -9,15 +9,15 @@ def open_file(request):
     return open(str(Path.cwd()) + "/tests/lex_examples/" + request.param)
 
 
-class TestIsParen:
+class TestShouldLex:
     def test_when_is_left_paren(self):
-        assert GroupingScanner.is_paren('(')
+        assert GroupingScanner.should_lex('(')
 
     def test_when_is_right_paren(self):
-        assert GroupingScanner.is_paren(')')
+        assert GroupingScanner.should_lex(')')
 
     def test_when_isnt_paren(self):
-        assert not GroupingScanner.is_paren('a')
+        assert not GroupingScanner.should_lex('a')
 
 
 class TestCreateToken:

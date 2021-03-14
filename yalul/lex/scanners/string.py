@@ -13,7 +13,7 @@ class StringScanner:
 
         :params current_char: Current char being read by Lexer
         :param source: Source code being read
-        :return: returns nothing
+        :return: StringScanner object
         """
         self.current_char = current_char
         self.source = source
@@ -21,6 +21,8 @@ class StringScanner:
     def create_token(self):
         """
         Read source and creates a new string token
+
+        :returns: Token object
         """
         self.current_char = self.source.read(1)
 
@@ -33,4 +35,13 @@ class StringScanner:
 
         string = ''.join(chars)
 
+        self.current_char = self.source.read(1)
+
         return Token(TokenType.STRING, string)
+
+    @classmethod
+    def should_lex(cls, char):
+        """
+        Receives a char and returning if its a quote
+        """
+        return char == '"'

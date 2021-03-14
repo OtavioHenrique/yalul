@@ -10,6 +10,14 @@ from yalul.parsers.token_counter import TokenCounter
 from yalul.parsers.variable_parser import VariableParser
 from yalul.parsers.while_parser import WhileParser
 
+TOKEN_TO_PARSERS = {
+    TokenType.VARIABLE: VariableParser,
+    TokenType.LEFT_BRACE: BlockParser,
+    TokenType.IF: IfParser,
+    TokenType.WHILE: WhileParser,
+    TokenType.FUNCTION: FuncParser
+}
+
 
 class Parser(ParserBase):
     """
@@ -23,11 +31,11 @@ class Parser(ParserBase):
         :param tokens: A list of language tokens
         :return: returns nothing
         """
-        super().__init__(tokens, TokenCounter(0), ParseErrors([]))
+        super().__init__(tokens, TokenCounter(0), ParseErrors([]), None)
 
     def parse(self):
         """
-        Returns a new AST
+        Construct new ASTs based on given Lex tokens
 
         :return: returns an abstract syntax tree (AST)
         """
@@ -41,21 +49,15 @@ class Parser(ParserBase):
         return ParseResponse(statements, self.errors)
 
     def create_statement(self):
-        if self.current_token().type == TokenType.VARIABLE:
-            return VariableParser(self.tokens, self._current_token, self.errors).parse()
-        elif self.current_token().type == TokenType.LEFT_BRACE:
-            return BlockParser(self.tokens, self._current_token, self.errors, self).parse()
-        elif self.current_token().type == TokenType.IF:
-            return IfParser(self.tokens, self._current_token, self.errors, self).parse()
-        elif self.current_token().type == TokenType.WHILE:
-            return WhileParser(self.tokens, self._current_token, self.errors, self).parse()
-        elif self.current_token().type == TokenType.FUNCTION:
-            return FuncParser(self.tokens, self._current_token, self.errors, self).parse()
+        parser_class = TOKEN_TO_PARSERS.get(self.current_token().type)
+
+        if parser_class:
+            return parser_class(self.tokens, self.token_counter, self.errors, self).parse()
         else:
             return self.__expression_statement()
 
     def __expression_statement(self):
-        return ExpressionParser(self.tokens, self._current_token, self.errors).parse()
+        return ExpressionParser(self.tokens, self.token_counter, self.errors).parse()
 
     def __at_end(self):
         current_token = self.current_token()

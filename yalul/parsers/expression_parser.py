@@ -28,20 +28,26 @@ class ExpressionParser(ParserBase):
     Yalul's expression parser, it parses all kinds of expressions
     """
 
-    def __init__(self, tokens, current_token, errors):
+    def __init__(self, tokens, token_counter, errors):
         """
         Construct a new ExpressionParser object.
 
         :tokens: A list of language tokens
-        :current_token: Current token being read
+        :token_counter: A instance of TokenCounter with current token being read
         :errors: ParseErrors instance
+        :return: ExpressionParser object
         """
-        super().__init__(tokens, current_token, errors)
+        super().__init__(tokens, token_counter, errors, None)
 
     def parse(self):
+        """
+        Parser func statement
+
+        :return: expression object
+        """
         expression = self.__var_assignment()
 
-        if self.tokens[self._current_token.current() - 1].type != TokenType.RIGHT_BRACE \
+        if self.tokens[self.token_counter.current() - 1].type != TokenType.RIGHT_BRACE \
                 and self.current_token().type != TokenType.LEFT_BRACE:
             self.consume(TokenType.END_STATEMENT, "Expected a END OF STATEMENT after expression")
 
@@ -51,9 +57,9 @@ class ExpressionParser(ParserBase):
         expression = self.__comparison()
 
         while self.current_token().type == TokenType.EQUAL:
-            identifier = self.tokens[self._current_token.current() - 1].value
+            identifier = self.tokens[self.token_counter.current() - 1].value
 
-            self._current_token.increment()
+            self.token_counter.increment()
 
             value = self.__var_assignment()
 
@@ -77,7 +83,7 @@ class ExpressionParser(ParserBase):
         while self.current_token().type in comparison_tokens:
             operator = self.current_token()
 
-            self._current_token.increment()
+            self.token_counter.increment()
 
             right_expression = self.__comparison()
 
@@ -91,7 +97,7 @@ class ExpressionParser(ParserBase):
         while self.current_token().type == TokenType.SUM:
             operator = self.current_token()
 
-            self._current_token.increment()
+            self.token_counter.increment()
 
             right_expression = self.__addition()
 
@@ -105,7 +111,7 @@ class ExpressionParser(ParserBase):
         while self.current_token().type == TokenType.MINUS:
             operator = self.current_token()
 
-            self._current_token.increment()
+            self.token_counter.increment()
 
             right_expression = self.__minus()
 
@@ -119,7 +125,7 @@ class ExpressionParser(ParserBase):
         while self.current_token().type == TokenType.MULTIPLY:
             operator = self.current_token()
 
-            self._current_token.increment()
+            self.token_counter.increment()
 
             right_expression = self.__multiply()
 
@@ -133,7 +139,7 @@ class ExpressionParser(ParserBase):
         while self.current_token().type == TokenType.DIVISION:
             operator = self.current_token()
 
-            self._current_token.increment()
+            self.token_counter.increment()
 
             right_expression = self.__division()
 
@@ -147,15 +153,15 @@ class ExpressionParser(ParserBase):
         token_class = TOKEN_TO_VALUES.get(current_token.type)
 
         if token_class:
-            self._current_token.increment()
+            self.token_counter.increment()
 
             return token_class(current_token.value)
         if current_token.type == TokenType.IDENTIFIER:
-            self._current_token.increment()
+            self.token_counter.increment()
 
             return Variable(current_token.value)
         if current_token.type == TokenType.LEFT_PAREN:
-            self._current_token.increment()
+            self.token_counter.increment()
 
             expression = self.__comparison()
 
@@ -163,17 +169,17 @@ class ExpressionParser(ParserBase):
 
             return Grouping(expression)
         if current_token.type == TokenType.RETURN:
-            self._current_token.increment()
+            self.token_counter.increment()
 
             expression = self.__comparison()
 
             return Return(expression)
         if current_token.type in UNOPENED_OPERATORS:
             self.errors.add_error("Expect a open operator for " + str(current_token))
-            self._current_token.increment()
+            self.token_counter.increment()
         else:
-            if self.tokens[self._current_token.current() - 1].type != TokenType.RIGHT_BRACE:
-                previous_token = self.tokens[self._current_token.current() - 1]
+            if self.last_token().type != TokenType.RIGHT_BRACE:
+                previous_token = self.last_token()
                 self.errors.add_error("Expect Expression after " + str(previous_token))
 
-            self._current_token.increment()
+            self.token_counter.increment()
