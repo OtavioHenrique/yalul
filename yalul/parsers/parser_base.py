@@ -16,13 +16,10 @@ class ParserBase:
         self.errors = errors
         self.parser = parser
 
-    # TODO: Test here
     def consume(self, token_type, error_message):
-        current_token = self.tokens[self.token_counter.current()]
-
-        if current_token.type != TokenType.EOF:
-            if current_token.type == token_type:
-                token = self.tokens[self.token_counter.current()]
+        if self.current_token().type != TokenType.EOF:
+            if self.current_token().type == token_type:
+                token = self.current_token()
                 self.token_counter.increment()
                 return token
             else:
@@ -30,3 +27,6 @@ class ParserBase:
 
     def current_token(self):
         return self.tokens[self.token_counter.current()]
+
+    def last_token(self):
+        return self.tokens[self.token_counter.current() - 1]

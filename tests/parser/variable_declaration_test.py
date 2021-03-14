@@ -13,12 +13,12 @@ class TestVariableDeclarationStatements:
         Validates if parser is generating a correct AST for variable declaration statements
         """
         tokens = [
-            Token(TokenType.VARIABLE, "Variable identifier"),
-            Token(TokenType.IDENTIFIER, "everything"),
-            Token(TokenType.EQUAL, "="),
+            Token(TokenType.VARIABLE, 'Variable identifier'),
+            Token(TokenType.IDENTIFIER, 'everything'),
+            Token(TokenType.EQUAL, '='),
             Token(TokenType.INTEGER, 42),
-            Token(TokenType.END_STATEMENT, "End of Statement"),
-            Token(TokenType.EOF, "End of File")
+            Token(TokenType.END_STATEMENT, 'End of Statement'),
+            Token(TokenType.EOF, 'End of File')
         ]
 
         parser_response = Parser(tokens).parse()
@@ -27,7 +27,7 @@ class TestVariableDeclarationStatements:
         assert len(parser_response.errors()) == 0
 
         assert type(first_statement_ast) is VariableDeclaration
-        assert first_statement_ast.name == "everything"
+        assert first_statement_ast.name == 'everything'
 
         assert type(first_statement_ast.initializer) is Integer
         assert first_statement_ast.initializer.value == 42

@@ -16,10 +16,10 @@ class TestParserBinary:
             Token(TokenType.INTEGER, 39),
             Token(TokenType.MULTIPLY, "*"),
             Token(TokenType.INTEGER, 2),
-            Token(TokenType.SUM, "+"),
+            Token(TokenType.SUM, '+'),
             Token(TokenType.INTEGER, 42),
-            Token(TokenType.END_STATEMENT, "End of Statement"),
-            Token(TokenType.EOF, "End of File")
+            Token(TokenType.END_STATEMENT, 'End of Statement'),
+            Token(TokenType.EOF, 'End of File')
         ]
 
         parser_response = Parser(tokens).parse()
@@ -53,20 +53,20 @@ class TestParserGenerateErrors:
         """
         tokens = [
             Token(TokenType.INTEGER, 39),
-            Token(TokenType.MULTIPLY, "*"),
-            Token(TokenType.LEFT_PAREN, "Left Paren"),
+            Token(TokenType.MULTIPLY, '*'),
+            Token(TokenType.LEFT_PAREN, 'Left Paren'),
             Token(TokenType.INTEGER, 41),
-            Token(TokenType.SUM, "+"),
+            Token(TokenType.SUM, '+'),
             Token(TokenType.INTEGER, 1),
-            Token(TokenType.END_STATEMENT, "End of Statement"),
-            Token(TokenType.EOF, "End of File")
+            Token(TokenType.END_STATEMENT, 'End of Statement'),
+            Token(TokenType.EOF, 'End of File')
         ]
 
         parser_response = Parser(tokens).parse()
 
         errors = parser_response.errors()
 
-        assert errors[0] == "Expected a RIGHT PAREN ) after expression"
+        assert errors[0] == 'Expected a RIGHT PAREN ) after expression'
 
 
 class TestParserGenerateUnfinishedExpressionErrors:
@@ -78,17 +78,17 @@ class TestParserGenerateUnfinishedExpressionErrors:
         """
         tokens = [
             Token(TokenType.INTEGER, 39),
-            Token(TokenType.MULTIPLY, "*"),
+            Token(TokenType.MULTIPLY, '*'),
             Token(TokenType.INTEGER, 41),
-            Token(TokenType.SUM, "+"),
-            Token(TokenType.END_STATEMENT, "End of Statement"),
-            Token(TokenType.EOF, "End of File")
+            Token(TokenType.SUM, '+'),
+            Token(TokenType.END_STATEMENT, 'End of Statement'),
+            Token(TokenType.EOF, 'End of File')
         ]
 
         parser_response = Parser(tokens).parse()
 
         errors = parser_response.errors()
-        assert errors[0] == "Expect Expression after TokenType.SUM, Value: +"
+        assert errors[0] == 'Expect Expression after TokenType.SUM, Value: +'
 
 
 class TestParserGenerateUnopenedOperatorError:
@@ -100,18 +100,18 @@ class TestParserGenerateUnopenedOperatorError:
         """
         tokens = [
             Token(TokenType.INTEGER, 39),
-            Token(TokenType.MULTIPLY, "*"),
-            Token(TokenType.RIGHT_PAREN, ")"),
+            Token(TokenType.MULTIPLY, '*'),
+            Token(TokenType.RIGHT_PAREN, ')'),
             Token(TokenType.INTEGER, 41),
-            Token(TokenType.END_STATEMENT, "End of Statement"),
-            Token(TokenType.EOF, "End of File")
+            Token(TokenType.END_STATEMENT, 'End of Statement'),
+            Token(TokenType.EOF, 'End of File')
         ]
 
         parser_response = Parser(tokens).parse()
 
         errors = parser_response.errors()
 
-        assert errors[0] == "Expect a open operator for TokenType.RIGHT_PAREN, Value: )"
+        assert errors[0] == 'Expect a open operator for TokenType.RIGHT_PAREN, Value: )'
 
     def test_parse_run_generates_correct_error_unopened_operators_right_brace(self):
         """
@@ -119,15 +119,15 @@ class TestParserGenerateUnopenedOperatorError:
         """
         tokens = [
             Token(TokenType.INTEGER, 39),
-            Token(TokenType.MULTIPLY, "*"),
-            Token(TokenType.RIGHT_BRACE, "}"),
+            Token(TokenType.MULTIPLY, '*'),
+            Token(TokenType.RIGHT_BRACE, '}'),
             Token(TokenType.INTEGER, 41),
-            Token(TokenType.END_STATEMENT, "End of Statement"),
-            Token(TokenType.EOF, "End of File")
+            Token(TokenType.END_STATEMENT, 'End of Statement'),
+            Token(TokenType.EOF, 'End of File')
         ]
 
         parser_response = Parser(tokens).parse()
 
         errors = parser_response.errors()
 
-        assert errors[0] == "Expect a open operator for TokenType.RIGHT_BRACE, Value: }"
+        assert errors[0] == 'Expect a open operator for TokenType.RIGHT_BRACE, Value: }'

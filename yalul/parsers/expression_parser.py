@@ -40,6 +40,11 @@ class ExpressionParser(ParserBase):
         super().__init__(tokens, token_counter, errors, None)
 
     def parse(self):
+        """
+        Parser func statement
+
+        :return: expression object
+        """
         expression = self.__var_assignment()
 
         if self.tokens[self.token_counter.current() - 1].type != TokenType.RIGHT_BRACE \
@@ -173,8 +178,8 @@ class ExpressionParser(ParserBase):
             self.errors.add_error("Expect a open operator for " + str(current_token))
             self.token_counter.increment()
         else:
-            if self.tokens[self.token_counter.current() - 1].type != TokenType.RIGHT_BRACE:
-                previous_token = self.tokens[self.token_counter.current() - 1]
+            if self.last_token().type != TokenType.RIGHT_BRACE:
+                previous_token = self.last_token()
                 self.errors.add_error("Expect Expression after " + str(previous_token))
 
             self.token_counter.increment()
