@@ -11,10 +11,10 @@ def open_file(request):
 
 class TestIsComparison:
     def test_when_is_comparison(self):
-        assert ComparisonOperatorScanner.is_comparison('>')
+        assert ComparisonOperatorScanner.should_lex('>')
 
     def test_when_isnt_comparison(self):
-        assert not ComparisonOperatorScanner.is_comparison('a')
+        assert not ComparisonOperatorScanner.should_lex('a')
 
 
 class TestCreateToken:

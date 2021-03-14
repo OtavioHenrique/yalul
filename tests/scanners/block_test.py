@@ -12,11 +12,11 @@ def open_file(request):
 
 class TestIsBlock:
     def test_when_is_block(self):
-        assert BlockScanner.is_block('{')
-        assert BlockScanner.is_block('}')
+        assert BlockScanner.should_lex('{')
+        assert BlockScanner.should_lex('}')
 
     def test_when_isnt_block(self):
-        assert not BlockScanner.is_block('a')
+        assert not BlockScanner.should_lex('a')
 
 
 class TestCreateToken:

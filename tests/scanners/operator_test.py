@@ -1,5 +1,14 @@
+from pathlib import Path
+
+import pytest
+
 from yalul.lex.scanners.operator import OperatorScanner
 from yalul.lex.token_type import TokenType
+
+
+@pytest.fixture(scope='function')
+def open_file(request):
+    return open(str(Path.cwd()) + "/tests/lex_examples/" + request.param)
 
 
 class TestIsOperator:
@@ -7,15 +16,17 @@ class TestIsOperator:
         operators = ['+', '-', '/', '*']
 
         for operator in operators:
-            assert OperatorScanner.is_operator(operator)
+            assert OperatorScanner.should_lex(operator)
 
     def test_when_isnt_operator(self):
-        assert not OperatorScanner.is_operator('a')
+        assert not OperatorScanner.should_lex('a')
 
 
 class TestCreateToken:
-    def test_create_token(self):
-        scanner = OperatorScanner('+')
+    @pytest.mark.parametrize('open_file', ['operators_example.yalul'], indirect=['open_file'])
+    def test_create_token(self, open_file):
+        char = open_file.read(1)
+        token = OperatorScanner(char, open_file).create_token()
 
-        assert scanner.create_token().type == TokenType.SUM
-        assert scanner.create_token().value == 'OPERATOR'
+        assert token.type == TokenType.SUM
+        assert token.value == 'OPERATOR'

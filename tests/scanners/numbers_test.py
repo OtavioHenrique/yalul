@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from yalul.lex.scanners.integer import NumbersScanner
+from yalul.lex.scanners.number import NumbersScanner
 from yalul.lex.token_type import TokenType
 
 
@@ -11,10 +11,10 @@ def open_file(request):
 
 class TestIsDigit:
     def test_when_is_digit(self):
-        assert NumbersScanner.is_digit('6')
+        assert NumbersScanner.should_lex('6')
 
     def test_when_isnt_digit(self):
-        assert not NumbersScanner.is_digit('a')
+        assert not NumbersScanner.should_lex('a')
 
 
 class TestCreateToken:

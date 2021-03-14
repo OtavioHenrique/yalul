@@ -13,16 +13,19 @@ class OperatorScanner:
     """
     OperatorScanner is called by Lexer when a operator character is read. It reads the operator and returns a Operator Token
     """
-    def __init__(self, token):
+    def __init__(self, current_char, source):
         """
         Construct a new OperatorScanner object.
 
         :params token: Char of the token
+        :params source: Source being read
+        :returns: OperatorScanner object
         """
-        self.token = token
+        self.current_char = current_char
+        self.source = source
 
     @classmethod
-    def is_operator(cls, char):
+    def should_lex(cls, char):
         """
         Receives a char and returning if its a operator
         """
@@ -35,4 +38,7 @@ class OperatorScanner:
         """
         Returns a new Token of the given char
         """
-        return Token(OPERATORS.get(self.token), 'OPERATOR')
+        token = Token(OPERATORS.get(self.current_char), 'OPERATOR')
+        self.current_char = self.source.read(1)
+
+        return token
