@@ -1,5 +1,3 @@
-# flake8: noqa: C901
-
 import os
 
 from yalul.lex.scanners.block_scanner import BlockScanner
