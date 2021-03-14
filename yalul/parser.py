@@ -52,12 +52,12 @@ class Parser(ParserBase):
         parser_class = TOKEN_TO_PARSERS.get(self.current_token().type)
 
         if parser_class:
-            return parser_class(self.tokens, self._current_token, self.errors, self).parse()
+            return parser_class(self.tokens, self.token_counter, self.errors, self).parse()
         else:
             return self.__expression_statement()
 
     def __expression_statement(self):
-        return ExpressionParser(self.tokens, self._current_token, self.errors).parse()
+        return ExpressionParser(self.tokens, self.token_counter, self.errors).parse()
 
     def __at_end(self):
         current_token = self.current_token()
