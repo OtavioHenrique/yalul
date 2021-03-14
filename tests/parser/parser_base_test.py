@@ -1,8 +1,8 @@
 from yalul.lex.token_type import TokenType
-from yalul.parser import Token
 from yalul.lex.token import Token as LexerToken
 from yalul.parsers.parse_errors import ParseErrors
 from yalul.parsers.parser_base import ParserBase
+from yalul.parsers.token_counter import TokenCounter
 
 
 class TestParserBase:
@@ -21,6 +21,6 @@ class TestParserBase:
             LexerToken(TokenType.EOF, "End of File")
         ]
 
-        parser = ParserBase(tokens, Token(0), ParseErrors([]))
+        parser = ParserBase(tokens, TokenCounter(0), ParseErrors([]))
 
         assert parser.current_token() == expected_token

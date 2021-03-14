@@ -6,20 +6,9 @@ from yalul.parsers.if_parser import IfParser
 from yalul.parsers.parse_errors import ParseErrors
 from yalul.parsers.parse_response import ParseResponse
 from yalul.parsers.parser_base import ParserBase
+from yalul.parsers.token_counter import TokenCounter
 from yalul.parsers.variable_parser import VariableParser
 from yalul.parsers.while_parser import WhileParser
-
-
-class Token:
-    def __init__(self, current):
-        self.current_token = current
-
-    def current(self):
-        return self.current_token
-
-    def increment(self):
-        self.current_token += 1
-        return self.current_token
 
 
 class Parser(ParserBase):
@@ -34,7 +23,7 @@ class Parser(ParserBase):
         :param tokens: A list of language tokens
         :return: returns nothing
         """
-        super().__init__(tokens, Token(0), ParseErrors([]))
+        super().__init__(tokens, TokenCounter(0), ParseErrors([]))
 
     def parse(self):
         """

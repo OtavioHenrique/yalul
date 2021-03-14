@@ -34,6 +34,8 @@ class TestFuncStatements:
         parser_response = Parser(tokens).parse()
         first_statement_ast = parser_response.asts[0]
 
+        assert len(parser_response.errors()) == 0
+
         assert type(first_statement_ast) is Func
         assert first_statement_ast.identifier == 'sum'
         assert len(first_statement_ast.parameters) == 2

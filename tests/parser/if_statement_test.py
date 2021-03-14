@@ -85,6 +85,8 @@ class TestIfElseStatements:
         parser_response = Parser(tokens).parse()
         first_statement_ast = parser_response.asts[0]
 
+        assert len(parser_response.errors()) == 0
+
         assert type(first_statement_ast) is If
         assert type(first_statement_ast.condition) is Grouping
         assert type(first_statement_ast.condition.value) is Binary

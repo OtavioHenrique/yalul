@@ -1,7 +1,7 @@
 class ParseResponse:
-    def __init__(self, asts, errors):
+    def __init__(self, asts, parse_errors):
         self.asts = asts
-        self.errors = errors
+        self.parse_errors = parse_errors
 
-    def show_errors(self):
-        return self.errors.errors
+    def errors(self):
+        return self.parse_errors.errors

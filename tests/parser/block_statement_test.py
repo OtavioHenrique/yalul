@@ -16,6 +16,7 @@ class TestBlockStatements:
             Token(TokenType.INTEGER, '42'),
             Token(TokenType.SUM, '+'),
             Token(TokenType.INTEGER, '1'),
+            Token(TokenType.END_STATEMENT, 'End of Statement'),
             Token(TokenType.RIGHT_BRACE, 'Brace'),
             Token(TokenType.END_STATEMENT, 'End of Statement'),
             Token(TokenType.EOF, 'End of File')
@@ -25,3 +26,4 @@ class TestBlockStatements:
         first_statement_ast = parser_response.asts[0]
 
         assert type(first_statement_ast) is Block
+        assert len(parser_response.errors()) == 0
