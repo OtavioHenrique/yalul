@@ -9,7 +9,7 @@ class VariableParser(ParserBase):
     Yalul's variable statement parser, it parses all kinds of variables declarations
     """
 
-    def __init__(self, tokens, current_token, errors):
+    def __init__(self, tokens, current_token, errors, _parser):
         """
         Construct a new VariableParser object.
 
@@ -18,7 +18,7 @@ class VariableParser(ParserBase):
         :errors: ParseErrors instance
         :return: returns parsed expression
         """
-        super().__init__(tokens, current_token, errors)
+        super().__init__(tokens, current_token, errors, _parser)
 
     def parse(self):
         self._current_token.increment()

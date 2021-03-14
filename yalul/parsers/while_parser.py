@@ -20,8 +20,7 @@ class WhileParser(ParserBase):
         :errors: ParseErrors instance
         :return: returns parsed expression
         """
-        super().__init__(tokens, current_token, errors)
-        self.parser = parser
+        super().__init__(tokens, current_token, errors, parser)
 
     def parse(self):
         self._current_token.increment()

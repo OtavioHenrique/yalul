@@ -2,7 +2,7 @@ from yalul.lex.token_type import TokenType
 
 
 class ParserBase:
-    def __init__(self, tokens, current_token, errors):
+    def __init__(self, tokens, current_token, errors, parser):
         """
         Construct a new ExpressionParser object.
 
@@ -14,6 +14,7 @@ class ParserBase:
         self.tokens = tokens
         self._current_token = current_token
         self.errors = errors
+        self.parser = parser
 
     # TODO: Test here
     def consume(self, token_type, error_message):

@@ -21,6 +21,6 @@ class TestParserBase:
             LexerToken(TokenType.EOF, "End of File")
         ]
 
-        parser = ParserBase(tokens, TokenCounter(0), ParseErrors([]))
+        parser = ParserBase(tokens, TokenCounter(0), ParseErrors([]), None)
 
         assert parser.current_token() == expected_token

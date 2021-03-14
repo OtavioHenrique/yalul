@@ -36,7 +36,7 @@ class ExpressionParser(ParserBase):
         :current_token: Current token being read
         :errors: ParseErrors instance
         """
-        super().__init__(tokens, current_token, errors)
+        super().__init__(tokens, current_token, errors, None)
 
     def parse(self):
         expression = self.__var_assignment()
