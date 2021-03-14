@@ -13,7 +13,7 @@ class NumbersScanner:
 
         :params current_char: Current char being read by Lexer
         :param source: Source code being read
-        :return: returns nothing
+        :return: NumbersScanner object
         """
         self.current_char = current_char
         self.source = source
@@ -21,11 +21,13 @@ class NumbersScanner:
     def create_token(self):
         """
         Read source and creates a new integer token
+
+        :returns: Token object
         """
         numbers = []
         is_float = False
 
-        while NumbersScanner.is_digit(self.current_char) or self.current_char == '.':
+        while NumbersScanner.should_lex(self.current_char) or self.current_char == '.':
             numbers.append(self.current_char)
 
             if self.current_char == '.':
@@ -41,7 +43,7 @@ class NumbersScanner:
             return Token(TokenType.INTEGER, int(number_string))
 
     @classmethod
-    def is_digit(cls, char):
+    def should_lex(cls, char):
         """
         Receives a char and returning if its a digit
         """

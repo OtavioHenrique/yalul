@@ -24,12 +24,13 @@ class ComparisonOperatorScanner:
 
         :params current_char: Current char being read
         :params source: Source being read by lexer
+        :returns: ComparisonOperatorScanner object
         """
         self.current_char = current_char
         self.source = source
 
     @classmethod
-    def is_comparison(cls, char):
+    def should_lex(cls, char):
         """
         Receives a char and returning if its a operator
         """
@@ -41,6 +42,8 @@ class ComparisonOperatorScanner:
     def create_token(self):
         """
         Returns a new Comparison Token of the given char
+
+        :returns: Token object
         """
         current_file_pointer_location = self.source.tell()
 

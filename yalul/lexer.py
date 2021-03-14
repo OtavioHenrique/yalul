@@ -1,16 +1,24 @@
-# flake8: noqa: C901
-
 import os
 
 from yalul.lex.scanners.block_scanner import BlockScanner
 from yalul.lex.scanners.grouping import GroupingScanner
 from yalul.lex.scanners.keyword import KeywordScanner
 from yalul.lex.scanners.operator import OperatorScanner
-from yalul.lex.scanners.integer import NumbersScanner
+from yalul.lex.scanners.number import NumbersScanner
 from yalul.lex.scanners.comparison_operator import ComparisonOperatorScanner
 from yalul.lex.scanners.string import StringScanner
 from yalul.lex.token import Token
 from yalul.lex.token_type import TokenType
+
+LEXER_SCANNERS = [
+    StringScanner,
+    NumbersScanner,
+    OperatorScanner,
+    ComparisonOperatorScanner,
+    GroupingScanner,
+    BlockScanner,
+    KeywordScanner
+]
 
 
 class Lexer:
@@ -53,47 +61,9 @@ class Lexer:
                     tokens_list.append(Token(TokenType.END_STATEMENT, "End of Statement"))
 
                 current_char = self.source.read(1)
-            elif current_char == '"':
-                string = StringScanner(current_char, self.source).create_token()
-
-                tokens_list.append(string)
-
-                current_char = self.source.read(1)
-            elif NumbersScanner.is_digit(current_char):
-                scanner = NumbersScanner(current_char, self.source)
-
-                tokens_list.append(scanner.create_token())
-
-                current_char = scanner.current_char
-            elif OperatorScanner.is_operator(current_char):
-                token = OperatorScanner(current_char).create_token()
-
-                tokens_list.append(token)
-
-                current_char = self.source.read(1)
-            elif ComparisonOperatorScanner.is_comparison(current_char):
-                scanner = ComparisonOperatorScanner(current_char, self.source)
-                token = scanner.create_token()
-
-                tokens_list.append(token)
-
-                current_char = scanner.current_char
-            elif GroupingScanner.is_paren(current_char):
-                scanner = GroupingScanner(current_char, self.source)
-                token = scanner.create_token()
-
-                tokens_list.append(token)
-
-                current_char = scanner.current_char
-            elif BlockScanner.is_block(current_char):
-                scanner = BlockScanner(current_char, self.source)
-                token = scanner.create_token()
-
-                tokens_list.append(token)
-
-                current_char = self.source.read(1)
-            elif KeywordScanner.is_alpha(current_char):
-                scanner = KeywordScanner(current_char, self.source, current_line)
+            elif self.__select_scanner(current_char) is not None:
+                selected_scanner = self.__select_scanner(current_char)
+                scanner = selected_scanner(current_char, self.source)
                 token = scanner.create_token()
 
                 tokens_list.append(token)
@@ -115,6 +85,14 @@ class Lexer:
         tokens_list.append(Token(TokenType.EOF, "End of File"))
 
         return tokens_list
+
+    def __select_scanner(self, current_char):
+        result = []
+        scanner = filter(lambda scan: scan.should_lex(current_char), LEXER_SCANNERS)
+
+        [result.append(x) for x in scanner]
+
+        return result[0] if len(result) > 0 else None
 
     def __end_of_file(self):
         return self.source.tell() > self.file_size

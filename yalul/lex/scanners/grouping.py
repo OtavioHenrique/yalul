@@ -18,7 +18,7 @@ class GroupingScanner:
 
         :params current_char: Current char being read by Lexer
         :param source: Source code being read
-        :return: returns nothing
+        :return: GroupingScanner object
         """
         self.current_char = current_char
         self.source = source
@@ -26,15 +26,16 @@ class GroupingScanner:
     def create_token(self):
         """
         Read source and creates a new paren token
-        """
 
+        :returns: Token object
+        """
         token = Token(PAREN.get(self.current_char), "paren")
         self.current_char = self.source.read(1)
 
         return token
 
     @classmethod
-    def is_paren(cls, char):
+    def should_lex(cls, char):
         """
         Receives a char and returning if is a paren
         """
