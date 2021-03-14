@@ -16,11 +16,16 @@ class VariableParser(ParserBase):
         :param tokens: A list of language tokens
         :token_counter: A instance of TokenCounter with current token being read
         :errors: ParseErrors instance
-        :return: returns parsed expression
+        :return: VariableParser object
         """
         super().__init__(tokens, token_counter, errors, _parser)
 
     def parse(self):
+        """
+        Parser VariableDeclaration statement
+
+        :return: VariableDeclaration object
+        """
         self.token_counter.increment()
 
         var_name = self.consume(TokenType.IDENTIFIER, "Expected a identifier after def")

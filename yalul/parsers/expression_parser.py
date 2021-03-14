@@ -35,6 +35,7 @@ class ExpressionParser(ParserBase):
         :tokens: A list of language tokens
         :token_counter: A instance of TokenCounter with current token being read
         :errors: ParseErrors instance
+        :return: ExpressionParser object
         """
         super().__init__(tokens, token_counter, errors, None)
 
