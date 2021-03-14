@@ -172,7 +172,7 @@ class ExpressionParser(ParserBase):
             self.errors.add_error("Expect a open operator for " + str(current_token))
             self._current_token.increment()
         else:
-            if self.current_token().type != TokenType.END_STATEMENT:
+            if self.tokens[self._current_token.current() - 1].type != TokenType.RIGHT_BRACE:
                 previous_token = self.tokens[self._current_token.current() - 1]
                 self.errors.add_error("Expect Expression after " + str(previous_token))
 

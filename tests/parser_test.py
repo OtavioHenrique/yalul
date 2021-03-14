@@ -87,15 +87,14 @@ class TestParserGenerateUnfinishedExpressionErrors:
 
         parser_response = Parser(tokens).parse()
 
-        errors = parser_response.show_errors()
-
+        errors = parser_response.errors()
         assert errors[0] == "Expect Expression after TokenType.SUM, Value: +"
 
 
 class TestParserGenerateUnopenedOperatorError:
     """Test parser generating correct parser errors"""
 
-    def test_parse_run_generates_correct_error_unopened_operators(self):
+    def test_parse_run_generates_correct_error_unopened_operators_right_paren(self):
         """
         Validates if parser if generating correct error to unopened operators
         """
@@ -110,6 +109,25 @@ class TestParserGenerateUnopenedOperatorError:
 
         parser_response = Parser(tokens).parse()
 
-        errors = parser_response.show_errors()
+        errors = parser_response.errors()
 
         assert errors[0] == "Expect a open operator for TokenType.RIGHT_PAREN, Value: )"
+
+    def test_parse_run_generates_correct_error_unopened_operators_right_brace(self):
+        """
+        Validates if parser if generating correct error to unopened operators
+        """
+        tokens = [
+            Token(TokenType.INTEGER, 39),
+            Token(TokenType.MULTIPLY, "*"),
+            Token(TokenType.RIGHT_BRACE, "}"),
+            Token(TokenType.INTEGER, 41),
+            Token(TokenType.END_STATEMENT, "End of Statement"),
+            Token(TokenType.EOF, "End of File")
+        ]
+
+        parser_response = Parser(tokens).parse()
+
+        errors = parser_response.errors()
+
+        assert errors[0] == "Expect a open operator for TokenType.RIGHT_BRACE, Value: }"
