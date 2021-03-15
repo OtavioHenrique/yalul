@@ -64,3 +64,12 @@ Open CMD, go yo your yalul folder and run:
 python bin\yalul
 ```
 
+## Render AST
+
+Yalul has a built-it tool to render its AST, available out of box. To use just use the flag `--render-ast` while executing a file. 
+
+### Example
+
+Considering the a file named `yalul_test.yalul` containing the fallowing code:
+
+
