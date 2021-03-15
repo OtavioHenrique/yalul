@@ -1,6 +1,7 @@
 # flake8: noqa: C901
 
 import uuid
+from datetime import datetime
 
 from yalul.parsers.ast.nodes.statements.block import Block
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
@@ -50,7 +51,7 @@ class GraphvizPrinter:
         for statement in self.ast:
             self.__render_statement(graph, statement)
 
-        graph.render('test-output/round-table.gv', view=True)
+        graph.render('yalul-renders/ast-print-{}.gv'.format(datetime.now().strftime('%Y-%m-%d-%H:%M:%S')), view=True)
 
     def __render_statement(self, graph, statement, previous_node=None, identifier=None):
         if type(statement) == VariableDeclaration:
