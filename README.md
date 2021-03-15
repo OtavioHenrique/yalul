@@ -85,3 +85,11 @@ Run `bin/yalul --render-ast yalul_test.yalul` (Unix example), and the fallowing 
 ![image](https://user-images.githubusercontent.com/11178512/111231612-57ec7600-85c8-11eb-9528-4c6a0e47dcba.png)
 
 **Pay attention, this tool need [graphviz](https://graphviz.org/) installed, you need to install it to use. You can find the install instructions [here](https://graphviz.org/download/). Graphviz are known to have PATH problems on windows, if you are using it, manually add it to yourrr PATH.**
+
+## Tests
+
+Yalul uses `pytest` as its test framework. To run it, just type:
+
+```
+PYTHONPATH=$PATHONPATH:`pwd` pytest
+```
