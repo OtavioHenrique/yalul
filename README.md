@@ -73,3 +73,12 @@ Yalul has a built-it tool to render its AST, available out of box. To use just u
 Considering the a file named `yalul_test.yalul` containing the fallowing code:
 
 
+```javascript
+func sum(a b) {
+  return a + b
+}
+```
+
+Run `bin/yalul --render-ast yalul_test.yalul` (Unix example), and the fallowing image will be generated:
+
+![image](https://user-images.githubusercontent.com/11178512/111231612-57ec7600-85c8-11eb-9528-4c6a0e47dcba.png)
