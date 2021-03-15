@@ -81,7 +81,7 @@ class GraphvizPrinter:
         func_graph_name = '{}{}'.format('FuncStatement', identifier)
 
         graph.node(func_graph_name, '<f0> Identifier|<f1> Func Statement|<f2> Parameters|<f3> Block')
-        graph.node(statement.identifier, '<f0> Func Identifier|<f1> {}'.format(func_graph_name))
+        graph.node(statement.identifier, '<f0> Func Identifier|<f1> {}'.format(statement.identifier))
         graph.edge('{}:f0'.format(func_graph_name), '{}:f0'.format(statement.identifier))
 
         for parameter in statement.parameters:
