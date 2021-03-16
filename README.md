@@ -1,5 +1,23 @@
 ![Yalul logo](img/logo_final.png)
 
+Yalul born with purpose of bring be simple and have a fun while studying programming languages.
+
+This is not a language for production systems, but a language to help everyone that wants to learn how a programming language works behind scenes in a fun way.
+
+## Development Status
+
+[x] Basic structure
+
+[x] Lexer
+
+[x] Parser
+
+[x] Tokens/AST Printers
+
+[] Interpreter (WIP)
+
+[] Documentation (WIP)
+
 ## How to run
 
 ### Linux Systems / Mac os
