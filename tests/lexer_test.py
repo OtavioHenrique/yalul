@@ -347,3 +347,31 @@ class TestLexerFuncStatements:
 
         for index, token in enumerate(tokens):
             assert token.type == expected_tokens[index]
+
+
+class TestNegativeNumbers:
+    """
+    Test lexer for negative numbers
+    """
+
+    @pytest.mark.parametrize('open_file', ['negative_number.yalul'], indirect=['open_file'])
+    def test_lexer_run(self, open_file):
+        """
+        Receives a source containing negative number and lex it to operator tokens
+        """
+        lexer = Lexer(open_file)
+        tokens = lexer.run()
+
+        expected_tokens = [
+            TokenType.FLOAT,
+            TokenType.END_STATEMENT,
+            TokenType.INTEGER,
+            TokenType.END_STATEMENT,
+            TokenType.EOF
+        ]
+
+        assert tokens[0].value == -42.0
+        assert tokens[2].value == -42
+
+        for index, token in enumerate(tokens):
+            assert token.type == expected_tokens[index]

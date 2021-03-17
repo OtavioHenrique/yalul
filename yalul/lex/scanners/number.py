@@ -27,7 +27,7 @@ class NumbersScanner:
         numbers = []
         is_float = False
 
-        while NumbersScanner.should_lex(self.current_char) or self.current_char == '.':
+        while NumbersScanner.should_lex(self.current_char) or self.current_char == '.' or self.current_char == '-':
             numbers.append(self.current_char)
 
             if self.current_char == '.':
