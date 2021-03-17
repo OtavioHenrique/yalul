@@ -1,5 +1,6 @@
 from yalul.lex.token_type import TokenType
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
+from yalul.parsers.ast.nodes.statements.expressions.func_call import FuncCall
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
 from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
 from yalul.parsers.ast.nodes.statements.expressions.values.boolean import Boolean
@@ -134,7 +135,7 @@ class ExpressionParser(ParserBase):
         return expression
 
     def __division(self):
-        expression = self.__literal()
+        expression = self.__function_cal()
 
         while self.current_token().type == TokenType.DIVISION:
             operator = self.current_token()
@@ -144,6 +145,27 @@ class ExpressionParser(ParserBase):
             right_expression = self.__division()
 
             expression = Binary(expression, operator, right_expression)
+
+        return expression
+
+    def __function_cal(self):
+        expression = self.__literal()
+
+        while True:
+            if self.current_token().type == TokenType.LEFT_PAREN:
+                arguments = []
+                self.token_counter.increment()
+
+                while self.current_token().type != TokenType.RIGHT_PAREN:
+                    argument = self.__comparison()
+
+                    arguments.append(argument)
+
+                self.consume(TokenType.RIGHT_PAREN, "Expected a RIGHT PAREN ) to close function call")
+
+                return FuncCall(expression, arguments)
+            else:
+                break
 
         return expression
 

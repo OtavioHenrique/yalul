@@ -5,6 +5,7 @@ from datetime import datetime
 
 from yalul.parsers.ast.nodes.statements.block import Block
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
+from yalul.parsers.ast.nodes.statements.expressions.func_call import FuncCall
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
 from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
 from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
@@ -176,6 +177,15 @@ class GraphvizPrinter:
             graph.node('VarName{}'.format(identifier), '<f0> {}'.format(expression.identifier))
             graph.edge('{}:f0'.format(expression_name), 'VarName{}:f0'.format(identifier))
             self.__render_expression(graph, expression.value, '{}:f2'.format(expression_name), str(uuid.uuid4()))
+
+            if previous_node is not None:
+                graph.edge(previous_node, '{}:f1'.format(expression_name))
+        elif type(expression) == FuncCall:
+            graph.node(expression_name, '<f0> Callee | <f1> Func Call |<f2> Arguments')
+            self.__render_expression(graph, expression.callee, '{}:f0'.format(expression_name), str(uuid.uuid4()))
+
+            for argument in expression.arguments:
+                self.__render_expression(graph, argument, '{}:f2'.format(expression_name), str(uuid.uuid4()))
 
             if previous_node is not None:
                 graph.edge(previous_node, '{}:f1'.format(expression_name))
