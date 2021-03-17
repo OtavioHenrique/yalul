@@ -1,3 +1,4 @@
+from yalul.lex.scanners.number import NumbersScanner
 from yalul.lex.token_type import TokenType
 from yalul.lex.token import Token
 
@@ -38,7 +39,19 @@ class OperatorScanner:
         """
         Returns a new Token of the given char
         """
-        token = Token(OPERATORS.get(self.current_char), 'OPERATOR')
-        self.current_char = self.source.read(1)
+        initial_file_pointer_location = self.source.tell()
+        token = None
+        next_character = self.source.read(1)
+
+        self.source.seek(initial_file_pointer_location)
+
+        if NumbersScanner.should_lex(next_character):
+            scanner = NumbersScanner(self.current_char, self.source)
+            token = scanner.create_token()
+
+            self.current_char = scanner.current_char
+        else:
+            token = Token(OPERATORS.get(self.current_char), 'OPERATOR')
+            self.current_char = self.source.read(1)
 
         return token
