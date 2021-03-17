@@ -127,10 +127,20 @@ All generated images will be placed inside `yalul-renders/` folder that it will 
 
 **Pay attention, this tool need [graphviz](https://graphviz.org/) installed, you need to install it to use. You can find the install instructions [here](https://graphviz.org/download/). Graphviz are known to have PATH problems on windows, if you are using it, manually add it to yourrr PATH.**
 
-## Tests
+## Developing
+
+### Tests
 
 Yalul uses `pytest` as its test framework. To run it, just type:
 
-```
+```shell
 PYTHONPATH=$PATHONPATH:`pwd` pytest
+```
+
+### Lint
+
+Yalul uses `flake8` as python linter. By default we run the fallowing line while developing:
+
+```shell
+flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 ```
