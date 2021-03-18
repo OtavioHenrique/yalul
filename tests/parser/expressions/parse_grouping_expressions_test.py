@@ -29,7 +29,7 @@ class TestParserGroupingExpressions:
 
         assert len(parser_response.errors()) == 0
 
-        first_statement_ast = parser_response.asts[0]
+        first_statement_ast = parser_response.ast.statements[0]
 
         assert type(first_statement_ast) is Binary
         assert first_statement_ast.operator.type is TokenType.MULTIPLY

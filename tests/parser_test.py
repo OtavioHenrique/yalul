@@ -24,7 +24,7 @@ class TestParserBinary:
 
         parser_response = Parser(tokens).parse()
 
-        asts = parser_response.asts
+        asts = parser_response.ast.statements
 
         ast = asts[0]
 
