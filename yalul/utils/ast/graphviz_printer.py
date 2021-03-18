@@ -49,8 +49,10 @@ class GraphvizPrinter:
     def generate_pdf(self):
         graph = Digraph(comment='AST', node_attr={'shape': 'record', 'height': '.1'})
 
-        for statement in self.ast:
-            self.__render_statement(graph, statement)
+        graph.node('AST', '<f0> Abstract Syntax Tree|<f1> Statements')
+
+        for statement in self.ast.statements:
+            self.__render_statement(graph, statement, 'AST:f1')
 
         graph.render('yalul-renders/ast-print-{}.gv'.format(datetime.now().strftime('%Y-%m-%d-%H:%M:%S')), view=True)
 
