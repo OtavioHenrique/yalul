@@ -36,6 +36,6 @@ def execute(filename, render_ast, render_lex_tokens):
         parser_response = Parser(tokens).parse()
 
         if render_ast:
-            ASTPrinter(parser_response.asts).print()
+            ASTPrinter(parser_response.ast).print()
 
         click.echo(parser_response.errors())

@@ -23,7 +23,7 @@ class TestParseBinaryDivision:
         parser_response = Parser(tokens).parse()
         assert len(parser_response.errors()) == 0
 
-        ast = parser_response.asts[0]
+        ast = parser_response.ast.statements[0]
 
         assert type(ast) is Binary
         assert ast.operator.type == TokenType.DIVISION
@@ -49,7 +49,7 @@ class TestParseBinaryDivision:
 
         parser_response = Parser(tokens).parse()
 
-        ast = parser_response.asts[0]
+        ast = parser_response.ast.statements[0]
 
         assert type(ast) is Binary
         assert ast.operator.type is TokenType.DIVISION

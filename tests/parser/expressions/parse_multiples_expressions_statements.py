@@ -28,7 +28,7 @@ class TestParserMultipleStatements:
 
         assert len(parser_response.errors()) == 0
 
-        first_statement_ast = parser_response.asts[0]
+        first_statement_ast = parser_response.ast.statements[0]
 
         assert type(first_statement_ast) is Binary
         assert first_statement_ast.operator.type is TokenType.MULTIPLY
@@ -39,7 +39,7 @@ class TestParserMultipleStatements:
         assert type(first_statement_ast.right) is Integer
         assert first_statement_ast.right.value == 2
 
-        second_statement_ast = parser_response.asts[1]
+        second_statement_ast = parser_response.ast.statements[1]
 
         assert type(second_statement_ast) is Binary
         assert second_statement_ast.operator.type is TokenType.SUM

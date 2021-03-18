@@ -25,7 +25,7 @@ class TestParserReturnExpressions:
 
         assert len(parser_response.errors()) == 0
 
-        first_statement_ast = parser_response.asts[0]
+        first_statement_ast = parser_response.ast.statements[0]
 
         assert type(first_statement_ast) is Return
         assert type(first_statement_ast.value) is Binary

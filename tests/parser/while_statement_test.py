@@ -34,7 +34,7 @@ class TestWhileStatements:
         ]
 
         parser_response = Parser(tokens).parse()
-        first_statement_ast = parser_response.asts[0]
+        first_statement_ast = parser_response.ast.statements[0]
 
         assert len(parser_response.errors()) == 0
 

@@ -9,6 +9,7 @@ from yalul.parsers.parser_base import ParserBase
 from yalul.parsers.token_counter import TokenCounter
 from yalul.parsers.variable_parser import VariableParser
 from yalul.parsers.while_parser import WhileParser
+from yalul.parsers.abstract_syntax_tree import AbstractSyntaxTree
 
 TOKEN_TO_PARSERS = {
     TokenType.VARIABLE: VariableParser,
@@ -46,7 +47,8 @@ class Parser(ParserBase):
 
             statements.append(statement)
 
-        return ParseResponse(statements, self.errors)
+        ast = AbstractSyntaxTree(statements)
+        return ParseResponse(ast, self.errors)
 
     def create_statement(self):
         parser_class = TOKEN_TO_PARSERS.get(self.current_token().type)

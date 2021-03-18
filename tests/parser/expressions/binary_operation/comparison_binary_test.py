@@ -23,7 +23,7 @@ class TestParseBinaryComparison:
         parser_response = Parser(tokens).parse()
         assert len(parser_response.errors()) == 0
 
-        node = parser_response.asts[0]
+        node = parser_response.ast.statements[0]
 
         assert type(node) is Binary
         assert node.operator.type == TokenType.GREATER
@@ -47,7 +47,7 @@ class TestParseBinaryComparison:
 
         parser_response = Parser(tokens).parse()
 
-        node = parser_response.asts[0]
+        node = parser_response.ast.statements[0]
 
         assert type(node) is Binary
         assert node.operator.type == TokenType.LESS
@@ -71,7 +71,7 @@ class TestParseBinaryComparison:
 
         parser_response = Parser(tokens).parse()
 
-        node = parser_response.asts[0]
+        node = parser_response.ast.statements[0]
 
         assert type(node) is Binary
         assert node.operator.type == TokenType.BANG_EQUAL
@@ -95,7 +95,7 @@ class TestParseBinaryComparison:
 
         parser_response = Parser(tokens).parse()
 
-        node = parser_response.asts[0]
+        node = parser_response.ast.statements[0]
 
         assert type(node) is Binary
         assert node.operator.type == TokenType.EQUAL_EQUAL
@@ -119,7 +119,7 @@ class TestParseBinaryComparison:
 
         parser_response = Parser(tokens).parse()
 
-        node = parser_response.asts[0]
+        node = parser_response.ast.statements[0]
 
         assert type(node) is Binary
         assert node.operator.type == TokenType.GREATER_EQUAL
@@ -143,7 +143,7 @@ class TestParseBinaryComparison:
 
         parser_response = Parser(tokens).parse()
 
-        node = parser_response.asts[0]
+        node = parser_response.ast.statements[0]
 
         assert type(node) is Binary
         assert node.operator.type == TokenType.LESS_EQUAL
@@ -167,7 +167,7 @@ class TestParseBinaryComparison:
 
         parser_response = Parser(tokens).parse()
 
-        node = parser_response.asts[0]
+        node = parser_response.ast.statements[0]
 
         assert type(node) is Binary
         assert node.operator.type == TokenType.BANG
