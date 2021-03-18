@@ -121,7 +121,8 @@ func sum(a b) {
 
 Run `bin/yalul --render-ast yalul_test.yalul` (Unix example), and the fallowing image will be generated:
 
-![image](https://user-images.githubusercontent.com/11178512/111231612-57ec7600-85c8-11eb-9528-4c6a0e47dcba.png)
+![image](https://user-images.githubusercontent.com/11178512/111708367-7c448e80-8824-11eb-8c3d-68cb70a26f5a.png)
+
 
 All generated images will be placed inside `yalul-renders/` folder that it will create as `pdf` files.
 
