@@ -1,8 +1,14 @@
+from yalul.interpreters.environment import Environment
 from yalul.interpreters.interpreter_errors import InterpreterErrors
+from yalul.interpreters.variable_declaration import VariableDeclarationInterpreter
 from yalul.parsers.ast.nodes.statements.expression import Expression
-from yalul.interpreters.expression import ExpressionInterpreter
+from yalul.interpreters.expression_interpreter import ExpressionInterpreter
+from yalul.parsers.ast.nodes.statements.expressions.values.string import String
+from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
 
-INTERPRETERS = {}
+INTERPRETERS = {
+    VariableDeclaration: VariableDeclarationInterpreter
+}
 
 
 class Interpreter:
@@ -10,7 +16,7 @@ class Interpreter:
     Yalul's interpreter, all your code is interpreted here
     """
 
-    def __init__(self, ast):
+    def __init__(self, ast, global_environment=Environment()):
         """
         Construct a new ExpressionParser object.
 
@@ -18,6 +24,7 @@ class Interpreter:
         :return: Interpreter object
         """
         self.ast = ast
+        self.global_environment = global_environment
 
     def run(self):
         """
@@ -29,7 +36,7 @@ class Interpreter:
         for statement in self.ast.statements:
             error = InterpreterErrors()
 
-            response = self.interpret(statement, error)
+            response = self.interpret(statement, self.global_environment, error)
 
             if error.errors:
                 for interpreter_error in error.errors:
@@ -37,16 +44,24 @@ class Interpreter:
 
                 next
             else:
-                print(response)
+                if isinstance(response, str):
+                    print('"{}"'.format(response))
+                    return ''
+                if isinstance(statement, Expression):
+                    print(response)
+                else:
+                    print('null')
 
-    def interpret(self, statement, error):
+    def interpret(self, statement, environment, error):
         """
         Interpret any given statement
         """
 
         if INTERPRETERS.get(type(statement)):
-            return None
+            interpreter = INTERPRETERS.get(type(statement))
+
+            return interpreter(statement, environment, error).execute()
         elif isinstance(statement, Expression):
-            return ExpressionInterpreter.execute(statement, error)
+            return ExpressionInterpreter.execute(statement, environment, error)
         else:
             return None
