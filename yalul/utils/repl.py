@@ -2,6 +2,7 @@ import tempfile
 import uuid
 
 from yalul.interpreter import Interpreter
+from yalul.interpreters.environment import Environment
 from yalul.lex.token_type import TokenType
 from yalul.lexer import Lexer
 from yalul.parser import Parser
@@ -13,6 +14,8 @@ class Repl:
         print('\n\nWelcome to Yalul REPL, to quit just type quit\n\n')
 
         user_input = None
+
+        repl_environment = Environment()
 
         with tempfile.TemporaryDirectory() as tmp_dirname:
             while user_input != 'quit':
@@ -42,4 +45,4 @@ class Repl:
                         print(parser_response.errors())
 
                     print('=> ', end='')
-                    Interpreter(parser_response.ast).run()
+                    Interpreter(parser_response.ast, repl_environment).run()
