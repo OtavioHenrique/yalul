@@ -8,7 +8,7 @@ This is not a language for production systems, but a language to help everyone t
 
 - [Development Status](#development-status)
 - [Installing](#installing)
-    * [Linux/Mac](#Linux-Systems/Mac-os)
+    * [Linux/Mac](#linux-systems-and-mac-os)
       + [Test]
 
 ## Development Status
@@ -27,7 +27,7 @@ This is not a language for production systems, but a language to help everyone t
 
 ## Installing
 
-### Linux Systems / Mac os
+### Linux Systems and Mac os
 
 Clone yalul repository:
 
