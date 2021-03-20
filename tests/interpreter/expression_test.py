@@ -37,4 +37,3 @@ class TestExpressionInterpreter:
 
         assert response == 42
         assert error.errors == []
-
