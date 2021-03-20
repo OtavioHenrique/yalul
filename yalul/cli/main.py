@@ -5,6 +5,7 @@ from yalul.parser import Parser
 from yalul.utils.ast_printer import ASTPrinter
 from yalul.interpreter import Interpreter
 from yalul.utils.lex_tokens_printer import LexTokensPrinter
+from yalul.utils.repl import Repl
 
 
 @click.command()
@@ -18,6 +19,8 @@ def execute(filename, render_ast, render_lex_tokens):
             'yalul is a simple tree-walk interpreter written in python for easy understanding and study of programming '
             'languages, compilers and interpreters. '
         )
+
+        Repl.start()
     else:
         source_file = open(filename, 'r')
         tokens = Lexer(source_file).run()
