@@ -14,7 +14,7 @@ This is not a language for production systems, but a language to help everyone t
     * [Docker](#docker)
     * [Windows](#windows)
 - [Development Tools](#development-tools)
-  * [REPL](#repl)
+  * [REPL](#repl-everybody-loves-repl)
   * [Render AST](#render-ast)
   * [Render Lex Tokens](#render-lex-tokens)
 - [Developing](#developing)
@@ -102,7 +102,7 @@ Clone yalul repository:
 git clone https://github.com/OtavioHenrique/yalul.git
 ```
 
-#### Install package requeriments(Go yo your cmd):
+#### Install package requeriments(Go to your cmd):
 
 ```
 pip install -r requirements.txt
@@ -138,6 +138,7 @@ python bin\yalul yalul_test.yalul
 
 Yalul REPL is simple and intuitive, just start it without passing any file as argument, and REPL will start:
 
+![image](https://user-images.githubusercontent.com/11178512/111860263-3a4f4180-8925-11eb-84ad-07ace41e7f32.png)
 
 
 ### Render Lex Tokens
