@@ -2,6 +2,9 @@ from yalul.lex.token_type import TokenType
 
 
 class BinaryInterpreter:
+    """
+    BinaryInterpreter interprets all binary operations expressions
+    """
     def __init__(self, operator, left, right, error):
         self.operator = operator
         self.left = left
@@ -9,6 +12,9 @@ class BinaryInterpreter:
         self.error = error
 
     def execute(self):
+        """
+        Interpret the binary operation
+        """
         try:
             if self.operator == TokenType.SUM:
                 return self.left + self.right
