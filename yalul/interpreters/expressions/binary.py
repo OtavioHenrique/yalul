@@ -1,0 +1,24 @@
+from yalul.lex.token_type import TokenType
+
+
+class BinaryInterpreter:
+    def __init__(self, operator, left, right, error):
+        self.operator = operator
+        self.left = left
+        self.right = right
+        self.error = error
+
+    def execute(self):
+        try:
+            if self.operator == TokenType.SUM:
+                return self.left + self.right
+            elif self.operator == TokenType.MINUS:
+                return self.left - self.right
+            elif self.operator == TokenType.DIVISION:
+                return self.left / self.right
+            elif self.operator == TokenType.MULTIPLY:
+                return self.left * self.right
+        except TypeError:
+            self.error.add(
+                "Interpreter Error: Cannot execute BinaryOperation of operator {} between values {} and {}".format(
+                    self.operator, self.left, self.right))

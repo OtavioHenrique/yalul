@@ -3,6 +3,7 @@ from yalul.lexer import Lexer
 from yalul.lex.token_type import TokenType
 from yalul.parser import Parser
 from yalul.utils.ast_printer import ASTPrinter
+from yalul.interpreter import Interpreter
 from yalul.utils.lex_tokens_printer import LexTokensPrinter
 
 
@@ -38,4 +39,7 @@ def execute(filename, render_ast, render_lex_tokens):
         if render_ast:
             ASTPrinter(parser_response.ast).print()
 
-        click.echo(parser_response.errors())
+        if parser_response.errors():
+            click.echo(parser_response.errors())
+
+        Interpreter(parser_response.ast).run()
