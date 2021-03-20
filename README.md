@@ -9,7 +9,17 @@ This is not a language for production systems, but a language to help everyone t
 - [Development Status](#development-status)
 - [Installing](#installing)
     * [Linux/Mac](#linux-systems-and-mac-os)
-      + [Test]
+      + [Install lib requirements](#install-lib-requirements)
+      + [Running](#running)
+    * [Docker](#docker)
+    * [Windows](#windows)
+- [Development Tools](#development-tools)
+  * [REPL](#repl)
+  * [Render AST](#render-ast)
+  * [Render Lex Tokens](#render-lex-tokens)
+- [Developing](#developing)
+  * [Tests](#tests)
+  * [Lint](#lint)
 
 ## Development Status
 
@@ -35,7 +45,7 @@ Clone yalul repository:
 git clone https://github.com/OtavioHenrique/yalul.git
 ```
 
-#### Install the lib requirements
+#### Install lib requirements
 
 ```
 pip install -r requirements.txt
