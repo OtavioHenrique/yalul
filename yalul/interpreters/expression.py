@@ -1,5 +1,6 @@
 from yalul.interpreters.expressions.binary import BinaryInterpreter
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
+from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
 from yalul.parsers.ast.nodes.statements.expressions.value import Value
 
 
@@ -23,3 +24,5 @@ class ExpressionInterpreter:
             operator = expression.operator.type
 
             return BinaryInterpreter(operator, left_value, right_value, error).execute()
+        elif expression_type == Grouping:
+            return ExpressionInterpreter.execute(expression.value, error)
