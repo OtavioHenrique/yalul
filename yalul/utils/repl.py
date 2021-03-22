@@ -45,4 +45,11 @@ class Repl:
                         print(parser_response.errors())
 
                     print('=> ', end='')
-                    Interpreter(parser_response.ast, repl_environment).run()
+                    response = Interpreter(parser_response.ast, repl_environment).run()
+
+                    if isinstance(response, str):
+                        print('"{}"'.format(response))
+                    elif response is None:
+                        print('null')
+                    else:
+                        print(response)

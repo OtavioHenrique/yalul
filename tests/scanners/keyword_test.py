@@ -76,7 +76,7 @@ class TestCreateToken:
         assert token.value == "func"
 
     @pytest.mark.parametrize('open_file', ['print_example.yalul'], indirect=['open_file'])
-    def test_create_function_token(self, open_file):
+    def test_create_print_token(self, open_file):
         char = open_file.read(1)
         token = KeywordScanner(char, open_file).create_token()
 

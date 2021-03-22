@@ -1,13 +1,15 @@
 from yalul.interpreters.environment import Environment
 from yalul.interpreters.interpreter_errors import InterpreterErrors
+from yalul.interpreters.print_interpreter import PrintInterpreter
 from yalul.interpreters.variable_declaration import VariableDeclarationInterpreter
 from yalul.parsers.ast.nodes.statements.expression import Expression
 from yalul.interpreters.expression_interpreter import ExpressionInterpreter
-from yalul.parsers.ast.nodes.statements.expressions.values.string import String
+from yalul.parsers.ast.nodes.statements.print import Print
 from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
 
 INTERPRETERS = {
-    VariableDeclaration: VariableDeclarationInterpreter
+    VariableDeclaration: VariableDeclarationInterpreter,
+    Print: PrintInterpreter
 }
 
 
@@ -33,6 +35,8 @@ class Interpreter:
         :return: None
         """
 
+        response = None
+
         for statement in self.ast.statements:
             error = InterpreterErrors()
 
@@ -43,14 +47,8 @@ class Interpreter:
                     print(interpreter_error)
 
                 next
-            else:
-                if isinstance(response, str):
-                    print('"{}"'.format(response))
-                    return ''
-                if isinstance(statement, Expression):
-                    print(response)
-                else:
-                    print('null')
+
+        return response
 
     def interpret(self, statement, environment, error):
         """
