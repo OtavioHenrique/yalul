@@ -375,3 +375,29 @@ class TestNegativeNumbers:
 
         for index, token in enumerate(tokens):
             assert token.type == expected_tokens[index]
+
+
+class TestPrint:
+    """
+    Test lexer for print statements
+    """
+
+    @pytest.mark.parametrize('open_file', ['keywords/print_example.yalul'], indirect=['open_file'])
+    def test_lexer_run(self, open_file):
+        """
+        Receives a source containing a print statement and lex it to tokens
+        """
+        lexer = Lexer(open_file)
+        tokens = lexer.run()
+
+        expected_tokens = [
+            TokenType.PRINT,
+            TokenType.LEFT_PAREN,
+            TokenType.STRING,
+            TokenType.RIGHT_PAREN,
+            TokenType.END_STATEMENT,
+            TokenType.EOF
+        ]
+
+        for index, token in enumerate(tokens):
+            assert token.type == expected_tokens[index]

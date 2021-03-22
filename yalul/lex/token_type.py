@@ -37,3 +37,4 @@ class TokenType(Enum):
     WHILE = 29
     FUNCTION = 30
     RETURN = 31
+    PRINT = 32
