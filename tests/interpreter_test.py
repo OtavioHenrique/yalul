@@ -1,5 +1,7 @@
 from yalul.interpreter import Interpreter
 from yalul.parsers.abstract_syntax_tree import AbstractSyntaxTree
+from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
+from yalul.parsers.ast.nodes.statements.print import Print
 from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
 
 
@@ -9,8 +11,8 @@ class TestInterpreter:
     def test_interpreter_running_multiple_statements(self, capsys):
         """Test interpreter interpreting multiple statements"""
         ast = AbstractSyntaxTree([
-            Integer(1),
-            Integer(41)
+            Print(Grouping(Integer(1))),
+            Print(Grouping(Integer(41)))
         ])
 
         interpreter = Interpreter(ast)

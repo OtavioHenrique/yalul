@@ -10,7 +10,8 @@ KEYWORDS = {
     'else': TokenType.ELSE,
     'while': TokenType.WHILE,
     'func': TokenType.FUNCTION,
-    'return': TokenType.RETURN
+    'return': TokenType.RETURN,
+    'print': TokenType.PRINT,
 }
 
 

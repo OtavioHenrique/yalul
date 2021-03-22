@@ -6,6 +6,7 @@ from yalul.parsers.if_parser import IfParser
 from yalul.parsers.parse_errors import ParseErrors
 from yalul.parsers.parse_response import ParseResponse
 from yalul.parsers.parser_base import ParserBase
+from yalul.parsers.print_parser import PrintParser
 from yalul.parsers.token_counter import TokenCounter
 from yalul.parsers.variable_parser import VariableParser
 from yalul.parsers.while_parser import WhileParser
@@ -16,7 +17,8 @@ TOKEN_TO_PARSERS = {
     TokenType.LEFT_BRACE: BlockParser,
     TokenType.IF: IfParser,
     TokenType.WHILE: WhileParser,
-    TokenType.FUNCTION: FuncParser
+    TokenType.FUNCTION: FuncParser,
+    TokenType.PRINT: PrintParser
 }
 
 

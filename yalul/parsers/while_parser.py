@@ -26,7 +26,7 @@ class WhileParser(ParserBase):
         """
         Parser VariableDeclaration statement
 
-        :return: WhileParser object
+        :return: While object
         """
         self.token_counter.increment()
 
