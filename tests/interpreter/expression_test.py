@@ -19,7 +19,7 @@ class TestExpressionInterpreter:
         """
         Validates if interpreter is interpreting value expressions correctly
         """
-        env = Environment()
+        env = Environment({})
         error = InterpreterErrors()
         ast = AbstractSyntaxTree([
             Integer(1)
@@ -34,7 +34,7 @@ class TestExpressionInterpreter:
         """
         Validates if interpreter is interpreting binary expressions correctly
         """
-        env = Environment()
+        env = Environment({})
         error = InterpreterErrors()
         ast = AbstractSyntaxTree([
             Binary(Integer(41), Token(TokenType.SUM, "operator"), Integer(1))
@@ -49,7 +49,7 @@ class TestExpressionInterpreter:
         """
         Validates if interpreter is interpreting grouping expressions correctly
         """
-        env = Environment()
+        env = Environment({})
         error = InterpreterErrors()
         ast = AbstractSyntaxTree([
             Grouping(
@@ -66,7 +66,7 @@ class TestExpressionInterpreter:
         """
         Validates if interpreter is interpreting variable expressions correctly
         """
-        env = Environment()
+        env = Environment({})
         env.add_variable('name', 'Gabriela')
         error = InterpreterErrors()
         ast = AbstractSyntaxTree([
@@ -82,7 +82,7 @@ class TestExpressionInterpreter:
         """
         Validates if interpreter is interpreting variable assign expressions correctly
         """
-        env = Environment()
+        env = Environment({})
         env.add_variable('name', 'Gabriela')
         error = InterpreterErrors()
         ast = AbstractSyntaxTree([

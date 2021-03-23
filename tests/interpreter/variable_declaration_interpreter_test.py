@@ -13,7 +13,7 @@ class TestVariableDeclarationInterpreter:
         """
         Validates if interpreter is interpreting variable declaration statements correctly
         """
-        env = Environment()
+        env = Environment({})
         error = InterpreterErrors()
         ast = AbstractSyntaxTree([
             VariableDeclaration('name', String('Gabriela'))

@@ -16,7 +16,7 @@ class Repl:
 
         user_input = None
 
-        repl_environment = Environment()
+        repl_environment = Environment({})
 
         with tempfile.TemporaryDirectory() as tmp_dirname:
             while user_input != 'quit':
@@ -51,7 +51,7 @@ class Repl:
 
                     if isinstance(response, str):
                         print('"{}"'.format(response))
-                    elif response is None or type(response) is Null:
+                    elif response is None:
                         print('null')
                     else:
                         print(response)

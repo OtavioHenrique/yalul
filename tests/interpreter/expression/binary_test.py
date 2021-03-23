@@ -64,14 +64,14 @@ class TestBinaryInterpreter:
 
         response = interpreter.execute()
 
-        assert response is True
+        assert bool(response) is True
         assert error.errors == []
 
         second_interpreter = BinaryInterpreter(TokenType.GREATER, 1, 42, error)
 
         second_response = second_interpreter.execute()
 
-        assert second_response is False
+        assert bool(second_response) is False
         assert error.errors == []
 
     def test_interpreting_binary_less_operation_without_errors(self):
@@ -84,14 +84,14 @@ class TestBinaryInterpreter:
 
         response = interpreter.execute()
 
-        assert response is False
+        assert bool(response) is False
         assert error.errors == []
 
         second_interpreter = BinaryInterpreter(TokenType.LESS, 1, 42, error)
 
         second_response = second_interpreter.execute()
 
-        assert second_response is True
+        assert bool(second_response) is True
         assert error.errors == []
 
     def test_interpreting_binary_equal_equal_operation_without_errors(self):
@@ -104,14 +104,14 @@ class TestBinaryInterpreter:
 
         response = interpreter.execute()
 
-        assert response is True
+        assert bool(response) is True
         assert error.errors == []
 
         second_interpreter = BinaryInterpreter(TokenType.EQUAL_EQUAL, 1, 42, error)
 
         second_response = second_interpreter.execute()
 
-        assert second_response is False
+        assert bool(second_response) is False
         assert error.errors == []
 
     def test_interpreting_binary_less_equal_operation_without_errors(self):
@@ -124,14 +124,14 @@ class TestBinaryInterpreter:
 
         response = interpreter.execute()
 
-        assert response is True
+        assert bool(response) is True
         assert error.errors == []
 
         second_interpreter = BinaryInterpreter(TokenType.LESS_EQUAL, 42, 42, error)
 
         second_response = second_interpreter.execute()
 
-        assert second_response is True
+        assert bool(second_response) is True
         assert error.errors == []
 
     def test_interpreting_binary_greater_equal_operation_without_errors(self):
@@ -144,14 +144,14 @@ class TestBinaryInterpreter:
 
         response = interpreter.execute()
 
-        assert response is True
+        assert bool(response) is True
         assert error.errors == []
 
         second_interpreter = BinaryInterpreter(TokenType.GREATER_EQUAL, 42, 42, error)
 
         second_response = second_interpreter.execute()
 
-        assert second_response is True
+        assert bool(second_response) is True
         assert error.errors == []
 
     def test_interpreting_binary_generating_errors_for_type_error(self):

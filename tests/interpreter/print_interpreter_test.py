@@ -14,7 +14,7 @@ class TestPrintInterpreter:
         """
         Validates if interpreter is interpreting variable print correctly
         """
-        env = Environment()
+        env = Environment({})
         error = InterpreterErrors()
         ast = AbstractSyntaxTree([
             Print(Grouping(String('Gabriela')))

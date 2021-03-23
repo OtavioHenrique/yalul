@@ -11,7 +11,7 @@ class TestVarAssignmentInterpreter:
         Validates if VarAssignmentInterpreter is interpreting correctly
         """
         error = InterpreterErrors()
-        env = Environment()
+        env = Environment({})
 
         env.add_variable('Name', 'Gabriela')
 
@@ -28,7 +28,7 @@ class TestVarAssignmentInterpreter:
         Validates if VarAssignmentInterpreter is generating errors when variable don't exists
         """
         error = InterpreterErrors()
-        env = Environment()
+        env = Environment({})
 
         interpreter = VarAssignmentInterpreter('Name', 'Otavio', env, error)
 
