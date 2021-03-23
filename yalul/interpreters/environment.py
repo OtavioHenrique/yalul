@@ -2,8 +2,8 @@ from yalul.parsers.ast.nodes.statements.expressions.values.null import Null
 
 
 class Environment:
-    def __init__(self):
-        self.environment_table = {}
+    def __init__(self, environment_table):
+        self.environment_table = environment_table
 
     def add_variable(self, identifier, value):
         self.environment_table[identifier] = value

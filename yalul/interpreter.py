@@ -9,7 +9,7 @@ from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDecl
 
 INTERPRETERS = {
     VariableDeclaration: VariableDeclarationInterpreter,
-    Print: PrintInterpreter
+    Print: PrintInterpreter,
 }
 
 
@@ -18,7 +18,7 @@ class Interpreter:
     Yalul's interpreter, all your code is interpreted here
     """
 
-    def __init__(self, ast, global_environment=Environment()):
+    def __init__(self, ast, global_environment=Environment({})):
         """
         Construct a new ExpressionParser object.
 
@@ -40,7 +40,7 @@ class Interpreter:
         for statement in self.ast.statements:
             error = InterpreterErrors()
 
-            response = self.interpret(statement, self.global_environment, error)
+            response = Interpreter.interpret(statement, self.global_environment, error)
 
             if error.errors:
                 for interpreter_error in error.errors:
@@ -50,11 +50,11 @@ class Interpreter:
 
         return response
 
-    def interpret(self, statement, environment, error):
+    @staticmethod
+    def interpret(statement, environment, error):
         """
         Interpret any given statement
         """
-
         if INTERPRETERS.get(type(statement)):
             interpreter = INTERPRETERS.get(type(statement))
 

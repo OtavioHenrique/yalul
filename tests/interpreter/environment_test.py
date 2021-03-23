@@ -9,7 +9,7 @@ class TestEnvironment:
         """
         Validates if environment is adding new variables correctly
         """
-        env = Environment()
+        env = Environment({})
 
         env.add_variable('name', 'Gabriela')
 
@@ -19,7 +19,7 @@ class TestEnvironment:
         """
         Validates if method show_environment_table is displaying all variables
         """
-        env = Environment()
+        env = Environment({})
 
         env.add_variable('name', 'Gabriela')
 
@@ -29,7 +29,7 @@ class TestEnvironment:
         """
         Validates if method variable exists is working when given identifier exists
         """
-        env = Environment()
+        env = Environment({})
 
         env.add_variable('name', 'Gabriela')
 
@@ -39,7 +39,7 @@ class TestEnvironment:
         """
         Validates if method variable exists is working when given identifier dont exists
         """
-        env = Environment()
+        env = Environment({})
 
         assert env.variable_exists('name') is False
 
@@ -47,7 +47,7 @@ class TestEnvironment:
         """
         Validates if method get_variable is geting variable when it exists
         """
-        env = Environment()
+        env = Environment({})
 
         env.add_variable('name', 'Gabriela')
 
@@ -57,6 +57,6 @@ class TestEnvironment:
         """
         Validates if method get_variable is returning null when given identifier dont exists
         """
-        env = Environment()
+        env = Environment({})
 
         assert type(env.get_variable('name')) == Null
