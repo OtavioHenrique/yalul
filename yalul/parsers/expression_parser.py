@@ -135,7 +135,7 @@ class ExpressionParser(ParserBase):
         return expression
 
     def __division(self):
-        expression = self.__function_cal()
+        expression = self.__function_call()
 
         while self.current_token().type == TokenType.DIVISION:
             operator = self.current_token()
@@ -148,7 +148,7 @@ class ExpressionParser(ParserBase):
 
         return expression
 
-    def __function_cal(self):
+    def __function_call(self):
         expression = self.__literal()
 
         while True:
