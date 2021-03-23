@@ -164,5 +164,5 @@ class TestBinaryInterpreter:
         response = interpreter.execute()
 
         assert response is None
-        assert error.errors == ["Interpreter Error: Cannot execute BinaryOperation of operator TokenType.MINUS "
-                                "between values 42 and everything"]
+        assert error.errors == ['Interpreter Error: Cannot execute BinaryOperation of operator TokenType.MINUS '
+                                'between values 42 and everything']

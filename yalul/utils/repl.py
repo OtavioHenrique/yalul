@@ -6,6 +6,7 @@ from yalul.interpreters.environment import Environment
 from yalul.lex.token_type import TokenType
 from yalul.lexer import Lexer
 from yalul.parser import Parser
+from yalul.parsers.ast.nodes.statements.expressions.values.null import Null
 
 
 class Repl:
@@ -44,12 +45,13 @@ class Repl:
                     if parser_response.errors():
                         print(parser_response.errors())
 
-                    print('=> ', end='')
                     response = Interpreter(parser_response.ast, repl_environment).run()
+
+                    print('=> ', end='')
 
                     if isinstance(response, str):
                         print('"{}"'.format(response))
-                    elif response is None:
+                    elif response is None or type(response) is Null:
                         print('null')
                     else:
                         print(response)

@@ -36,5 +36,5 @@ class BinaryInterpreter:
                 return self.left >= self.right
         except TypeError:
             self.error.add(
-                "Interpreter Error: Cannot execute BinaryOperation of operator {} between values {} and {}".format(
+                'Interpreter Error: Cannot execute BinaryOperation of operator {} between values {} and {}'.format(
                     self.operator, self.left, self.right))
