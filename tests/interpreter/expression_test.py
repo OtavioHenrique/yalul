@@ -7,7 +7,9 @@ from yalul.parsers.abstract_syntax_tree import AbstractSyntaxTree
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
 from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
+from yalul.parsers.ast.nodes.statements.expressions.values.string import String
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
+from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
 
 
 class TestExpressionInterpreter:
@@ -74,4 +76,21 @@ class TestExpressionInterpreter:
         response = ExpressionInterpreter.execute(ast.statements[0], env, error)
 
         assert response == 'Gabriela'
+        assert error.errors == []
+
+    def test_interpreting_var_assign_expression(self):
+        """
+        Validates if interpreter is interpreting variable assign expressions correctly
+        """
+        env = Environment()
+        env.add_variable('name', 'Gabriela')
+        error = InterpreterErrors()
+        ast = AbstractSyntaxTree([
+            VarAssignment('name', String('Otavio'))
+        ])
+
+        response = ExpressionInterpreter.execute(ast.statements[0], env, error)
+
+        assert response == 'Otavio'
+        assert env.get_variable('name') == 'Otavio'
         assert error.errors == []
