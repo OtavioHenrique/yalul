@@ -4,12 +4,14 @@ from yalul.interpreters.print_interpreter import PrintInterpreter
 from yalul.interpreters.variable_declaration import VariableDeclarationInterpreter
 from yalul.parsers.ast.nodes.statements.expression import Expression
 from yalul.interpreters.expression_interpreter import ExpressionInterpreter
+from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
 from yalul.parsers.ast.nodes.statements.print import Print
 from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
+from yalul.parsers.ast.nodes.statements.while_statement import While
 
 INTERPRETERS = {
     VariableDeclaration: VariableDeclarationInterpreter,
-    Print: PrintInterpreter,
+    Print: PrintInterpreter
 }
 
 
@@ -55,11 +57,29 @@ class Interpreter:
         """
         Interpret any given statement
         """
+        if type(statement) == While:
+            return Interpreter.interpret_while_statement(statement, environment, error)
         if INTERPRETERS.get(type(statement)):
             interpreter = INTERPRETERS.get(type(statement))
-
             return interpreter(statement, environment, error).execute()
         elif isinstance(statement, Expression):
             return ExpressionInterpreter.execute(statement, environment, error)
         else:
             return None
+
+    @staticmethod
+    def interpret_while_statement(while_statement, environment, error):
+        """
+        Interpret any while statement
+        """
+        condition = while_statement.condition
+        statements = while_statement.block.statements
+
+        block_env = Environment(environment.show_environment_table())
+
+        while bool(ExpressionInterpreter.execute(condition, block_env, error)):
+            for statement in statements:
+                result = Interpreter.interpret(statement, block_env, error)
+
+                if type(statement) == Return:
+                    return result
