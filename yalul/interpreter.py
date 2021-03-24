@@ -78,7 +78,7 @@ class Interpreter:
         condition = while_statement.condition
         statements = while_statement.block.statements
 
-        block_env = Environment(environment.show_environment_table())
+        block_env = Environment(environment.variables_table())
 
         while bool(ExpressionInterpreter.execute(condition, block_env, error)):
             for statement in statements:
@@ -96,7 +96,7 @@ class Interpreter:
         condition = if_statement.condition
         then_block = if_statement.then_block.statements
 
-        block_env = Environment(environment.show_environment_table())
+        block_env = Environment(environment.variables_table())
 
         if bool(ExpressionInterpreter.execute(condition, block_env, error)):
             for statement in then_block:

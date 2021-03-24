@@ -13,7 +13,7 @@ class TestEnvironment:
 
         env.add_variable('name', 'Gabriela')
 
-        assert env.environment_table['name'] == 'Gabriela'
+        assert env.variables_table['name'] == 'Gabriela'
 
     def test_show_environment_table(self):
         """
@@ -23,7 +23,7 @@ class TestEnvironment:
 
         env.add_variable('name', 'Gabriela')
 
-        assert env.show_environment_table() == env.environment_table
+        assert env.variables_table() == env.variables_table
 
     def test_show_variable_exists_when_identifier_exists(self):
         """
