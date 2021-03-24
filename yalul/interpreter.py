@@ -5,6 +5,7 @@ from yalul.interpreters.variable_declaration import VariableDeclarationInterpret
 from yalul.parsers.ast.nodes.statements.expression import Expression
 from yalul.interpreters.expression_interpreter import ExpressionInterpreter
 from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
+from yalul.parsers.ast.nodes.statements.if_statement import If
 from yalul.parsers.ast.nodes.statements.print import Print
 from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
 from yalul.parsers.ast.nodes.statements.while_statement import While
@@ -57,6 +58,8 @@ class Interpreter:
         """
         Interpret any given statement
         """
+        if type(statement) == If:
+            return Interpreter.interpret_if_statement(statement, environment, error)
         if type(statement) == While:
             return Interpreter.interpret_while_statement(statement, environment, error)
         if INTERPRETERS.get(type(statement)):
@@ -83,3 +86,21 @@ class Interpreter:
 
                 if type(statement) == Return:
                     return result
+
+    @staticmethod
+    def interpret_if_statement(if_statement, environment, error):
+        """
+        Interpret any given if statement
+        """
+
+        condition = if_statement.condition
+        then_block = if_statement.then_block.statements
+
+        block_env = Environment(environment.show_environment_table())
+
+        if bool(ExpressionInterpreter.execute(condition, block_env, error)):
+            for statement in then_block:
+                Interpreter.interpret(statement, block_env, error)
+        elif if_statement.else_block:
+            for statement in if_statement.else_block.statements:
+                Interpreter.interpret(statement, block_env, error)
