@@ -21,7 +21,7 @@ class ExpressionInterpreter:
         expression_type = type(expression)
 
         if isinstance(expression, Value):
-            return expression.value
+            return expression.value #TODO Remove this value
         elif expression_type == Binary:
             left_value = ExpressionInterpreter.execute(expression.left, environment, error)
             right_value = ExpressionInterpreter.execute(expression.right, environment, error)

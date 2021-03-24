@@ -63,7 +63,7 @@ class IfParser(ParserBase):
 
             else_block = BlockParser(self.tokens, self.token_counter, self.errors, self.parser).parse()
 
-        if type(else_block) != Block:
-            self.errors.add_error("Expect a block after else condition")
+            if type(else_block) != Block:
+                self.errors.add_error("Expect a block after else condition")
 
         return else_block

@@ -49,7 +49,8 @@ class ExpressionParser(ParserBase):
         expression = self.__var_assignment()
 
         if self.tokens[self.token_counter.current() - 1].type != TokenType.RIGHT_BRACE \
-                and self.current_token().type != TokenType.LEFT_BRACE:
+                and self.current_token().type != TokenType.LEFT_BRACE \
+                and self.tokens[self.token_counter.current() - 1].type != TokenType.END_STATEMENT:
             self.consume(TokenType.END_STATEMENT, "Expected a END OF STATEMENT after expression")
 
         return expression
