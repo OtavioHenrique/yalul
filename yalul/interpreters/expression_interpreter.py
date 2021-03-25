@@ -3,6 +3,7 @@ from yalul.interpreters.expressions.var_assignment_interpreter import VarAssignm
 from yalul.interpreters.expressions.variable_interpreter import VariableInterpreter
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
+from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
 from yalul.parsers.ast.nodes.statements.expressions.value import Value
 from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
@@ -28,6 +29,8 @@ class ExpressionInterpreter:
             operator = expression.operator.type
 
             return BinaryInterpreter(operator, left_value, right_value, error).execute()
+        elif expression_type == Return:
+            return ExpressionInterpreter.execute(expression.value, environment, error)
         elif expression_type == Grouping:
             return ExpressionInterpreter.execute(expression.value, environment, error)
         elif expression_type == VarAssignment:

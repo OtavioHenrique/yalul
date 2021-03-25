@@ -1,19 +1,14 @@
 from yalul.interpreters.environment import Environment
 from yalul.interpreters.interpreter_errors import InterpreterErrors
-from yalul.interpreters.print_interpreter import PrintInterpreter
-from yalul.interpreters.variable_declaration import VariableDeclarationInterpreter
 from yalul.parsers.ast.nodes.statements.expression import Expression
 from yalul.interpreters.expression_interpreter import ExpressionInterpreter
+from yalul.parsers.ast.nodes.statements.expressions.func_call import FuncCall
 from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
+from yalul.parsers.ast.nodes.statements.func import Func
 from yalul.parsers.ast.nodes.statements.if_statement import If
 from yalul.parsers.ast.nodes.statements.print import Print
 from yalul.parsers.ast.nodes.statements.variable_declaration import VariableDeclaration
 from yalul.parsers.ast.nodes.statements.while_statement import While
-
-INTERPRETERS = {
-    VariableDeclaration: VariableDeclarationInterpreter,
-    Print: PrintInterpreter
-}
 
 
 class Interpreter:
@@ -21,7 +16,7 @@ class Interpreter:
     Yalul's interpreter, all your code is interpreted here
     """
 
-    def __init__(self, ast, global_environment=Environment({})):
+    def __init__(self, ast, global_environment=Environment({}, {})):
         """
         Construct a new ExpressionParser object.
 
@@ -58,17 +53,36 @@ class Interpreter:
         """
         Interpret any given statement
         """
-        if type(statement) == If:
-            return Interpreter.interpret_if_statement(statement, environment, error)
-        if type(statement) == While:
-            return Interpreter.interpret_while_statement(statement, environment, error)
-        if INTERPRETERS.get(type(statement)):
-            interpreter = INTERPRETERS.get(type(statement))
-            return interpreter(statement, environment, error).execute()
+        interpret_functions = {
+            VariableDeclaration: Interpreter.interpret_variable_declaration,
+            Func: Interpreter.interpret_func_statement,
+            If: Interpreter.interpret_if_statement,
+            While: Interpreter.interpret_while_statement,
+            Print: Interpreter.interpret_print_statement,
+            FuncCall: Interpreter.interpret_func_call
+        }
+
+        if interpret_functions.get(type(statement)):
+            function = interpret_functions.get(type(statement))
+
+            return function(statement, environment, error)
         elif isinstance(statement, Expression):
             return ExpressionInterpreter.execute(statement, environment, error)
         else:
             return None
+
+    @staticmethod
+    def interpret_print_statement(statement, environment, error):
+        value = ExpressionInterpreter.execute(statement.value, environment, error)
+
+        print(value)
+
+    @staticmethod
+    def interpret_variable_declaration(variable_declaration, environment, error):
+        variable_value = Interpreter.interpret(variable_declaration.initializer,
+                                               environment, error)
+
+        environment.add_variable(variable_declaration.name, variable_value)
 
     @staticmethod
     def interpret_while_statement(while_statement, environment, error):
@@ -78,7 +92,7 @@ class Interpreter:
         condition = while_statement.condition
         statements = while_statement.block.statements
 
-        block_env = Environment(environment.variables_table())
+        block_env = Environment(environment.variables_table(), {})
 
         while bool(ExpressionInterpreter.execute(condition, block_env, error)):
             for statement in statements:
@@ -96,7 +110,7 @@ class Interpreter:
         condition = if_statement.condition
         then_block = if_statement.then_block.statements
 
-        block_env = Environment(environment.variables_table())
+        block_env = Environment(environment.variables_table(), {})
 
         if bool(ExpressionInterpreter.execute(condition, block_env, error)):
             for statement in then_block:
@@ -104,3 +118,48 @@ class Interpreter:
         elif if_statement.else_block:
             for statement in if_statement.else_block.statements:
                 Interpreter.interpret(statement, block_env, error)
+
+    @staticmethod
+    def interpret_func_statement(func_statement, environment, _error):
+        """
+        Interpret any given func statement
+        """
+
+        identifier = func_statement.identifier
+        parameters = func_statement.parameters
+        block = func_statement.block
+
+        environment.add_function(identifier, parameters, block)
+
+        return None
+
+    @staticmethod
+    def interpret_func_call(func_call, environment, error):
+        """
+        Interpret any given func call expression
+        """
+
+        func = ExpressionInterpreter.execute(func_call.callee, environment, error)
+        arguments = func_call.arguments
+
+        identifier = func['name']
+        func_block = func['block']
+        func_parameters = func['parameters']
+
+        if len(func_parameters) != len(arguments):
+            error.add('Interpreter error: Wrong arity, func {} expected {} parameters but {} arguments were given'
+                      .format(identifier, len(func_parameters), len(arguments)))
+            return None
+
+        func_env = Environment({}, {})
+
+        for argument, parameter in zip(arguments, func_parameters):
+            func_env.add_variable(
+                parameter.value,
+                ExpressionInterpreter.execute(argument, environment, error))
+
+        for statement in func_block.statements:
+            result = Interpreter.interpret(statement, func_env, error)
+
+            if type(statement) == Return:
+                return result
