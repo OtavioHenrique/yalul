@@ -16,7 +16,7 @@ class Repl:
 
         user_input = None
 
-        repl_environment = Environment({})
+        repl_environment = Environment({}, {})
 
         with tempfile.TemporaryDirectory() as tmp_dirname:
             while user_input != 'quit':

@@ -6,9 +6,13 @@ from yalul.lex.token_type import TokenType
 from yalul.parsers.abstract_syntax_tree import AbstractSyntaxTree
 from yalul.parsers.ast.nodes.statements.block import Block
 from yalul.parsers.ast.nodes.statements.expressions.binary import Binary
+from yalul.parsers.ast.nodes.statements.expressions.func_call import FuncCall
 from yalul.parsers.ast.nodes.statements.expressions.grouping import Grouping
+from yalul.parsers.ast.nodes.statements.expressions.return_expression import Return
+from yalul.parsers.ast.nodes.statements.expressions.values.string import String
 from yalul.parsers.ast.nodes.statements.expressions.var_assignment import VarAssignment
 from yalul.parsers.ast.nodes.statements.expressions.variable import Variable
+from yalul.parsers.ast.nodes.statements.func import Func
 from yalul.parsers.ast.nodes.statements.if_statement import If
 from yalul.parsers.ast.nodes.statements.print import Print
 from yalul.parsers.ast.nodes.statements.expressions.values.integer import Integer
@@ -33,16 +37,55 @@ class TestInterpreter:
         assert captured.out == '1\n41\n'
 
 
+class TestInterpreterInterpretPrintStatement:
+    """
+    Test Interpreter interpret_print_statement
+    """
+
+    def test_interpreting_print_statements(self, capsys):
+        """Test interpreter interpreting multiple statements"""
+        env = Environment({}, {})
+        error = InterpreterErrors()
+        ast = AbstractSyntaxTree([
+            Print(Grouping(String('Gabriela')))
+        ])
+
+        Interpreter.interpret_print_statement(ast.statements[0], env, error)
+
+        captured = capsys.readouterr()
+
+        assert captured.out == 'Gabriela\n'
+
+
+class TestInterpreterInterpretVariableDeclarationStatement:
+    """
+    Test Interpreter interpret_variable_declaration_statement
+    """
+
+    def test_interpreting_variable_declaration_statements(self):
+        """Test interpreter interpreting multiple statements"""
+        env = Environment({}, {})
+        error = InterpreterErrors()
+        ast = AbstractSyntaxTree([
+            VariableDeclaration('name', String('Gabriela'))
+        ])
+
+        Interpreter.interpret_variable_declaration(ast.statements[0], env, error)
+
+        assert env.get_variable('name') == 'Gabriela'
+
+
 class TestInterpreterInterpretWhileStatement:
     """
     Test Interpreter interpret_while_statement
     """
 
     def test_interpreting_while_statement(self):
-        """Test runing a normal while statement"""
+        """Test running a normal while statement"""
+
         env = Environment({
             'a': 0
-        })
+        }, {})
 
         error = InterpreterErrors()
 
@@ -68,16 +111,101 @@ class TestInterpreterInterpretWhileStatement:
         assert env.get_variable('a') == 10
 
 
+class TestInterpreterInterpretFuncStatement:
+    """
+    Test Interpreter interpret_func_statement
+    """
+
+    def test_interpreting_func_statement(self):
+        """Test running a normal func statement"""
+
+        env = Environment({}, {})
+
+        error = InterpreterErrors()
+
+        func_name = 'sum'
+        func_parameters = [String('a'), String('b')]
+        func_block = Block([
+            Return(
+                Grouping(
+                    Binary(
+                        Variable('a'),
+                        Token(TokenType.SUM, '+'),
+                        Variable('b')
+                    )
+                )
+            )
+        ])
+
+        ast = AbstractSyntaxTree([
+            Func(
+                func_name,
+                func_parameters,
+                func_block
+            )
+        ])
+
+        Interpreter.interpret_func_statement(ast.statements[0], env, error)
+
+        func = env.get_variable(func_name)
+
+        assert func['name'] == func_name
+        assert func['parameters'] == func_parameters
+        assert func['block'] == func_block
+
+
+class TestInterpreterInterpretFuncCall:
+    """
+    Test Interpreter interpret_func_call
+    """
+
+    def test_interpreting_func_call(self):
+        """Test running a normal func call"""
+
+        env = Environment({}, {})
+
+        error = InterpreterErrors()
+
+        func_name = 'sum'
+        func_parameters = [String('a'), String('b')]
+        func_block = Block([
+            Return(
+                Grouping(
+                    Binary(
+                        Variable('a'),
+                        Token(TokenType.SUM, '+'),
+                        Variable('b')
+                    )
+                )
+            )
+        ])
+
+        ast = AbstractSyntaxTree([
+            Func(
+                func_name,
+                func_parameters,
+                func_block
+            )
+        ])
+
+        Interpreter.interpret_func_statement(ast.statements[0], env, error)
+
+        func_call = FuncCall(Variable('sum'), [Integer(1), Integer(41)])
+
+        assert Interpreter.interpret_func_call(func_call, env, error) == 42
+
+
 class TestInterpreterInterpretIfStatement:
     """
     Test Interpreter interpret_if_statement
     """
 
     def test_interpreting_if_statement(self):
-        """Test runing a normal if statement without else"""
+        """Test running a normal if statement without else"""
+
         env = Environment({
             'a': 0
-        })
+        }, {})
 
         error = InterpreterErrors()
 
@@ -100,10 +228,11 @@ class TestInterpreterInterpretIfStatement:
         assert env.get_variable('a') == 10
 
     def test_interpreting_if_else_statement(self):
-        """Test runing a normal if statement with else block"""
+        """Test running a normal if statement with else block"""
+
         env = Environment({
             'a': 0
-        })
+        }, {})
 
         error = InterpreterErrors()
 
