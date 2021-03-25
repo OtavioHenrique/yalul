@@ -49,7 +49,9 @@ class Repl:
 
                     print('=> ', end='')
 
-                    if isinstance(response, str):
+                    if response == 'true' or response == 'false' or response == 'null':
+                        print(response)
+                    elif isinstance(response, str):
                         print('"{}"'.format(response))
                     elif response is None:
                         print('null')

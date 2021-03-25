@@ -6,7 +6,15 @@ This is not a language for production systems, but a language to help everyone t
 
 ## Table of Contents
 
-- [Development Status](#development-status)
+- [Development Status](#development-status-v1)
+- [Syntax](#syntax)
+    * [print](#print)
+    * [basic types](#basic-types)
+    * [Arithmetic and Comparison](#arithmetic-and-comparison)
+    * [Variables](#variables)
+    * [Loop](#loop)
+    * [Control Flow](#control-flow)
+    * [Functions](#functions)
 - [Installing](#installing)
     * [Linux/Mac](#linux-systems-and-mac-os)
       + [Install lib requirements](#install-lib-requirements)
@@ -21,7 +29,7 @@ This is not a language for production systems, but a language to help everyone t
   * [Tests](#tests)
   * [Lint](#lint)
 
-## Development Status
+## Development Status V1
 
 [x] Basic structure
 
@@ -31,9 +39,149 @@ This is not a language for production systems, but a language to help everyone t
 
 [x] Tokens/AST Printers
 
-[] Interpreter (WIP)
+[x] Interpreter
 
 [] Documentation (WIP)
+
+## Syntax
+
+### Print
+
+Yalul has a built-in print statement to help you while developing:
+
+```javascript
+print("Hello Yalul")
+```
+
+### Basic types
+
+Yalul has five basic value types, `boolean`, `float`, `integer`, `null`, and `string`:
+
+#### Integers
+
+The most basic data type, integer represent any integer number:
+
+```javascript
+Yalul v0.0.1 > 42
+=> 42
+```
+
+#### Float
+
+Floats are floating point numbers, using dots:
+
+```javascript
+Yalul v0.0.1 > 3.18
+=> 3.18
+```
+
+#### String
+
+Strings represents any text, and on Yalul strings are represented around ONLY double quotes:
+
+```javascript
+Yalul v0.0.1 > "Hello World" 
+=> "Hello World"
+```
+
+#### Booleans
+
+Booleans as you may imagine, represents `true` and `false`:
+
+```javascript
+Yalul v0.0.1 > true
+=> true
+Yalul v0.0.1 > false
+=> false
+```
+
+#### Null
+
+And unfortunately Yalul has its dark side (among many others), yes we have Null types to represent the absence of any information.
+
+```javascript
+Yalul v0.0.1 > null
+=> null
+```
+
+### Arithmetic and Comparison
+
+Yalul has basic math operations `+`, `-`, `*` and `/`. It has basic comparison operators too, `>`, `<`, `<=`, `>=`, `==`:
+
+```javascript
+Yalul v0.0.1 > 1 + 1
+=> 2
+Yalul v0.0.1 > 1 - 1
+=> 0
+Yalul v0.0.1 > 2 * 2
+=> 4
+Yalul v0.0.1 > 4 / 2
+=> 2.0
+Yalul v0.0.1 > 2 > 1
+=> true
+Yalul v0.0.1 > 2 < 1
+=> false
+Yalul v0.0.1 > 1 <= 1
+=> true
+Yalul v0.0.1 > 1 >= 1
+=> true
+Yalul v0.0.1 > 1 == 1
+=> true
+```
+
+### Variables
+
+To declare your variable its easy, just use `def` keyword, pass a name and any expression as value.
+
+```
+def name = "otavio"
+```
+
+And feel free to redefine your variable:
+
+```
+name = "Valadares"
+```
+
+### Loop
+
+To loop yalul have a while statement, that will execute a given block till the given condition is true:
+
+```javascript
+def counter = 0
+
+while(counter < 10) {
+  print(counter)
+  counter = counter + 1
+}
+```
+
+### Control Flow
+
+To control your flow, yalul provides a basic if/else structure:
+
+```javascript
+if (42 > 41) {
+  print("If block")
+} else {
+  print("Else block")
+}
+```
+
+### Functions
+
+To create functions and call it its easy too, yalul provides a nice syntax for it:
+
+```javascript
+
+func sum(a b) {
+  return a + b
+}
+
+def result = sum(41, 1)
+
+print(result)
+```
 
 ## Installing
 
